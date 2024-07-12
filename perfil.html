@@ -1,0 +1,585 @@
+﻿<!DOCTYPE html>
+<html style="" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>:: STT - GAT® Link ::</title>
+
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="description" content="STT GAT Link">
+    <meta name="keywords" content="app,stt">
+    <meta name="author" content="leonamcorreia">
+
+    <link href="files/pace-theme-flash.css" rel="stylesheet">
+    <link href="files/uniform.default.min.css" rel="stylesheet">
+    <link href="files/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="./weather-icons-master/css/weather-icons.min.css" rel="stylesheet" type="text/css">
+    <link href="./simple-line-icons-master/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+    <link href="files/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="files/menu_cornerbox.css" rel="stylesheet" type="text/css">
+    <link href="files/waves.min.css" rel="stylesheet" type="text/css">
+    <link href="files/switchery.min.css" rel="stylesheet" type="text/css">
+    <link href="files/style.css" rel="stylesheet" type="text/css">
+    <link href="files/component.css" rel="stylesheet" type="text/css">
+    <link href="files/MetroJs.min.css" rel="stylesheet" type="text/css">
+    <link href="files/toastr.min.css" rel="stylesheet" type="text/css">
+    <link href="files/modern.min.css" rel="stylesheet" type="text/css">
+    <link href="files/green.css" class="theme-color" rel="stylesheet" type="text/css">
+    <link href="files/custom.css" rel="stylesheet" type="text/css">
+    <script src="js/apijs.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- Funções -->
+    <script>
+
+        //Page load
+        window.onload = function () {
+
+            //variaveis
+            iduser_global = queryString("id");
+            user_global = queryString("nom");
+            permissao_global = queryString("perm");
+            status_global = queryString("st");
+
+            //Define o nome do usuario
+            document.getElementById("nomeperfil").innerText = user_global;
+            document.getElementById("nomeperfil").innerText = "Leonam Correia Sousa";
+
+            document.getElementById("lbltotposvenda").innerText = "0";
+            document.getElementById("lbltotquente").innerText = "0";
+            document.getElementById("lbltotmorno").innerText = "0";
+            document.getElementById("lbltotfria").innerText = "0";
+            document.getElementById("lbltotPontos").innerHTML = "<b>Pontos</b>&emsp;" + 0;
+            
+
+        }
+
+        //String URL
+        function queryString(parameter) {  
+              var loc = location.search.substring(1, location.search.length);   
+              var param_value = false;   
+              var params = loc.split("&");   
+              for (i=0; i<params.length;i++) {   
+                  param_name = params[i].substring(0,params[i].indexOf('='));   
+                  if (param_name == parameter) {                                          
+                      param_value = params[i].substring(params[i].indexOf('=')+1)   
+                  }   
+              }   
+              if (param_value) {   
+                  return param_value;   
+              }   
+              else {   
+                  return undefined;   
+              }   
+        }
+
+        //Abre pagina
+        function open_page(pagina){
+            window.location = pagina + '?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + status_global;
+            //window.location = 'https://www.gatlink.com.br/appmercadopago/' + pagina + '?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + status_global;
+        }
+
+        //Resgates
+        function Resgates(svalor) {
+
+            switch (svalor) {
+                case 'posvenda':
+                    var vProgress = document.getElementById("progress_posvenda").style.width.slice(0, -1);
+                    var vtotProgress = document.getElementById("lbltotposvenda").innerText;
+                    var vtotPontos = document.getElementById("lbltotPontos").innerText.replace("Pontos","");
+                    
+                    vProgress++
+                    vtotProgress = parseInt(vtotProgress) + 4;
+                    vtotPontos = parseInt(vtotPontos) + 4;
+
+                    if (parseInt(vtotProgress) > 10) {
+                        document.getElementById("lbltotestrela").innerText = "1";
+                    }
+
+                    document.getElementById("progress_posvenda").style.width = vProgress + "%";
+                    document.getElementById("lbltotposvenda").innerText = vtotProgress;
+                    document.getElementById("lbltotPontos").innerHTML = "<b>Pontos</b>&emsp;" + vtotPontos;
+                    break;
+                case 'quente':
+                    var vProgress = document.getElementById("progress_quente").style.width.slice(0, -1);
+                    var vtotProgress = document.getElementById("lbltotquente").innerText;
+                    var vtotPontos = document.getElementById("lbltotPontos").innerText.replace("Pontos", "");
+
+                    vProgress++
+                    vtotProgress = parseInt(vtotProgress) + 3;
+                    vtotPontos = parseInt(vtotPontos) + 3;
+
+                    document.getElementById("progress_quente").style.width = vProgress + "%";
+                    document.getElementById("lbltotquente").innerText = vtotProgress;
+                    document.getElementById("lbltotPontos").innerHTML = "<b>Pontos</b>&emsp;" + vtotPontos;
+                    break;
+
+                case 'morno':
+                    var vProgress = document.getElementById("progress_morno").style.width.slice(0, -1);
+                    var vtotProgress = document.getElementById("lbltotmorno").innerText;
+                    var vtotPontos = document.getElementById("lbltotPontos").innerText.replace("Pontos", "");
+
+                    vProgress++
+                    vtotProgress = parseInt(vtotProgress) +2;
+                    vtotPontos = parseInt(vtotPontos) + 2;
+
+                    document.getElementById("progress_morno").style.width = vProgress + "%";
+                    document.getElementById("lbltotmorno").innerText = vtotProgress;
+                    document.getElementById("lbltotPontos").innerHTML = "<b>Pontos</b>&emsp;" + vtotPontos;
+                    break;
+
+                case 'fria':
+                    var vProgress = document.getElementById("progress_fria").style.width.slice(0, -1);
+                    var vtotProgress = document.getElementById("lbltotfria").innerText;
+                    var vtotPontos = document.getElementById("lbltotPontos").innerText.replace("Pontos", "");
+
+                    vProgress++
+                    vtotProgress = parseInt(vtotProgress) + 1;
+                    vtotPontos = parseInt(vtotPontos) + 1;
+
+                    document.getElementById("progress_fria").style.width = vProgress + "%";
+                    document.getElementById("lbltotfria").innerText = vtotProgress;
+                    document.getElementById("lbltotPontos").innerHTML = "<b>Pontos</b>&emsp;" + vtotPontos;
+                    break;
+
+                case 'tot':
+
+                    break;
+
+                case 'QR':
+                    var vProgress = document.getElementById("progress_qr").style.width.slice(0, -1);
+                    var vtotProgress = document.getElementById("lbltotqr").innerText;
+                    var vtotPontos = document.getElementById("lbltotPontos").innerText.replace("Pontos", "");
+
+                    vProgress++
+                    vtotProgress = parseInt(vtotProgress) + 1;
+                    vtotPontos = parseInt(vtotPontos) + 30;
+
+                    document.getElementById("progress_qr").style.width = vProgress + "%";
+                    document.getElementById("lbltotqr").innerText = vtotProgress;
+                    document.getElementById("lbltotPontos").innerHTML = "<b>Pontos</b>&emsp;" + vtotPontos;
+                    break;
+
+                case 'Point':
+                    var vProgress = document.getElementById("progress_point").style.width.slice(0, -1);
+                    var vtotProgress = document.getElementById("lbltotpoint").innerText;
+                    var vtotPontos = document.getElementById("lbltotPontos").innerText.replace("Pontos", "");
+
+                    vProgress++
+                    vtotProgress = parseInt(vtotProgress) + 1;
+                    vtotPontos = parseInt(vtotPontos) + 40;
+
+                    document.getElementById("progress_point").style.width = vProgress + "%";
+                    document.getElementById("lbltotpoint").innerText = vtotProgress;
+                    document.getElementById("lbltotPontos").innerHTML = "<b>Pontos</b>&emsp;" + vtotPontos;
+                    break;
+
+                case 'CARD':
+                    var vProgress = document.getElementById("progress_CARD").style.width.slice(0, -1);
+                    var vtotProgress = document.getElementById("lbltotCARD").innerText;
+                    var vtotPontos = document.getElementById("lbltotPontos").innerText.replace("Pontos", "");
+
+                    vProgress++
+                    vtotProgress = parseInt(vtotProgress) + 1;
+                    vtotPontos = parseInt(vtotPontos) + 10;
+
+                    document.getElementById("progress_CARD").style.width = vProgress + "%";
+                    document.getElementById("lbltotCARD").innerText = vtotProgress;
+                    document.getElementById("lbltotPontos").innerHTML = "<b>Pontos</b>&emsp;" + vtotPontos;
+                    break;
+            }
+
+
+        }
+
+    </script>
+
+    <!-- Estilo -->
+    <style>
+
+        /* DivTable.com */
+        .divTable{
+            display: table;
+            width: 100%;
+        }
+        .divTableRow {
+            display: table-row;
+        }
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+        }
+        .divTableCell, .divTableHead {
+            border: none;
+            display: table-cell;
+            padding: 3px 10px;
+        }
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+            font-weight: bold;
+        }
+        .divTableFoot {
+            background-color: #EEE;
+            display: table-footer-group;
+            font-weight: bold;
+        }
+        .divTableBody {
+            display: table-row-group;
+        }
+
+
+        #mapa { 
+            width: 100%;
+            height: 200px;
+            border: 2px solid #ccc;;
+            margin-bottom: 10px;
+        }
+
+    </style>
+
+
+</head>
+<body class="page-header-fixed  pace-done">
+
+    <!-- Barra de Progresso -->
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+	
+    <div class="overlay"></div>
+
+    <!-- BARRA DE MENU SUPERIOR --TOP -->
+    <main class="page-content content-wrap">
+
+		<!-- Navbar -->
+        <div class="navbar">
+            <div class="navbar-inner">
+
+                <div class="sidebar-pusher">
+                    <a href="javascript:void(0);" class="waves-effect waves-button waves-classic push-sidebar">
+                        <i class="fa fa-bars" style="color:#ffffff"></i>
+                    </a>
+                </div>
+
+                <!-- GAT LINK -->
+                <div class="logo-box">
+                    <a href="#" style="background-color:#DD2F2F" class="logo-text"><span style="color:#ffffff">GAT® Link</span></a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MENU ESQUERDA -  -->
+        <div class="page-sidebar sidebar">
+            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+                <div class="page-sidebar-inner slimscroll" style="overflow: hidden; width: auto; height: 100%;">
+
+                    <!-- CABECALHO MENU LATERAL -->                   
+                    <ul class="menu accordion-menu">
+
+                        <!-- PERFIL -->
+                        <li class="active"><a href="javascript:open_page('perfil.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-user"></span><p>Perfil</p></a></li>
+
+                        <!-- HOME -->
+                        <li ><a href="javascript:open_page('gatlink.html');" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
+
+                        <!-- LOGIN -->
+                        <li><a href="javascript:open_page('logingeo.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-sign-in"></span><p>Login</p></a></li>
+
+                        <!-- LOGOUT -->
+                        <li><a href="javascript:open_page('logoutgeo.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-sign-out"></span><p>Logout</p></a></li>
+                        
+                        <!-- CHECKIN -->
+                        <li><a href="javascript:open_page('checkin.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-map-marker"></span><p>Check-In</p></a></li>
+                        
+                        <!-- CHECKOUT -->
+                        <li><a href="cjavascript:open_page('heckout.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-external-link-square"></span><p>Check-Out</p></a></li>
+                        
+                        <!-- ROTAS -->
+                        <li><a href="javascript:open_page('rota.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-location-arrow"></span><p>Rotas</p></a></li>
+
+                        <!-- MAPS -->
+                        <li><a href="javascript:open_page('maps.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-globe"></span><p>Maps</p></a></li>
+                                                
+                        <!-- CLIENTES -->
+                        <li><a href="javascript:open_page('ger_clientes.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-users"></span><p>Clientes</p></a></li>
+
+                        <!-- VENDAS -->
+                        <li><a href="javascript:open_page('ger_vendas.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-credit-card"></span><p>Vendas</p></a></li>  
+
+                        <!-- PONTOS -->
+                        <li><a href="javascript:open_page('pontos.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-random"></span><p>Pontos</p></a></li>
+
+                        <!-- SAIR -->
+                        <li><a href="login.html" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-share"></span><p>Sair</p></a></li>
+                        
+                    </ul>
+
+                </div>
+				
+                <div class="slimScrollBar" style="background: rgb(204, 204, 204); width: 7px; position: absolute; top: 0px; opacity: 0.3; display: none; border-radius: 0px; z-index: 99; right: 0px; height: 1080px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 0px;"></div>
+            </div><!-- Page Sidebar Inner -->
+        </div>
+
+        <div class="page-inner" >
+
+            <!-- TITULO DA PAGINA -->
+            <div class="page-title" style="background-color:#ffffff">
+                <span style="color:#000000;font-size:27px;"><b>Perfil</b> </span>
+                <a data-toggle="modal" data-target="#exampleModal"><img src="Imagens/qaV.png" style="float:right;max-height:39px;max-width:45px" /></a>
+            </div>
+
+            <div id="alerta" class="alert alert-danger" style="display: none;"></div>
+
+            <br />
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h2 class="modal-title" id="exampleModalLabel">Pontuações</h2>
+                        </div>
+                        <br />
+                        <div class="modal-body" style="font-size:15px">
+                            <b>Visita Pós-Venda:</b> 4 pontos;
+                            <p></p>
+                            <b>Visita Quente:</b> 3 pontos;
+                            <p></p>
+                            <b>Visita Morna:</b> 2 pontos;
+                            <p></p>
+                            <b>Visita Fria:</b> 1 ponto;
+                            <p></p>
+                            <b>Total de 20 visitas:</b> 10 pontos;
+                            <p></p>
+                            <b>2 QR:</b> 30 pontos;
+                            <p></p>
+                            <b>1 Point:</b> 40 pontos;
+                            <p></p>
+                            <b>CARD:</b> 10 pontos.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" style="border-radius: 10px;width:100%; background-color:#94150F; height:55px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">FECHAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CORPO -->
+            <div id="main-wrapper" style="margin:11px">
+
+                <!-- BLOCOS GERENCIAS -->
+                <div class="panel-body"style="border-radius:10px; box-shadow: 0px 0px 1em #BBC0C8;background-color:white;padding:6px">
+
+                    <div class="col-lg-12" style="padding:1px">
+
+                        <h2 id="nomeperfil" class="text-center" style="font-weight:bold;">&nbsp;</h2>
+                        
+                        <br />
+
+                        <div class="panel-body" style="background-color:white;padding:5px;">
+
+                            <!-- PONTOS / ESTRELA -->
+                            <div class='panel-heading text-center' style='padding:18px 18px 10px 18px;height: 30%'>
+                                <span id="lbltotPontos" style="font-size:27px"></span>
+                                <p></p>
+                                <hr class="hr-text" style="margin:10px;"><span style="font-size:25px;color:burlywood" class="menu-icon glyphicon glyphicon-star"></span>&emsp;<span style="font-size:30px" id="lbltotestrela"></span>
+                            </div>
+
+                            <br />
+
+                            <!-- VISITAS POS VENDA -->
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>Visitas de Pós-Venda</span>
+                                        <p></p>
+                                        <div class="progress" style="border-radius:10px;height:10px; margin:0px;">
+                                            <div class="progress-bar" id="progress_posvenda" role="progressbar" style="width:0%;height:10px;border-radius:10px;background-color:#DD2F2F" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <hr class="hr-text" style="margin:10px">
+                                        <span class="menu-icon glyphicon glyphicon-ok"></span>&nbsp;<span id="lbltotposvenda"></span>
+                                        <p></p>
+                                        <button type="button" onclick="Resgates('posvenda');" style="border-radius: 10px;width:100%; background-color:#94150F; height:32px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">Resgatar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- VISITAS QUENTE -->
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>Visitas Quente</span>
+                                        <p></p>
+                                        <div class="progress" style="border-radius:10px;height:10px; margin:0px;">
+                                            <div class="progress-bar" id="progress_quente" role="progressbar" style="width: 0%;height:10px;border-radius:10px; " aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <hr class="hr-text" style="margin:10px">
+                                        <span class="menu-icon glyphicon glyphicon-ok"></span>&nbsp;<span id="lbltotquente"></span>
+                                        <p></p>
+                                        <button type="button" onclick="Resgates('quente');" style="border-radius: 10px;width:100%; background-color:#94150F; height:32px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">Resgatar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- VISITAS MORNO -->
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>Visitas Morna</span>
+                                        <p></p>
+                                        <div class="progress" style="border-radius:10px;height:10px; margin:0px;">
+                                            <div class="progress-bar" id="progress_morno" role="progressbar" style="width: 0%;height:10px;border-radius:10px; " aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <hr class="hr-text" style="margin:10px">
+                                        <span class="menu-icon glyphicon glyphicon-ok"></span>&nbsp;<span id="lbltotmorno"></span>
+                                        <p></p>
+                                        <button type="button" onclick="Resgates('morno');" style="border-radius: 10px;width:100%; background-color:#94150F; height:32px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">Resgatar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- VISITAS FRIA -->
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>Visitas Fria</span>
+                                        <p></p>
+                                        <div class="progress" style="border-radius:10px;height:10px; margin:0px;">
+                                            <div class="progress-bar" id="progress_fria" role="progressbar" style="width: 0%;height:10px;border-radius:10px; " aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <hr class="hr-text" style="margin:10px">
+                                        <span class="menu-icon glyphicon glyphicon-ok"></span>&nbsp;<span id="lbltotfria"></span>
+                                        <p></p>
+                                        <button type="button" onclick="Resgates('fria');" style="border-radius: 10px;width:100%; background-color:#94150F; height:32px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">Resgatar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- VISITAS TOTAL DIA -->
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>Visitas Totais/dia</span>
+                                        <p></p>
+                                        <div class="progress" style="border-radius:10px;height:10px; margin:0px;">
+                                            <div class="progress-bar" id="progress1" role="progressbar" style="width: 0%;height:10px;border-radius:10px; " aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <hr class="hr-text" style="margin:10px">
+                                        <span class="menu-icon glyphicon glyphicon-ok"></span>&nbsp;<span id="lbltot"></span>
+                                        <p></p>
+                                        <button type="button" onclick="" style="border-radius: 10px;width:100%; background-color:#94150F; height:32px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">Resgatar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- QR -->
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>2 Vendas QR</span>
+                                        <p></p>
+                                        <div class="progress" style="border-radius:10px;height:10px; margin:0px;">
+                                            <div class="progress-bar" id="progress_qr" role="progressbar" style="width: 0%;height:10px;border-radius:10px; " aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <hr class="hr-text" style="margin:10px">
+                                        <span class="menu-icon glyphicon glyphicon-ok"></span>&nbsp;<span id="lbltotqr"></span>
+                                        <p></p>
+                                        <button type="button" onclick="Resgates('QR');" style="border-radius: 10px;width:100%; background-color:#94150F; height:32px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">Resgatar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Point -->
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>Point</span>
+                                        <p></p>
+                                        <div class="progress" style="border-radius:10px;height:10px; margin:0px;">
+                                            <div class="progress-bar" id="progress_point" role="progressbar" style="width: 0%;height:10px;border-radius:10px; " aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <hr class="hr-text" style="margin:10px">
+                                        <span class="menu-icon glyphicon glyphicon-ok"></span>&nbsp;<span id="lbltotpoint"></span>
+                                        <p></p>
+                                        <button type="button" onclick="Resgates('Point');" style="border-radius: 10px;width:100%; background-color:#94150F; height:32px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">Resgatar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Point -->
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>Card</span>
+                                        <p></p>
+                                        <div class="progress" style="border-radius:10px;height:10px; margin:0px;">
+                                            <div class="progress-bar" id="progress_card" role="progressbar" style="width: 0%;height:10px;border-radius:10px; " aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <hr class="hr-text" style="margin:10px">
+                                        <span class="menu-icon glyphicon glyphicon-ok"></span>&nbsp;<span id="lbltotcard"></span>
+                                        <p></p>
+                                        <button type="button" onclick="Resgates('CARD');" style="border-radius: 10px;width:100%; background-color:#94150F; height:32px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">Resgatar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <h2 class="text-center"><strong>&nbsp;Metas Diárias</strong></h2>
+                            <br />  
+
+                        </div>
+                </div>
+                <p></p>
+                <!-- VOLTAR -->
+                <div>
+                    <button type="button" id="cmdCancelar" onclick="open_page('gatlink.html');" style="border-radius: 10px;width:100%; background-color:#94150F; height:55px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">VOLTAR</button>
+                </div>
+
+            </div>
+
+                <!-- RODAPE -->
+                <div class="page-footer">
+                    <p class="no-s">2021 © STT GAT® Link -  for World Class Solutions</p>
+                </div>
+
+            </div>
+
+		</div>
+      
+    </main>
+
+    <!-- Javascripts -->
+    <script src="files/jquery-2.1.4.min.js"></script>
+    <script src="files/jquery-ui.min.js"></script>
+    <script src="files/pace.min.js"></script>
+    <script src="files/jquery.blockui.js"></script>
+    <script src="files/bootstrap.min.js"></script>
+    <script src="files/jquery.slimscroll.min.js"></script>
+    <script src="files/switchery.min.js"></script>
+    <script src="files/jquery.uniform.min.js"></script>
+    <script src="files/classie.js"></script>
+    <script src="files/waves.min.js"></script>
+    <script src="files/main2.js"></script>
+    <script src="files/jquery.waypoints.min.js"></script>
+    <script src="files/jquery.counterup.min.js"></script>
+    <script src="files/toastr.min.js"></script>
+    <script src="files/jquery.flot.min.js"></script>
+    <script src="files/jquery.flot.time.min.js"></script>
+    <script src="files/jquery.flot.symbol.min.js"></script>
+    <script src="files/jquery.flot.resize.min.js"></script>
+    <script src="files/jquery.flot.tooltip.min.js"></script>
+    <script src="files/curvedLines.js"></script>
+    <script src="files/MetroJs.min.js"></script>
+    <script src="files/modern.js"></script>
+
+    <div id="flotTip" style="display: none; position: absolute;"></div>
+
+</body>
+</html>

@@ -1,0 +1,1599 @@
+﻿<!DOCTYPE html>
+<html style="" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>:: STT - GAT® Link ::</title>
+
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="description" content="STT GAT Link">
+    <meta name="keywords" content="admin,dashboard,stt">
+    <meta name="author" content="leonamcorreia">
+
+    <link href="files/pace-theme-flash.css" rel="stylesheet">
+    <link href="files/uniform.default.min.css" rel="stylesheet">
+    <link href="files/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="./weather-icons-master/css/weather-icons.min.css" rel="stylesheet" type="text/css">
+    <link href="./simple-line-icons-master/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+    <link href="files/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="files/menu_cornerbox.css" rel="stylesheet" type="text/css">
+    <link href="files/waves.min.css" rel="stylesheet" type="text/css">
+    <link href="files/switchery.min.css" rel="stylesheet" type="text/css">
+    <link href="files/style.css" rel="stylesheet" type="text/css">
+    <link href="files/component.css" rel="stylesheet" type="text/css">
+    <link href="files/MetroJs.min.css" rel="stylesheet" type="text/css">
+    <link href="files/toastr.min.css" rel="stylesheet" type="text/css">
+    <link href="files/modern.min.css" rel="stylesheet" type="text/css">
+    <link href="files/green.css" class="theme-color" rel="stylesheet" type="text/css">
+    <link href="files/custom.css" rel="stylesheet" type="text/css">
+
+    <script src="js/apijs.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- Estilo -->
+    <style>
+        .modal {
+            text-align: center;
+        }
+
+        @media screen and (min-width: 768px) {
+            .modal:before {
+                display: inline-block;
+                vertical-align: middle;
+                content: " ";
+                height: 100%;
+            }
+        }
+
+        .modal-dialog {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
+        /* DivTable.com */
+        .divTable{
+            display: table;
+            width: 100%;
+        }
+        .divTableRow {
+            display: table-row;
+        }
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+        }
+        .divTableCell, .divTableHead {
+            border: none;
+            display: table-cell;
+            padding: 3px 10px;
+        }
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+            font-weight: bold;
+        }
+        .divTableFoot {
+            background-color: #EEE;
+            display: table-footer-group;
+            font-weight: bold;
+        }
+        .divTableBody {
+            display: table-row-group;
+        }
+
+
+        #mapa { 
+            width: 100%;
+            height: 200px;
+            border: 2px solid #ccc;;
+            margin-bottom: 10px;
+        }
+
+    </style>
+
+
+</head>
+<body class="page-header-fixed  pace-done">
+
+    <!-- Barra de Progresso -->
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+	
+    <div class="overlay"></div>
+
+    <!-- CORPO -->
+    <main class="page-content content-wrap">
+
+		<!-- Navbar -->
+        <div class="navbar">
+            <div class="navbar-inner">
+
+                <div class="sidebar-pusher">
+                    <a href="javascript:void(0);" class="waves-effect waves-button waves-classic push-sidebar">
+                        <i class="fa fa-bars" style="color:#ffffff"></i>
+                    </a>
+                </div>
+
+                <!-- GAT LINK -->
+                <div class="logo-box">
+                    <a href="#" style="background-color:#DD2F2F" class="logo-text"><span style="color:#ffffff">GAT® Link</span></a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MENU ESQUERDA -  -->
+        <div class="page-sidebar sidebar">
+            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+                <div class="page-sidebar-inner slimscroll" style="overflow: hidden; width: auto; height: 100%;">
+
+                    <!-- CABECALHO MENU LATERAL -->                   
+                    <ul class="menu accordion-menu">
+
+                        <!-- HOME -->
+                        <li ><a href="javascript:open_page('gatlink.html');" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
+
+                        <!-- LOGIN -->
+                        <li><a href="javascript:open_page('logingeo.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-sign-in"></span><p>Login</p></a></li>
+
+                        <!-- LOGOUT -->
+                        <li><a href="javascript:open_page('logoutgeo.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-sign-out"></span><p>Logout</p></a></li>
+                        
+                        <!-- CHECKIN -->
+                        <li><a href="javascript:open_page('checkin.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-map-marker"></span><p>Check-In</p></a></li>
+                        
+                        <!-- CHECKOUT -->
+                        <li><a href="cjavascript:open_page('heckout.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-external-link-square"></span><p>Check-Out</p></a></li>
+                        
+                        <!-- ROTAS -->
+                        <li><a href="javascript:open_page('rota.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-location-arrow"></span><p>Rotas</p></a></li>
+
+                        <!-- MAPS -->
+                        <li><a href="javascript:open_page('maps.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-globe"></span><p>Maps</p></a></li>
+                                                
+                        <!-- CLIENTES -->
+                        <li><a href="javascript:open_page('ger_clientes.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-users"></span><p>Clientes</p></a></li>
+
+                        <!-- VENDAS -->
+                        <li class="active"><a href="javascript:open_page('ger_vendas.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-credit-card"></span><p>Vendas</p></a></li>  
+
+                        <!-- PONTOS -->
+                        <li><a href="javascript:open_page('pontos.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-random"></span><p>Pontos</p></a></li>
+
+                        <!-- SAIR -->
+                        <li><a href="login.html" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-share"></span><p>Sair</p></a></li>
+                        
+                    </ul>
+
+                </div>
+				
+                <div class="slimScrollBar" style="background: rgb(204, 204, 204); width: 7px; position: absolute; top: 0px; opacity: 0.3; display: none; border-radius: 0px; z-index: 99; right: 0px; height: 1080px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 0px;"></div>
+            </div><!-- Page Sidebar Inner -->
+        </div>
+
+        <!-- CONTEUDO-->
+        <div class="page-inner">
+
+            <!-- Modal -->
+            <div class="modal fade fa-box" id="myModal" tabindex="-1" style="border-radius:10px" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div>
+                        <div class="modal-body">
+                            <img src="files/loading_blue.gif" alt="carregando...">
+                            <figcaption class="loading-text"></figcaption>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal FAQ -->
+            <div class="modal fade" id="Modalvendas_cliente" tabindex="-1" role="dialog" aria-labelledby="Modalvendas_clienteLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h2 class="modal-title" id="Modalvendas_clienteLabel">Questões Gerais</h2>
+                        </div>
+                        <br />
+                        <div class="modal-body" style="font-size:15px">
+
+                            <!--FAQS CLIENTES -->
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span><b>1.</b>    Como cadastrar um cliente?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro" class="collapse">
+                                        <div class="panel-body">
+                                            1 - Necessário selecionar um Tipo do Cliente;<p></p>
+                                            2 - Ao carregar os campos de acordo o tipo do cliente, preencher os dados!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>2.    Para que serve o cadastro do cliente?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro1" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro1" class="collapse">
+                                        <div class="panel-body">
+                                            Serve para a inserção de Venda, sem um cliente cadastrado, não é possível realizar e finalizar a Venda!;<p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>3.    Existe regras para preenchimento?&nbsp; </span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro2" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro2" class="collapse">
+                                        <div class="panel-body">
+                                            1 - Todos os campos são obrigatórios;<p></p>
+                                            2 - O campo de <strong>Endereço</strong> é um campo importante para preenchimento correto!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>4.    O que deve conter no campo de Endereço?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro3" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro3" class="collapse">
+                                        <div class="panel-body">
+                                            Importante o preenchimento conforme alerta em tela, com o endereço com número e separados por vírgula (,) e um traço (-) UF (estado)<p></p>
+                                            <strong>Exemplo:</strong>Rua Joaquim Teixeira, 99 - RJ.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--FAQS VENDAS -->
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span><b>5.</b>    Como cadastrar uma venda?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro5" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro5" class="collapse">
+                                        <div class="panel-body">
+                                            1 - Necessário selecionar um Cliente já cadastrado;<p></p>
+                                            2 - Necessário selecionar um Tipo de Venda;<p></p>
+                                            3 - Necessário selecionar um Tipo de Check;<p></p>
+                                            2 - Ao carregar os campos de acordo com cada tipo, preencher os dados!<p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>6.    Para que serve o cadastro da venda?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro6" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro6" class="collapse">
+                                        <div class="panel-body">
+                                            Serve para a inserção de um endereço em Rotas, sem um cliente cadastrado, não é possível realizar e finalizar a Venda!;<p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>7.    Existe regras para preenchimento?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro7" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro7" class="collapse">
+                                        <div class="panel-body">
+                                            Todos os campos são obrigatórios;<p></p>
+                                            Campos com foto tem um limite de 3 fotos<p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                     
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" style="border-radius: 10px;width:100%; background-color:#94150F; height:55px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">FECHAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TITULO DA PAGINA -->
+            <div class="page-title" style="background-color:#ffffff">
+                <span style="color:#000000;font-size:27px;"><b>Dados</b> </span>
+                <a data-toggle="modal" data-target="#Modalvendas_cliente"><img src="Imagens/qaV.png" style="float:right;max-height:39px;max-width:45px" /></a>
+            </div>
+
+            <div id="alerta" class="alert alert-danger" style="display: none;"></div>
+
+            <!-- FORMULARIO -->
+            <div id="main-wrapper" style="margin:11px">
+                <div class="panel-body"style="border-radius:10px; box-shadow: 0px 0px 1em #BBC0C8;background-color:white;padding:6px">
+
+                    <div class="col-lg-12" style="padding:1px">
+
+                        <input type="hidden" id="img1" name="img1" />
+                        <input type="hidden" id="img2" name="img2" />
+                        <input type="hidden" id="img3" name="img3" />
+
+                        <!--Campos-->
+                        <div class="panel-body" style="background-color:white;padding:10px 5px 5px 5px;">
+
+                            <!-- Tipo cliente -->
+                            <div class="form-group">
+                                <label style="font-size:16px;color:#1C3570"><b>Tipo cliente:<b style="color:red"> *</b></b></label>
+
+                                <select id="cmbtipocliente" onchange="mostra_oculta(this.value)" style="border-radius: 10px;width:100%; background-color:#F5FAFF; color:#30A7FE; height:55px; font-size:14px; border-color:#30A7FE;" class="text-center btn btn-success btn-block">
+                                    <option value="" selected>Selecione:</option>
+                                    <option value="clientepointqr">Point / QR Code </option>
+                                </select>
+                            </div>
+
+                            <!-- Campos do Cliente Point e QR Code -->
+                            <div id="clientepointqr" style="display:none;padding:7px">
+                                <h2 style="margin-top:5px;color:#1C3570">Dados Point / QR</h2>
+                                <hr class="hr-text" style="margin:10px;">
+                                <br />
+                                <!-- Tipo Segmento -->
+                                <div class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Tipo Segmento:<b style="color:red"> *</b></b></label>
+
+                                    <select id="cmbtiposegmento" style="border-radius: 10px;width:100%; background-color:#F5FAFF; color:#30A7FE; height:55px; font-size:14px; border-color:#30A7FE" class="text-center btn btn-success btn-block">
+                                        <option value="" disabled selected>Selecione:</option>
+                                        <option value="Academias">Academias </option>
+                                        <option value="Acougue_e_Peixarias">Açougue e Peixarias</option>
+                                        <option value="Acougues_Peixarias">Açougues / Peixarias</option>
+                                        <option value="Alimentos_e_Bebidas">Alimentos & Bebidas</option>
+                                        <option value="Alimentos_Bebidas">Alimentos Bebidas</option>
+                                        <option value="Bares_e_Cafeterias">Bares e Cafeterias</option>
+                                        <option value="Casa_e_Decoração">Casa & Decoração</option>
+                                        <option value="Casa_Decoracao">Casa Decoracao</option>
+                                        <option value="Clinicas_Veterinarias">Clinicas Veterinrias</option>
+                                        <option value="Delivery">Delivery</option>
+                                        <option value="Eletronicos">Eletrônicos</option>
+                                        <option value="Farmacias">Farmacias</option>
+                                        <option value="Fast_Food">Fast Food</option>
+                                        <option value="Ferragens">Ferragens</option>
+                                        <option value="Fruteiras">Fruteiras</option>
+                                        <option value="Lavanderias">Lavanderias</option>
+                                        <option value="Livrarias">Livrarias</option>
+                                        <option value="Medicos_e_Dentistas">Médicos e Dentistas</option>
+                                        <option value="Motocicletas">Motocicletas</option>
+                                        <option value="Oficinas_Mecânicas">Oficinas Mecânicas</option>
+                                        <option value="Oftalmologistas">Oftalmologistas</option>
+                                        <option value="Outros">Outros</option>
+                                        <option value="Padarias">Padarias</option>
+                                        <option value="Petshops">Petshops</option>
+                                        <option value="Postos_de_Gasolina">Postos de Gasolina</option>
+                                        <option value="Restaurante">Restaurante</option>
+                                        <option value="Roupas_Acessorios">Roupas Acessórios</option>
+                                        <option value="Roupas_e_Acessorios">Roupas e Acessórios </option>
+                                        <option value="Saloes_de_Beleza">Salões de beleza</option>
+                                        <option value="Sorveterias">Sorveterias</option>
+                                        <option value="Supermercados">Supermercados</option>
+                                        <option value="Vinhos">Vinhos</option>
+                                    </select>
+                                </div>
+
+                                <!-- Nome -->
+                                <div class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Nome:<b style="color:red"> *</b></b></label>
+
+                                    <input type="text" id="txtnome" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF; border-color:#30A7FE; color:#30A7FE">
+                                </div>
+
+                                <!-- CNPJ -->
+                                <div class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>CPF/CNPJ:<b style="color:red"> *</b></b></label>
+
+                                    <input type="text" id="txtcnpj" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF; border-color:#30A7FE; color:#30A7FE">
+                                </div>
+
+                                <!-- Endereço -->
+                                <div class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Endereço:<b style="color:red"> *</b></b></label>
+
+                                    <input type="text" id="txtendereco" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF; border-color:#30A7FE; color:#30A7FE;" placeholder="Rua Teste, 00 - SP">
+                                </div>
+
+                                <!-- Decisor -->
+                                <div class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Decisor:<b style="color:red"> *</b></b></label>
+
+                                    <input type="text" id="txtnomedecisor" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF; border-color:#30A7FE; color:#30A7FE">
+                                </div>
+
+                                <!-- Contato -->
+                                <div class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Contato:<b style="color:red"> *</b></b></label>
+
+                                    <input type="text" id="txtcontato" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF; border-color:#30A7FE; color:#30A7FE">
+                                </div>
+
+                            </div>
+
+                            <!-- Tipo venda -->
+                            <div class="form-group">
+                                <label style="font-size:16px;color:#1C3570"><b>Tipo da Venda:<b style="color:red"> *</b></b></label>
+
+                                <select id="cmbtipovenda" onchange="mostra_oculta(this.value)" style="border-radius: 10px;width:100%; background-color:#F5FAFF; color:#129ACB; height:55px; font-size:14px; border-color:#129ACB" class="text-center btn btn-success btn-block">
+                                    <option value="" selected>Selecione:</option>
+                                    <option value="clientepoint">Point</option>
+                                    <option value="clienteqr">QR</option>
+                                </select>
+                            </div>
+
+                            <!-- Campos do Cliente Point -->
+                            <div id="clientepoint" style="display:none;padding:7px;background-color:white;">                                
+                                <h2 style="margin-top:5px;color:#1C3570">Dados Point</h2>
+                                <hr class="hr-text" style="margin:10px;">
+                                <br />
+
+                                <!-- Tipo de maquina -->
+                                <div class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Tipo de Máquina:<b style="color:red"> *</b></b></label>
+
+                                    <select id="cmbtipomaquina" style="border-radius: 10px;width:100%; background-color:#F5FAFF; color:#129ACB; height:55px; font-size:14px; border-color:#129ACB" class="text-center btn btn-success btn-block">
+                                        <option value="" disabled selected>Selecione:</option>
+                                        <option value="SMART">SMART</option>
+                                        <option value="PRO">PRO</option>
+                                    </select>
+                                </div>
+
+                                <!-- Numero de controle -->
+                                <div class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>S/N Número de Série:<b style="color:red"> *</b></b></label>
+
+                                    <input type="text" id="txtnumcontrole" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF; border-color:#129ACB;color:#129ACB">
+                                </div>
+
+                                <!-- Forma de pagamento -->
+                                <div class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Forma de Pagamento:<b style="color:red"> *</b></b></label>
+
+                                    <select id="cmbformpagamento" style="border-radius: 10px;width:100%; background-color:#F5FAFF; color:#129ACB; height:55px; font-size:14px; border-color:#129ACB" class="text-center btn btn-success btn-block">
+                                        <option value="" disabled selected>Selecione:</option>
+                                        <option value="Credito">Crédito</option>
+                                        <option value="Debito">Débito</option>
+                                        <option value="Link_de_Pagamento">Link de Pagamento</option>
+                                        <option value="QR">QR</option>
+                                    </select>
+                                </div>
+
+                                <!-- Tipo de Taxa -->
+                                <div class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Faturamento:<b style="color:red"> *</b></b></label>
+
+                                    <select id="cmbfaturamento" onchange="AlertFat(this.value)" style="border-radius: 10px;width:100%; background-color:#F5FAFF; color:#129ACB; height:55px; font-size:14px; border-color:#129ACB" class="text-center btn btn-success btn-block">
+                                        <option value="" disabled selected>Selecione:</option>
+                                        <option value="10_15">10/15K</option>
+                                        <option value="15_20">15/20K</option>
+                                        <option value="20_30">20/30K</option>
+                                        <option value="30">>30K</option>
+                                    </select>
+                                </div>
+
+                                <div id="alerta_taxa" class="alert alert-info" style="display: none; border-radius:10px;"></div>
+                                
+                            </div>
+
+                            <!-- Campos do Cliente QR -->
+                            <div id="clienteqr" style="display:none;padding:7px; background-color:white;">
+                                <h2 style="margin-top:5px;color:#1C3570">Dados QR</h2>
+                                <hr class="hr-text" style="margin:10px;">
+                                <br />
+
+                                <!-- Status venda -->
+                                <div class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Status da Venda:<b style="color:red"> *</b></b></label>
+
+                                    <select id="cmbstatusvenda" style="border-radius: 10px;width:100%; background-color:#F5FAFF; color:#129ACB; height:55px; font-size:14px; border-color:#129ACB" class="text-center btn btn-success btn-block">
+                                        <option value="" disabled selected>Selecione:</option>
+                                        <option value="1">Quente</option>
+                                        <option value="2">Fria</option>
+                                        <option value="3">Sim</option>
+                                        <option value="4">Não</option>
+                                    </select>
+                                </div>
+
+                                <!-- Cadastro do pix -->
+                                <div class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Cadastro do Pix?<b style="color:red"> *</b></b></label>
+
+                                    <select id="cmbcadpix" style="border-radius: 10px;width:100%; background-color:#F5FAFF; color:#129ACB; height:55px; font-size:14px; border-color:#129ACB" class="text-center btn btn-success btn-block">
+                                        <option value="" disabled selected>Selecione:</option>
+                                        <option value="Sim">Sim</option>
+                                        <option value="Nao">Não</option>
+                                    </select>
+                                </div>
+
+                                <!-- cliente já possui -->
+                                <div class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Cliente já possui conta Mercado Pago?<b style="color:red"> *</b></b></label>
+
+                                    <select id="cmbpossuiconta" style="border-radius: 10px;width:100%; background-color:#F5FAFF; color:#129ACB; height:55px; font-size:14px; border-color:#129ACB" class="text-center btn btn-success btn-block">
+                                        <option value="" disabled selected>Selecione:</option>
+                                        <option value="Sim">Sim</option>
+                                        <option value="Nao">Não</option>
+                                    </select>
+                                </div>
+
+                                <!-- E-mail -->
+                                <div class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>E-mail:<b style="color:red"> *</b></b></label>
+
+                                    <input type="text" id="txtemail_qr" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF;color:#129ACB;border-color:#129ACB">
+                                </div>
+
+                            </div>
+       
+                            <p></p>
+
+                            <!-- Tipo de check -->
+                            <div class="form-group">
+                                <label style="font-size:16px;color:#1C3570"><b>Tipo de Check:<b style="color:red"> *</b></b></label>
+
+                                <select id="cmbcheck" onchange="mostra_oculta_check(this.value)" style="border-radius: 10px;width:100%; background-color:#F5FAFF; color:#2755B7; height:55px; font-size:14px; border-color:#2755B7" class="text-center btn btn-success btn-block">
+                                    <option value="" selected>Selecione:</option>
+                                    <option value="1">Ativação QR</option>
+                                    <option value="2">Negociação Fria</option>
+                                    <option value="3">Negociação Morna</option>
+                                    <option value="4">Negociação Quente</option>
+                                    <option value="5">Pós Venda</option>
+                                    <option value="6">Troca de Máquina</option>
+                                    <option value="7">Vendido</option>
+                                </select>
+                            </div>
+
+                            <!-- Campos do check -->
+                            <div id="check" style="display:none; background-color:white;padding:7px">
+                                <h2 style="margin-top:5px;color:#1C3570">Dados Check</h2>
+                                <hr class="hr-text" style="margin:10px;">
+                                <br />
+
+                                <!-- TPV -->
+                                <div id="div_tpv" class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>TPV Prometido:<b style="color:red"> *</b></b></label>
+                                    <input type="text" id="txttpv" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF;color:#2755B7;border-color:#2755B7;">
+                                </div>
+
+                                <!-- Nome Responsável -->
+                                <div id="div_resp" class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Nome Responsável:<b style="color:red"> *</b></b></label>
+                                    <input type="text" id="txtnomeresp" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF;color:#2755B7;border-color:#2755B7;">
+                                </div>
+
+                                <!-- Telefone Responsável -->
+                                <div id="div_telresp" class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Telefone Responsável:<b style="color:red"> *</b></b></label>
+                                    <input type="text" id="txttelefoneresp" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF;color:#2755B7;border-color:#2755B7;">
+                                </div>
+
+                                <!-- E=mail mercado pago -->
+                                <div id="div_email" class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>E-mail Mercado Pago:<b style="color:red"> *</b></b></label>
+
+                                    <input type="text" id="txtemailmercado" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF;color:#2755B7;border-color:#2755B7;">
+                                </div>
+
+                                <!-- Número de Operação 1 -->
+                                <div id="div_op1" class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Número de Operação 1:<b style="color:red"> *</b></b></label>
+
+                                    <input type="text" id="txtnumop1" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF;color:#2755B7;border-color:#2755B7;">
+                                </div>
+
+                                <!-- Número de Operação 2 -->
+                                <div id="div_op2" class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Número de Operação 2:<b style="color:red"> *</b></b></label>
+
+                                    <input type="text" id="txtnumop2" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF;color:#2755B7;border-color:#2755B7;">
+                                </div>
+
+                                <!-- Número de Operação 3 -->
+                                <div id="div_op3" class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Número de Operação 3:<b style="color:red"> *</b></b></label>
+
+                                    <input type="text" id="txtnumop3" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF;color:#2755B7;border-color:#2755B7;">
+                                </div>
+
+                                <!-- Número do Card -->
+                                <div id="div_numcard" class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Número do Card:<b style="color:red"> *</b></b></label>
+
+                                    <input type="text" id="txtnumcard" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF;color:#2755B7;border-color:#2755B7;">
+                                </div>
+
+                                <!-- Chip Anterior -->
+                                <div id="div_chipant" class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Chip Anterior:<b style="color:red"> *</b></b></label>
+
+                                    <input type="text" id="txtchipanterior" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF;color:#2755B7;border-color:#2755B7;">
+                                </div>
+
+                                <!-- Chip Atual -->
+                                <div id="div_chipatual" class="form-group">
+                                    <label style="font-size:16px;color:#1C3570"><b>Chip Atual:<b style="color:red"> *</b></b></label>
+
+                                    <input type="text" id="txtchipatual" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#F5FAFF;color:#2755B7;border-color:#2755B7;">
+                                </div>
+                            </div>
+
+                            <p></p>
+
+                            <!-- Observacao -->
+                            <div class="form-group">
+                                <label style="font-size:16px;color:#1C3570"><b>Observação:<b style="color:red"> *</b></b></label>
+                                <textarea id="txtobs" class="form-control" style="border-radius: 10px;width:100%; height:100px; background-color:#ffffff; resize:none"></textarea>
+                            </div>
+
+                            <br />
+
+                            <!-- REGISTRAR -->
+                            <div>
+                                <button type="button" id="btnacao" onclick="Cadastro_Venda_Cliente();" style="border-radius: 10px;width:100%; background-color:#94150F; height:55px; font-size:14px" class="text-center btn btn-success btn-block">REGISTRAR</button>
+                            </div>
+
+                            <p></p>
+
+                            <!-- VOLTAR -->
+                            <div>
+                                <button type="button" id="cmdCancelar" onclick="open_page('ger_vendas.html');" style="border-radius: 10px;width:100%; background-color:#94150F; height:55px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">VOLTAR</button>
+                            </div>
+
+                            <p></p>
+
+                        </div> 
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- RODAPE -->
+            <div class="page-footer">
+                <p class="no-s">2023 © STT GAT® Link -  for World Class Solutions</p>
+            </div>
+
+        </div>
+		
+    </main>
+
+    <!-- Javascripts -->
+    <script src="files/jquery-2.1.4.min.js"></script>
+    <script src="files/jquery-ui.min.js"></script>
+    <script src="files/pace.min.js"></script>
+    <script src="files/jquery.blockui.js"></script>
+    <script src="files/bootstrap.min.js"></script>
+    <script src="files/jquery.slimscroll.min.js"></script>
+    <script src="files/switchery.min.js"></script>
+    <script src="files/jquery.uniform.min.js"></script>
+    <script src="files/classie.js"></script>
+    <script src="files/waves.min.js"></script>
+    <script src="files/main2.js"></script>
+    <script src="files/jquery.waypoints.min.js"></script>
+    <script src="files/jquery.counterup.min.js"></script>
+    <script src="files/toastr.min.js"></script>
+    <script src="files/jquery.flot.min.js"></script>
+    <script src="files/jquery.flot.time.min.js"></script>
+    <script src="files/jquery.flot.symbol.min.js"></script>
+    <script src="files/jquery.flot.resize.min.js"></script>
+    <script src="files/jquery.flot.tooltip.min.js"></script>
+    <script src="files/curvedLines.js"></script>
+    <script src="files/MetroJs.min.js"></script>
+    <script src="files/modern.js"></script>
+
+    <!-- Funções -->
+    <script>
+
+        //Page load
+        window.onload = function () {
+
+            //variaveis
+            iduser_global = queryString("id");
+            user_global = queryString("nom");
+            idvenda_global = queryString("idvenda");
+            tipovenda = queryString("tpv");
+            permissao_global = queryString("perm");
+            status_global = queryString("st");
+
+            //verifica o parametro
+            if (idvenda_global != "") {
+
+                //formata data
+                var data = new Date();
+                var dia = String(data.getDate()).padStart(2, '0');
+                var mes = String(data.getMonth() + 1).padStart(2, '0');
+                var ano = data.getFullYear();
+                var dataatual = ano + "-" + mes + "-" + dia;
+
+                //consulta a listagem
+                //var sret = CarregaVendas('', idvenda_global, '', '', dataatual, dataatual, '');
+
+                //verifica o tipo da venda
+                if (tipovenda == "Point") {
+
+                    //verifica retorno
+                    if (sret == '') {
+                        document.getElementById("alerta").style = "display: visible;";
+                        document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Executar ação";
+                        return;
+                    }
+                    else {
+
+                        var obj_json = JSON.parse(sret);
+
+                        //carrega os dados
+                        document.getElementById("cmbcliente").value = obj_json[0].idcodcliente;
+                        document.getElementById("cmbtipovenda").value = "clientepoint";
+                        mostra_oculta("clientepoint");
+                        document.getElementById("cmbtipomaquina").value = obj_json[0].TipoMaquina_Point;
+                        document.getElementById("txtnumcontrole").value = obj_json[0].NumeroControle_Point;
+                        document.getElementById("cmbformpagamento").value = obj_json[0].FormaPagamento_Point;
+                        document.getElementById("cmbcheck").value = obj_json[0].IdCodTipoCheckVenda;
+                        mostra_oculta_check(obj_json[0].IdCodTipoCheckVenda);
+                        document.getElementById("txttpv").value = obj_json[0].TPV_Prometido;
+                        document.getElementById("txtnomeresp").value = obj_json[0].Nome_Responsavel;
+                        document.getElementById("txttelefoneresp").value = obj_json[0].Telefone_Responsavel;
+                        document.getElementById("txtemailmercado").value = obj_json[0].Email_MercadoPago;
+                        document.getElementById("txtnumop1").value = obj_json[0].Numero_Operacao1;
+                        document.getElementById("txtnumop2").value = obj_json[0].Numero_Operacao2;
+                        document.getElementById("txtnumop3").value = obj_json[0].Numero_Operacao3;
+                        document.getElementById("txtnumcard").value = obj_json[0].Numero_Card;
+                        document.getElementById("txtchipanterior").value = obj_json[0].Chip_Anterior;
+                        document.getElementById("txtchipatual").value = obj_json[0].Chip_Atual;
+                        document.getElementById("txtobs").value = obj_json[0].Observacao;
+
+                        
+                        //document.getElementById("div_foto").style.display = "none";
+                    }
+
+                }
+
+                //Verifica o tipo da venda
+                if (tipovenda == "QR") {
+
+                    //verifica retorno
+                    if (sret == '') {
+                        document.getElementById("alerta").style = "display: visible;";
+                        document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Executar ação";
+                    }
+                    else {
+
+                        var obj_json = JSON.parse(sret);
+
+                        //carrega os dados
+                        document.getElementById("cmbcliente").value = obj_json[0].idcodcliente;
+                        document.getElementById("cmbtipovenda").value = "clienteqr";
+                        mostra_oculta("clienteqr");
+                        document.getElementById("cmbstatusvenda").value = obj_json[0].IdCodStatusVenda_QR;
+                        document.getElementById("cmbcadpix").value = obj_json[0].CadatroPix_QR;
+                        document.getElementById("cmbpossuiconta").value = obj_json[0].PossuiConta_QR;
+                        document.getElementById("txtemail_qr").value = obj_json[0].Email_QR;
+                        document.getElementById("cmbcheck").value = obj_json[0].IdCodTipoCheckVenda;
+                        mostra_oculta_check(obj_json[0].IdCodTipoCheckVenda);
+                        document.getElementById("txttpv").value = obj_json[0].TPV_Prometido;
+                        document.getElementById("txtnomeresp").value = obj_json[0].Nome_Responsavel;
+                        document.getElementById("txttelefoneresp").value = obj_json[0].Telefone_Responsavel;
+                        document.getElementById("txtemailmercado").value = obj_json[0].Email_MercadoPago;
+                        document.getElementById("txtnumop1").value = obj_json[0].Numero_Operacao1;
+                        document.getElementById("txtnumop2").value = obj_json[0].Numero_Operacao2;
+                        document.getElementById("txtnumop3").value = obj_json[0].Numero_Operacao3;
+                        document.getElementById("txtnumcard").value = obj_json[0].Numero_Card;
+                        document.getElementById("txtchipanterior").value = obj_json[0].Chip_Anterior;
+                        document.getElementById("txtchipatual").value = obj_json[0].Chip_Atual;
+                        document.getElementById("txtobs").value = obj_json[0].Observacao;
+                    }
+                }
+
+            }
+
+        }
+
+        //String URL
+        function queryString(parameter) {
+              var loc = location.search.substring(1, location.search.length);
+              var param_value = false;
+              var params = loc.split("&");
+              for (i=0; i<params.length;i++) {
+                  param_name = params[i].substring(0,params[i].indexOf('='));
+                  if (param_name == parameter) {
+                      param_value = params[i].substring(params[i].indexOf('=')+1)
+                  }
+              }
+              if (param_value) {
+                  return param_value;
+              }
+              else {
+                  return undefined;
+              }
+        }
+
+        //Abre pagina
+        function open_page(pagina) {
+
+            //Icone de carregamento
+            $("#myModal").modal({
+                show: true
+            });
+
+            window.location = pagina + '?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + status_global;
+            //window.location = 'https://www.gatlink.com.br/appmercadopago/' + pagina + '?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + status_global;
+        }
+
+        //Ações
+        function Acao() {
+
+            //registra o ping
+            var sret = registro_tempo(iduser_global,'3',document.getElementById("h_lat").value,document.getElementById("h_lng").value,'',document.getElementById("endereco").innerText.replace(';',''));
+
+            //valida o retorno
+            if  (sret==''){
+                document.getElementById("alerta").style="display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Executar ação";
+                window.scrollTo(0, 0);
+                return;
+            }
+            else{
+
+                var arrayOfStrings = sret.split(';');
+
+                //Verifica retorno
+                if (arrayOfStrings[0]=="OK"){
+                    document.getElementById("alerta").style="visibility: visible;";
+                    document.getElementById("alerta").className="alert alert-success";
+                    document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-check-circle-o' aria-hidden='true'></i>&nbsp;Ação Realizada com Sucesso!</strong>";
+                    $('#myModal').modal('hide');
+                    window.scrollTo(0, 0);
+                }
+                else{
+                    document.getElementById("alerta").style="visibility: visible;";
+                    document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong>&nbsp;" + arrayOfStrings[1];
+                    $('#myModal').modal('hide');
+                    window.scrollTo(0, 0);
+                }
+            }
+        }
+
+        //Oculta divs
+        function mostra_oculta(sdiv)
+        {
+            var dpoint = document.getElementById("clientepoint");
+            var dqr = document.getElementById("clienteqr");
+            var cliente = document.getElementById("clientepointqr");
+
+            //verifica tipo
+            if (sdiv == "clientepoint") {
+                dpoint.style.display = "block";
+                dqr.style.display = "none";
+            }
+            else if (sdiv == "clienteqr") {
+                dqr.style.display = "block";
+                dpoint.style.display = "none";
+            }
+            else {
+                //vazio
+                dpoint.style.display = "none";
+                dqr.style.display = "none";
+            }
+
+
+            if (sdiv == "clientepointqr") {
+                cliente.style.display = "block";
+            }
+            else {
+                cliente.style.display = "none";
+            }
+
+        }
+
+        //Apresenta alerta de faturamento/taxa
+        function AlertFat(svalor) {
+            
+            switch (svalor) {
+                case "":
+                    document.getElementById("alerta_taxa").style = "display: none;";
+                    break;
+                case "10_15":
+                    document.getElementById("alerta_taxa").style = "display: block;";
+                    document.getElementById("alerta_taxa").innerHTML = "A taxa cobrada para esse faturamento é de: 1,82%/4,15%";
+                    break;
+                case "15_20":
+                    document.getElementById("alerta_taxa").style = "display: block;";
+                    document.getElementById("alerta_taxa").innerHTML = "A taxa cobrada para esse faturamento é de: 1,79%/3,49%";
+                    break;
+                case "20_30":
+                    document.getElementById("alerta_taxa").style = "display: block;";
+                    document.getElementById("alerta_taxa").innerHTML = "A taxa cobrada para esse faturamento é de: 1,75%/3,19%";
+                    break;
+                case "30":
+                    document.getElementById("alerta_taxa").style = "display: block;";
+                    document.getElementById("alerta_taxa").innerHTML = "A taxa cobrada para esse faturamento é de: 1,7%/2,99%";
+                    break;
+            }
+        }
+
+        //Oculta campos
+        function mostra_oculta_check(svalor) {
+
+            if (svalor == "") {
+                document.getElementById("check").style.display = "none";
+            }
+            else {
+                document.getElementById("check").style.display = "block";
+            }
+
+            //Ativação
+            if (svalor == "1") {
+                document.getElementById("div_tpv").style.display = "block";
+                document.getElementById("div_resp").style.display = "block";
+                document.getElementById("div_op1").style.display = "none";
+                document.getElementById("div_op2").style.display = "none";
+                document.getElementById("div_op3").style.display = "none";
+                document.getElementById("div_numcard").style.display = "none";
+                document.getElementById("div_chipant").style.display = "none";
+                document.getElementById("div_chipatual").style.display = "none";
+            }
+            //Negociação fria
+            if (svalor == "2") {
+                document.getElementById("div_tpv").style.display = "none";
+                document.getElementById("div_resp").style.display = "none";
+                document.getElementById("div_op1").style.display = "none";
+                document.getElementById("div_op2").style.display = "none";
+                document.getElementById("div_op3").style.display = "none";
+                document.getElementById("div_numcard").style.display = "none";
+                document.getElementById("div_chipant").style.display = "none";
+                document.getElementById("div_chipatual").style.display = "none";
+            }
+            //Negociação morna
+            if (svalor == "3") {
+                document.getElementById("div_tpv").style.display = "none";
+                document.getElementById("div_resp").style.display = "none";
+                document.getElementById("div_op1").style.display = "none";
+                document.getElementById("div_op2").style.display = "none";
+                document.getElementById("div_op3").style.display = "none";
+                document.getElementById("div_numcard").style.display = "none";
+                document.getElementById("div_chipant").style.display = "none";
+                document.getElementById("div_chipatual").style.display = "none";
+            }
+            //Negociação quente
+            if (svalor == "4") {
+                document.getElementById("div_tpv").style.display = "none";
+                document.getElementById("div_resp").style.display = "none";
+                document.getElementById("div_op1").style.display = "none";
+                document.getElementById("div_op2").style.display = "none";
+                document.getElementById("div_op3").style.display = "none";
+                document.getElementById("div_numcard").style.display = "none";
+                document.getElementById("div_chipant").style.display = "none";
+                document.getElementById("div_chipatual").style.display = "none";
+            }
+            //Pós venda
+            if (svalor == "5") {
+                document.getElementById("div_tpv").style.display = "block";
+                document.getElementById("div_resp").style.display = "block";
+                document.getElementById("div_op1").style.display = "none";
+                document.getElementById("div_op2").style.display = "none";
+                document.getElementById("div_op3").style.display = "none";
+                document.getElementById("div_numcard").style.display = "none";
+                document.getElementById("div_chipant").style.display = "block";
+                document.getElementById("div_chipatual").style.display = "block";
+            }
+            //Troca de maquina
+            if (svalor == "6") {
+                document.getElementById("div_tpv").style.display = "block";
+                document.getElementById("div_resp").style.display = "block";
+                document.getElementById("div_op1").style.display = "none";
+                document.getElementById("div_op2").style.display = "none";
+                document.getElementById("div_op3").style.display = "none";
+                document.getElementById("div_numcard").style.display = "none";
+                document.getElementById("div_chipant").style.display = "block";
+                document.getElementById("div_chipatual").style.display = "block";
+            }
+            //Vendido
+            if (svalor == "7") {
+                document.getElementById("div_tpv").style.display = "block";
+                document.getElementById("div_email").style.display = "block";
+                document.getElementById("div_op1").style.display = "block";
+                document.getElementById("div_op2").style.display = "block";
+                document.getElementById("div_op3").style.display = "block";
+                document.getElementById("div_numcard").style.display = "block";
+                document.getElementById("div_chipant").style.display = "block";
+                document.getElementById("div_chipatual").style.display = "block";
+            }
+
+        }
+
+        //apresenta imagem selecionada do campo point
+        function previewImages() {
+
+            var preview = document.querySelector('#preview');
+            var input = document.querySelector('input[type=file]');
+
+
+            if (input.files) {
+                [].forEach.call(input.files, readAndPreview);
+            }
+
+            function readAndPreview(file) {
+
+            reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var image = new Image();
+
+                    image.height = 100;
+                    image.title = file.name;
+                    image.src = this.result;
+
+                    preview.appendChild(image);
+
+                });
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        //Cadastra o cliente e a venda
+        function Cadastro_Venda_Cliente() {
+
+            var IdCodCliente;
+
+            //oculta o botão
+            document.getElementById("btnacao").style.display = "none"; 
+
+            //verifica preenchimento dos campos do cliente -----------------------------
+            if (document.getElementById('cmbtipocliente').value == '') {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Selecione um Tipo de Cliente!";
+                document.getElementById("btnacao").style.display = "block";
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            if (document.getElementById("cmbtiposegmento").value == '') {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Selecione um Tipo de Segmento!";
+                document.getElementById("btnacao").style.display = "block";
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            if (document.getElementById("txtnome").value == '') {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Preencha o Nome do Cliente!";
+                document.getElementById("btnacao").style.display = "block";
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            if (document.getElementById("txtcnpj").value == '') {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Preencha o CPF/CNPJ!";
+                document.getElementById("btnacao").style.display = "block";
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            if (document.getElementById("txtcnpj").value.length < 11) {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Quantidade de Caracteres inválido. Preencha o CPF/CNPJ corretamente!";
+                document.getElementById("btnacao").style.display = "block";
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            if (document.getElementById("txtcnpj").value.length > 11) {
+
+                if (document.getElementById("txtcnpj").value.length < 14) {
+                    document.getElementById("alerta").style = "display: visible;";
+                    document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Quantidade de Caracteres inválido.Preencha o CPF/CNPJ corretamente!";
+                    document.getElementById("btnacao").style.display = "block";
+                    window.scrollTo(0, 0);
+                    return;
+                }
+            }
+
+            if (document.getElementById("txtendereco").value == '') {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Preencha o Endereço!";
+                document.getElementById("btnacao").style.display = "block";
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            if (document.getElementById("txtnomedecisor").value == '') {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Preencha o Decisor!";
+                document.getElementById("btnacao").style.display = "block";
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            if (document.getElementById("txtcontato").value == '') {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Preencha o Contato!";
+                document.getElementById("btnacao").style.display = "block";
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            //verifica preenchimento do tipo da venda
+            if (stipovenda == '') {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Selecione um Tipo de Venda!";
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            //verifica preenchimento do check
+            if (scheck == '') {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Selecione um tipo de Check!";
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            //verifica preenchimento da observação
+            if (document.getElementById("txtobs").value == '') {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Preencha o campo Obervação!";
+                window.scrollTo(0, 0);
+                return;
+            }
+            // -------------------------------------------------------------------------
+
+            //Icone de carregamento
+            $("#myModal").modal({
+                show: true
+            });
+
+            //captura o id do tipo cliente
+            var sidtipo = document.getElementById("cmbtipocliente").value;
+
+            //cliente point e qr
+            if (sidtipo == "clientepointqr") {
+
+                //insere
+                if (idcliente_global == '' || idcliente_global == undefined) {
+
+                    //verifica se é supervisor para insercao
+                    if (permissao_global == "Supervisor") {
+
+                        var sret = Registra_Cliente('', iduser_global, 1, document.getElementById("cmbtiposegmento").value, document.getElementById("txtnome").value, document.getElementById("txtcnpj").value, document.getElementById("txtendereco").value, document.getElementById("txtcontato").value, document.getElementById("txtnomedecisor").value, document.getElementById("cmbpromotor").value, 1);
+
+                    }
+                        //Promotor
+                    else {
+                        var sret = Registra_Cliente('', iduser_global, 1, document.getElementById("cmbtiposegmento").value, document.getElementById("txtnome").value, document.getElementById("txtcnpj").value, document.getElementById("txtendereco").value, document.getElementById("txtcontato").value, document.getElementById("txtnomedecisor").value, '', 0);
+                    }
+
+                }
+                else {
+                    //altera
+                    //verifica se é supervisor para insercao
+                    if (permissao_global == "Supervisor") {
+                        var sret = Registra_Cliente(idcliente_global, iduser_global, 1, document.getElementById("cmbtiposegmento").value, document.getElementById("txtnome").value, document.getElementById("txtcnpj").value, document.getElementById("txtendereco").value, document.getElementById("txtcontato").value, document.getElementById("txtnomedecisor").value, document.getElementById("cmbpromotor").value, 1);
+                    }
+                        //Promotor
+                    else {
+                        var sret = Registra_Cliente(idcliente_global, iduser_global, 1, document.getElementById("cmbtiposegmento").value, document.getElementById("txtnome").value, document.getElementById("txtcnpj").value, document.getElementById("txtendereco").value, document.getElementById("txtcontato").value, document.getElementById("txtnomedecisor").value, '', 0);
+                    }
+
+                }
+
+            }
+
+            //valida retorno do cadastro do cliente
+            if (sret == '') {
+                //erro
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Executar ação";
+                document.getElementById("btnacao").style.display = "block";
+                $('#myModal').modal('hide');
+                window.scrollTo(0, 0);
+                return;
+            }
+            else {
+
+                var arrayOfStrings = sret.split(';');
+
+                //mensagem de sucesso
+                if (arrayOfStrings[0] == "OK") {
+                    //captura o id do cliente para venda
+                    IdCodCliente = arrayOfStrings[1];
+                }
+                else {
+                    //valida erro
+                    if (arrayOfStrings[1] == undefined) {
+                        document.getElementById("alerta").style = "visibility: visible;";
+                        document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong>&nbsp;Não é permitido caracteres especiais! Verifique os campos que contém!";
+                        document.getElementById("btnacao").style.display = "block";
+                        $('#myModal').modal('hide');
+                        window.scrollTo(0, 0);
+                        return;
+                    }
+                    else {
+                        document.getElementById("alerta").style = "visibility: visible;";
+                        document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong>&nbsp;" + arrayOfStrings[1];
+                        document.getElementById("btnacao").style.display = "block";
+                        $('#myModal').modal('hide');
+                        window.scrollTo(0, 0);
+                        return;
+                    }
+
+
+
+
+
+                }
+            }
+            // >>> FIM CADASTRO DO CLIENTE <<<
+
+            // >>> INICIA CADASTRO DA VENDA <<<
+            
+            //campos principais
+            var stipovenda = document.getElementById("cmbtipovenda").value;
+            var scliente = document.getElementById("cmbcliente").value;
+            var scheck = document.getElementById("cmbcheck").value;
+
+            //campos point
+            var stpmaquina = document.getElementById("cmbtipomaquina").value;
+            var snumcontrole = document.getElementById("txtnumcontrole").value;
+            var sformapag = document.getElementById("cmbformpagamento").value;
+            var sfaturamento = document.getElementById("cmbfaturamento").value;
+            var sfoto1;
+            var sfoto2;
+            var sfoto3;
+
+            //campos qr
+            var sstatusvenda = document.getElementById("cmbstatusvenda").value;
+            var scadpix = document.getElementById("cmbcadpix").value;
+            var scontamp = document.getElementById("cmbpossuiconta").value;
+            var semailqr = document.getElementById("txtemail_qr").value;
+
+            //campos check
+            var stpv = document.getElementById("txttpv").value;
+            var snomeresp = document.getElementById("txtnomeresp").value;
+            var stelresp = document.getElementById("txttelefoneresp").value;
+            var semailmp = document.getElementById("txtemailmercado").value;
+            var snumop1 = document.getElementById("txtnumop1").value;
+            var snumop2 = document.getElementById("txtnumop2").value;
+            var snumop3 = document.getElementById("txtnumop3").value;
+            var snumcard = document.getElementById("txtnumcard").value;
+            var schipant = document.getElementById("txtchipanterior").value;
+            var schipatual = document.getElementById("txtchipatual").value;
+            var sobservacao = document.getElementById("txtobs").value;
+
+            //verifica tipo da venda
+            if (stipovenda == "clientepoint") {
+
+                //verifica para inserção ou alteração
+                if (idvenda_global == '' || idvenda_global == undefined) {
+
+                    //verifica preenchimentos
+                    if (stpmaquina == '') {
+                        document.getElementById("alerta").style = "display: visible;";
+                        document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Selecione um tipo de máquina!";
+                        document.getElementById("btnacao").style.display = "block";
+                        $('#myModal').modal('hide');
+                        window.scrollTo(0, 0);
+                        return;
+                    }
+                    if (snumcontrole == '') {
+                        document.getElementById("alerta").style = "display: visible;";
+                        document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Preencha o campo Número de Controle!";
+                        document.getElementById("btnacao").style.display = "block";
+                        $('#myModal').modal('hide');
+                        window.scrollTo(0, 0);
+                        return;
+                    }
+                    if (sformapag == '') {
+                        document.getElementById("alerta").style = "display: visible;";
+                        document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Selecione uma forma de pagamento!";
+                        document.getElementById("btnacao").style.display = "block";
+                        $('#myModal').modal('hide');
+                        window.scrollTo(0, 0);
+                        return;
+                    }
+                    if (sfaturamento == '') {
+                        document.getElementById("alerta").style = "display: visible;";
+                        document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Selecione um tipo de Faturamento!";
+                        document.getElementById("btnacao").style.display = "block";
+                        $('#myModal').modal('hide');
+                        window.scrollTo(0, 0);
+                        return;
+                    }
+
+                    //captura posição atual
+                    navigator.geolocation.getCurrentPosition(function showpotion(position) {
+
+                        //Captura latitute e longitude
+                        var slat = position.coords.latitude;
+                        var slong = position.coords.longitude;
+
+                        var sret = Registra_Venda('', iduser_global, 1, stpmaquina, snumcontrole, sformapag, '', '0', '', '', '', IdCodCliente, scheck, stpv, snomeresp, stelresp, semailmp, snumop1, snumop2, snumop3, snumcard, schipant, schipatual, slat, slong, sobservacao, '', '', sfaturamento);
+
+                        //valida retorno
+                        if (sret == '') {
+                            document.getElementById("alerta").style = "display: visible;";
+                            document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Executar ação";
+                            document.getElementById("btnacao").style.display = "block";
+                            $('#myModal').modal('hide');
+                            window.scrollTo(0, 0);
+                            return;
+                        }
+                        else {
+                            //split
+                            var arrayOfStrings = sret.split(';');
+
+                            //valida retorno
+                            if (arrayOfStrings[0] == "OK") {
+                                document.getElementById("alerta").style = "visibility: visible;";
+                                document.getElementById("alerta").className = "alert alert-success";
+                                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-check-circle-o' aria-hidden='true'></i>&nbsp;Venda Realizada com Sucesso!</strong>";
+                                $('#myModal').modal('hide');
+                                window.scrollTo(0, 0);
+                                document.getElementById("cmdCancelar").click();
+                            }
+                            else {
+                                //erro
+                                document.getElementById("alerta").style = "visibility: visible;";
+                                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong>&nbsp;" + arrayOfStrings[1];
+                                document.getElementById("btnacao").style.display = "block";
+                                $('#myModal').modal('hide');
+                                window.scrollTo(0, 0);
+                                return;
+                            }
+                        }
+                    });
+                }
+                else { //altera
+
+                    //verifica para inserçaõ de acordo com o check
+                    switch (scheck) {
+
+                        case "1": //Ativação QR
+                            var ret = Registra_Venda(idvenda_global, iduser_global, 1, document.getElementById("cmbtipomaquina").value, document.getElementById("txtnumcontrole").value, document.getElementById("cmbformpagamento").value, '', '', '', '', '', document.getElementById("cmbcliente").value, 1, document.getElementById("txttpv").value, document.getElementById("txtnomeresp").value, document.getElementById("txttelefoneresp").value, document.getElementById("txtemailmercado").value, '', '', '', '', '', '', '', '', document.getElementById("txtobs").value, '', '', document.getElementById("cmbfaturamento").value);
+                            break;
+                        case "2": //Negociação Fria
+                            var ret = Registra_Venda(idvenda_global, iduser_global, 1, document.getElementById("cmbtipomaquina").value, document.getElementById("txtnumcontrole").value, document.getElementById("cmbformpagamento").value, '', '', '', '', '', document.getElementById("cmbcliente").value, 2, '', document.getElementById("txtnomeresp").value, document.getElementById("txttelefoneresp").value, document.getElementById("txtemailmercado").value, '', '', '', '', '', '', '', '', document.getElementById("txtobs").value, '', '', document.getElementById("cmbfaturamento").value);
+                            break;
+                        case "3": //Negociação Morna
+                            var ret = Registra_Venda(idvenda_global, iduser_global, 1, document.getElementById("cmbtipomaquina").value, document.getElementById("txtnumcontrole").value, document.getElementById("cmbformpagamento").value, '', '', '', '', '', document.getElementById("cmbcliente").value, 3, '', document.getElementById("txtnomeresp").value, document.getElementById("txttelefoneresp").value, document.getElementById("txtemailmercado").value, '', '', '', '', '', '', '', '', document.getElementById("txtobs").value, '', '', document.getElementById("cmbfaturamento").value);
+                            break;
+                        case "4": //Negociação Quente
+                            var ret = Registra_Venda(idvenda_global, iduser_global, 1, document.getElementById("cmbtipomaquina").value, document.getElementById("txtnumcontrole").value, document.getElementById("cmbformpagamento").value, '', '', '', '', '', document.getElementById("cmbcliente").value, 4, '', document.getElementById("txtnomeresp").value, document.getElementById("txttelefoneresp").value, document.getElementById("txtemailmercado").value, '', '', '', '', '', '', '', '', document.getElementById("txtobs").value, '', '', document.getElementById("cmbfaturamento").value);
+                            break;
+                        case "5": //Pós Venda
+                            var ret = Registra_Venda(idvenda_global, iduser_global, 1, document.getElementById("cmbtipomaquina").value, document.getElementById("txtnumcontrole").value, document.getElementById("cmbformpagamento").value, '', '', '', '', '', document.getElementById("cmbcliente").value, 5, document.getElementById("txttpv").value, document.getElementById("txtnomeresp").value, document.getElementById("txttelefoneresp").value, document.getElementById("txtemailmercado").value, '', '', '', '', document.getElementById("txtchipanterior").value, document.getElementById("txtchipatual").value, '', '', document.getElementById("txtobs").value, '', '', document.getElementById("cmbfaturamento").value);
+                            break;
+                        case "6": //Troca de Máquina
+                            var ret = Registra_Venda(idvenda_global, iduser_global, 1, document.getElementById("cmbtipomaquina").value, document.getElementById("txtnumcontrole").value, document.getElementById("cmbformpagamento").value, '', '', '', '', '', document.getElementById("cmbcliente").value, 6, document.getElementById("txttpv").value, document.getElementById("txtnomeresp").value, document.getElementById("txttelefoneresp").value, document.getElementById("txtemailmercado").value, '', '', '', '', document.getElementById("txtchipanterior").value, document.getElementById("txtchipatual").value, '', '', document.getElementById("txtobs").value, '', '', document.getElementById("cmbfaturamento").value);
+                            break;
+                        case "7": //Vendido
+                            var ret = Registra_Venda(idvenda_global, iduser_global, 1, document.getElementById("cmbtipomaquina").value, document.getElementById("txtnumcontrole").value, document.getElementById("cmbformpagamento").value, '', '', '', '', '', document.getElementById("cmbcliente").value, 7, document.getElementById("txttpv").value, document.getElementById("txtnomeresp").value, document.getElementById("txttelefoneresp").value, document.getElementById("txtemailmercado").value, document.getElementById("txtnumop1").value, document.getElementById("txtnumop2").value, document.getElementById("txtnumop3").value, document.getElementById("txtnumcard").value, document.getElementById("txtchipanterior").value, document.getElementById("txtchipatual").value, '', '', document.getElementById("txtobs").value, '', '', document.getElementById("cmbfaturamento").value);
+                            break;
+                    }
+
+                    //valida retorno
+                    if (ret == '') {
+                        document.getElementById("alerta").style = "display: visible;";
+                        document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Executar ação";
+                        document.getElementById("btnacao").style.display = "block";
+                        $('#myModal').modal('hide');
+                        window.scrollTo(0, 0);
+                        return;
+                    }
+                    else {
+
+                        var arrayOfStrings = ret.split(';');
+
+                        //valida retorno
+                        if (arrayOfStrings[0] == "OK") {
+                            document.getElementById("alerta").style = "visibility: visible;";
+                            document.getElementById("alerta").className = "alert alert-success";
+                            document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-check-circle-o' aria-hidden='true'></i>&nbsp;Venda Realizada com Sucesso!</strong>";
+                            $('#myModal').modal('hide');
+                            window.scrollTo(0, 0);
+                            document.getElementById("cmdCancelar").click();
+                        }
+                        else {
+                            document.getElementById("alerta").style = "visibility: visible;";
+                            document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong>&nbsp;" + arrayOfStrings[1];
+                            document.getElementById("btnacao").style.display = "block";
+                            $('#myModal').modal('hide');
+                            window.scrollTo(0, 0);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            //verifica tipo da venda
+            if (stipovenda == "clienteqr") {
+
+                //verifica para inserção ou alteração
+                if (idvenda_global == '' || idvenda_global == undefined) {
+
+                    //verifica preenchimentos
+                    if (sstatusvenda == '') {
+                        document.getElementById("alerta").style = "display: visible;";
+                        document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Selecione um status da venda!";
+                        document.getElementById("btnacao").style.display = "block";
+                        $('#myModal').modal('hide');
+                        window.scrollTo(0, 0);
+                        return;
+                    }
+                    if (scadpix == '') {
+                        document.getElementById("alerta").style = "display: visible;";
+                        document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Selecione o Cadastro Pix!";
+                        document.getElementById("btnacao").style.display = "block";
+                        $('#myModal').modal('hide');
+                        window.scrollTo(0, 0);
+                        return;
+                    }
+                    if (scontamp == '') {
+                        document.getElementById("alerta").style = "display: visible;";
+                        document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Selecione Cliente já possui conta Mercado Pago!";
+                        document.getElementById("btnacao").style.display = "block";
+                        $('#myModal').modal('hide');
+                        window.scrollTo(0, 0);
+                        return;
+                    }
+                    if (semailqr == "") {
+                        semailqr = "0";
+                    }
+
+                    //captura posição atual
+                    navigator.geolocation.getCurrentPosition(function showpotion(position) {
+
+                        //Captura latitute e longitude
+                        var slat = position.coords.latitude;
+                        var slong = position.coords.longitude;
+
+                        //registra venda
+                        var sret = Registra_Venda('', iduser_global, 2, '', '', '', '', sstatusvenda, scadpix, scontamp, semailqr, IdCodCliente, scheck, stpv, snomeresp, stelresp, semailmp, snumop1, snumop2, snumop3, snumcard, schipant, schipatual, slat, slong, sobservacao, '', '', '');
+
+                        //valida retorno
+                        if (sret == '') {
+                            document.getElementById("alerta").style = "display: visible;";
+                            document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Executar ação";
+                            document.getElementById("btnacao").style.display = "block";
+                            $('#myModal').modal('hide');
+                            window.scrollTo(0, 0);
+                            return;
+                        }
+                        else {
+
+                            var arrayOfStrings = sret.split(';');
+
+                            //valida retorno
+                            if (arrayOfStrings[0] == "OK") {
+                                document.getElementById("alerta").style = "visibility: visible;";
+                                document.getElementById("alerta").className = "alert alert-success";
+                                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-check-circle-o' aria-hidden='true'></i>&nbsp;Venda Realizada com Sucesso!</strong>";
+                                $('#myModal').modal('hide');
+                                window.scrollTo(0, 0);
+                                document.getElementById("cmdCancelar").click();
+                            }
+                            else {
+                                //erro
+                                document.getElementById("alerta").style = "visibility: visible;";
+                                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong>&nbsp;" + arrayOfStrings[1];
+                                document.getElementById("btnacao").style.display = "block";
+                                $('#myModal').modal('hide');
+                                window.scrollTo(0, 0);
+                                return;
+                            }
+                        }
+                    });
+                }
+                else { //altera
+
+                    //verifica para alteração de acordo do check
+                    switch (scheck) {
+
+                        case "1": //Ativação QR
+                            var ret = Registra_Venda(idvenda_global, iduser_global, 2, '', '', '', '', document.getElementById("cmbstatusvenda").value, document.getElementById("cmbcadpix").value, document.getElementById("cmbpossuiconta").value, document.getElementById("txtemail_qr").value, document.getElementById("cmbcliente").value, 1, document.getElementById("txttpv").value, document.getElementById("txtnomeresp").value, document.getElementById("txttelefoneresp").value, document.getElementById("txtemailmercado").value, '', '', '', '', '', '', '', '', document.getElementById("txtobs").value, '', '', '');
+                            break;
+                        case "2": //Negociação Fria
+                            var ret = Registra_Venda(idvenda_global, iduser_global, 2, '', '', '', '', document.getElementById("cmbstatusvenda").value, document.getElementById("cmbcadpix").value, document.getElementById("cmbpossuiconta").value, document.getElementById("txtemail_qr").value, document.getElementById("cmbcliente").value, 2, '', document.getElementById("txtnomeresp").value, document.getElementById("txttelefoneresp").value, document.getElementById("txtemailmercado").value, '', '', '', '', '', '', '', '', document.getElementById("txtobs").value, '', '', '');
+                            break;
+                        case "3": //Negociação Morna
+                            var ret = Registra_Venda(idvenda_global, iduser_global, 2, '', '', '', '', document.getElementById("cmbstatusvenda").value, document.getElementById("cmbcadpix").value, document.getElementById("cmbpossuiconta").value, document.getElementById("txtemail_qr").value, document.getElementById("cmbcliente").value, 3, '', document.getElementById("txtnomeresp").value, document.getElementById("txttelefoneresp").value, document.getElementById("txtemailmercado").value, '', '', '', '', '', '', '', '', document.getElementById("txtobs").value, '', '', '');
+                            break;
+                        case "4": //Negociação Quente
+                            var ret = Registra_Venda(idvenda_global, iduser_global, 2, '', '', '', '', document.getElementById("cmbstatusvenda").value, document.getElementById("cmbcadpix").value, document.getElementById("cmbpossuiconta").value, document.getElementById("txtemail_qr").value, document.getElementById("cmbcliente").value, 4, '', document.getElementById("txtnomeresp").value, document.getElementById("txttelefoneresp").value, document.getElementById("txtemailmercado").value, '', '', '', '', '', '', '', '', document.getElementById("txtobs").value, '', '', '');
+                            break;
+                        case "5": //Pós Venda
+                            var ret = Registra_Venda(idvenda_global, iduser_global, 2, '', '', '', '', document.getElementById("cmbstatusvenda").value, document.getElementById("cmbcadpix").value, document.getElementById("cmbpossuiconta").value, document.getElementById("txtemail_qr").value, document.getElementById("cmbcliente").value, 5, document.getElementById("txttpv").value, document.getElementById("txtnomeresp").value, document.getElementById("txttelefoneresp").value, document.getElementById("txtemailmercado").value, '', '', '', '', document.getElementById("txtchipanterior").value, document.getElementById("txtchipatual").value, '', '', document.getElementById("txtobs").value, '', '', '');
+                            break;
+                        case "6": //Troca de Máquina
+                            var ret = Registra_Venda(idvenda_global, iduser_global, 2, '', '', '', '', document.getElementById("cmbstatusvenda").value, document.getElementById("cmbcadpix").value, document.getElementById("cmbpossuiconta").value, document.getElementById("txtemail_qr").value, document.getElementById("cmbcliente").value, 6, document.getElementById("txttpv").value, document.getElementById("txtnomeresp").value, document.getElementById("txttelefoneresp").value, document.getElementById("txtemailmercado").value, '', '', '', '', document.getElementById("txtchipanterior").value, document.getElementById("txtchipatual").value, '', '', document.getElementById("txtobs").value, '', '', '');
+                            break;
+                        case "7": //Vendido
+                            var ret = Registra_Venda(idvenda_global, iduser_global, 2, '', '', '', '', document.getElementById("cmbstatusvenda").value, document.getElementById("cmbcadpix").value, document.getElementById("cmbpossuiconta").value, document.getElementById("txtemail_qr").value, document.getElementById("cmbcliente").value, 7, document.getElementById("txttpv").value, document.getElementById("txtnomeresp").value, document.getElementById("txttelefoneresp").value, document.getElementById("txtemailmercado").value, document.getElementById("txtnumop1").value, document.getElementById("txtnumop2").value, document.getElementById("txtnumop3").value, document.getElementById("txtnumcard").value, document.getElementById("txtchipanterior").value, document.getElementById("txtchipatual").value, '', '', document.getElementById("txtobs").value, '', '', '');
+                            break;
+                    }
+
+                    //valida retorno
+                    if (ret == '') {
+                        document.getElementById("alerta").style = "display: visible;";
+                        document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Executar ação";
+                        document.getElementById("btnacao").style.display = "block";
+                        $('#myModal').modal('hide');
+                        window.scrollTo(0, 0);
+                        return;
+                    }
+                    else {
+
+                        var arrayOfStrings = ret.split(';');
+
+                        //valida retorno
+                        if (arrayOfStrings[0] == "OK") {
+                            document.getElementById("alerta").style = "visibility: visible;";
+                            document.getElementById("alerta").className = "alert alert-success";
+                            document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-check-circle-o' aria-hidden='true'></i>&nbsp;Venda Realizada com Sucesso!</strong>";
+                            $('#myModal').modal('hide');
+                            window.scrollTo(0, 0);
+                            document.getElementById("cmdCancelar").click();
+                        }
+                        else {
+                            //erro
+                            document.getElementById("alerta").style = "visibility: visible;";
+                            document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong>&nbsp;" + arrayOfStrings[1];
+                            document.getElementById("btnacao").style.display = "block";
+                            $('#myModal').modal('hide');
+                            window.scrollTo(0, 0);
+                            return;
+                        }
+                    }
+                }
+            }
+
+        }
+
+    </script>
+
+    <div id="flotTip" style="display: none; position: absolute;"></div>
+
+</body>
+</html>

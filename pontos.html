@@ -1,0 +1,969 @@
+﻿<!DOCTYPE html>
+<html style="" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>:: STT - GAT® Link ::</title>
+
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="description" content="STT GAT Link">
+    <meta name="keywords" content="app,pontos,stt">
+    <meta name="author" content="leonamcorreia">
+
+     
+    <link href="files/pace-theme-flash.css" rel="stylesheet">
+    <link href="files/uniform.default.min.css" rel="stylesheet">
+    <link href="files/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="./weather-icons-master/css/weather-icons.min.css" rel="stylesheet" type="text/css">
+    <link href="./simple-line-icons-master/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+    <link href="files/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="files/menu_cornerbox.css" rel="stylesheet" type="text/css">
+    <link href="files/waves.min.css" rel="stylesheet" type="text/css">
+    <link href="files/switchery.min.css" rel="stylesheet" type="text/css">
+    <link href="files/style.css" rel="stylesheet" type="text/css">
+    <link href="files/component.css" rel="stylesheet" type="text/css">
+    <link href="files/MetroJs.min.css" rel="stylesheet" type="text/css">
+    <link href="files/toastr.min.css" rel="stylesheet" type="text/css">
+    <link href="files/modern.min.css" rel="stylesheet" type="text/css">
+    <link href="files/green.css" class="theme-color" rel="stylesheet" type="text/css">
+    <link href="files/custom.css" rel="stylesheet" type="text/css">
+    <script src="js/apijs.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+
+    
+    
+
+    <!-- Estilo -->
+    <style>
+        .modal {
+            text-align: center;
+        }
+
+        @media screen and (min-width: 768px) {
+            .modal:before {
+                display: inline-block;
+                vertical-align: middle;
+                content: " ";
+                height: 100%;
+            }
+        }
+
+        .modal-dialog {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+        .new{
+                background-color:white;
+                color:black;
+                text-align:center;
+            }
+
+        /* DivTable.com */
+        .divTable{
+            display: table;
+            width: 100%;
+        }
+        .divTableRow {
+            display: table-row;
+        }
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+        }
+        .divTableCell, .divTableHead {
+            border: none;
+            display: table-cell;
+            padding: 3px 10px;
+        }
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+            font-weight: bold;
+        }
+        .divTableFoot {
+            background-color: #EEE;
+            display: table-footer-group;
+            font-weight: bold;
+        }
+        .divTableBody {
+            display: table-row-group;
+        }
+
+
+        #mapa { 
+            width: 100%;
+            height: 200px;
+            border: 2px solid #ccc;;
+            margin-bottom: 10px;
+        }
+
+    </style>
+
+
+</head>
+<body class="page-header-fixed  pace-done">
+
+    <!-- Barra de Progresso -->
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+	
+    <!-- Espaço -->
+    <div class="overlay"></div>
+	
+
+    <!-- BARRA DE MENU SUPERIOR --TOP -->
+    <main class="page-content content-wrap">
+
+		<!-- Navbar -->
+        <div class="navbar">
+            <div class="navbar-inner">
+
+                <div class="sidebar-pusher">
+                    <a href="javascript:void(0);" class="waves-effect waves-button waves-classic push-sidebar">
+                        <i class="fa fa-bars" style="color:#ffffff"></i>
+                    </a>
+                </div>
+
+                <!-- GAT LINK -->
+                <div class="logo-box">
+                    <a href="#" style="background-color:#DD2F2F" class="logo-text"><span style="color:#ffffff">GAT® Link</span></a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MENU ESQUERDA -  -->
+        <div class="page-sidebar sidebar">
+            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+                <div class="page-sidebar-inner slimscroll" style="overflow: hidden; width: auto; height: 100%;">
+
+                    <!-- CABECALHO MENU LATERAL -->                   
+                    <ul class="menu accordion-menu">
+
+                        <!-- HOME -->
+                        <li ><a href="javascript:open_page('gatlink.html');" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
+
+                        <!-- LOGIN -->
+                        <li><a href="javascript:open_page('logingeo.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-sign-in"></span><p>Login</p></a></li>
+
+                        <!-- LOGOUT -->
+                        <li><a href="javascript:open_page('logoutgeo.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-sign-out"></span><p>Logout</p></a></li>
+                        
+                        <!-- CHECKIN -->
+                        <li><a href="javascript:open_page('checkin.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-map-marker"></span><p>Check-In</p></a></li>
+                        
+                        <!-- CHECKOUT -->
+                        <li><a href="javascript:open_page('checkout.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-external-link-square"></span><p>Check-Out</p></a></li>
+                        
+                        <!-- ROTAS -->
+                        <li><a href="javascript:open_page('rota.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-location-arrow"></span><p>Rotas</p></a></li>
+
+                        <!-- MAPS -->
+                        <li><a href="javascript:open_page('maps.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-globe"></span><p>Maps</p></a></li>
+
+                        <!-- CLIENTES -->
+                        <li><a href="javascript:open_page('ger_clientes.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-users"></span><p>Clientes</p></a></li>
+
+                        <!-- VENDAS -->
+                        <li><a href="javascript:open_page('ger_vendas.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-credit-card"></span><p>Vendas</p></a></li>  
+
+                        <!-- PONTOS -->
+                        <li><a href="javascript:open_page('pontos.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-random"></span><p>Pontos</p></a></li>  
+                                                
+                        <!-- SAIR -->
+                        <li><a href="login.html" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-share"></span><p>Sair</p></a></li>
+                        
+                    </ul>
+
+                </div>
+				
+                <div class="slimScrollBar" style="background: rgb(204, 204, 204); width: 7px; position: absolute; top: 0px; opacity: 0.3; display: none; border-radius: 0px; z-index: 99; right: 0px; height: 1080px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 0px;"></div>
+            </div>
+        </div>
+
+
+        <div class="page-inner">
+
+            <!-- Modal -->
+            <div class="modal fade fa-box" id="myModal" tabindex="-1" style="border-radius:10px" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div>
+                        <div class="modal-body">
+                            <img src="files/loading_blue.gif" alt="carregando...">
+                            <figcaption class="loading-text"></figcaption>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal FAQ -->
+            <div class="modal fade" id="modalpontos" tabindex="-1" role="dialog" aria-labelledby="modalpontosLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h2 class="modal-title" id="modalpontosLabel">Questões Gerais</h2>
+                        </div>
+                        <br />
+                        <div class="modal-body" style="font-size:15px">
+                            <!--FAQS -->
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span><b>1.</b>    O que essa tela apresenta?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro" class="collapse">
+                                        <div class="panel-body">
+                                            Essa tela apresenta todos os endereços próximos as rotas para realizar uma visita;<p></p>
+                                            Para visualização dos detalhes do endereço, basta expandir o painel desejado!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>2.    Como realizar um agendamento?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro1" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro1" class="collapse">
+                                        <div class="panel-body">
+                                            Não é possível realizar agendamento! Só o registro de conclusão caso a visita tenha realizado!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>4.    Como é criado um novo endereço nos Pontos?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro3" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro3" class="collapse">
+                                        <div class="panel-body">
+                                            Usuários administradores (Supervisores, Coordenadores e ect) realizam o cadastro;<p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>5.    Como inserir uma observação?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro5" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro5" class="collapse">
+                                        <div class="panel-body">
+                                            1 - Expandir o painel desejado;<p></p>
+                                            2 - Nota-se que no detalhes de cada painel, contém a aba Principal e a Aba Observação, selecionar a aba Observação e preencher o campo;<p></p>
+                                            3 - Após preencher o campo, é necessário registrar Conclusão.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>6.    Como registrar qualquer ação?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro6" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro6" class="collapse">
+                                        <div class="panel-body">
+                                            Para qualquer registro de ação ao endereços no ponto, é necessário apertar o botão Concluído!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" style="border-radius: 10px;width:100%; background-color:#94150F; height:55px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">FECHAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TITULO DA PAGINA -->
+            <div class="page-title" style="background-color:#ffffff">
+                <span style="color:#000000;font-size:27px;"><b>Pontos</b></span>
+                <a data-toggle="modal" data-target="#modalpontos"><img src="Imagens/qaV.png" style="float:right;max-height:39px;max-width:45px" /></a>
+            </div>
+
+            <!-- ALERTA -->
+            <div id="alertaagenda" class="alert" style="display: none;"></div>
+            <div id="alerta" class="alert alert-danger" style="display: none;"></div>
+
+            <!-- CORPO -->
+            <div id="main-wrapper">
+
+                <!-- BLOCOS GERENCIAS -->
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        
+                        <input type="hidden" id="h_lat"/>
+                        <input type="hidden" id="h_lng"/>
+
+                        <!--Google map-->
+                        <div id="mapas"></div>
+                       
+                        <p></p>
+                       
+                        <!-- CANCELAR -->
+                        <div>
+                            <button type="button" id="cmdCancelar" onclick="open_page('gatlink.html');" style="border-radius: 10px;width:100%; background-color:#94150F; height:55px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">VOLTAR</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- RODAPE -->
+            <div class="page-footer">
+                <p class="no-s">2023 © STT GAT® Link -  for World Class Solutions</p>
+            </div>
+
+            <!-- Key -->
+            <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD64r3AtOT6uaGrLkQtyLUuy9ukWeFkiCs">
+            </script>
+
+        </div>
+		
+    </main>
+
+    <!-- Javascripts -->
+    <script src="files/jquery-2.1.4.min.js"></script>
+    <script src="files/jquery-ui.min.js"></script>
+    <script src="files/pace.min.js"></script>
+    <script src="files/jquery.blockui.js"></script>
+    <script src="files/bootstrap.min.js"></script>
+    <script src="files/jquery.slimscroll.min.js"></script>
+    <script src="files/switchery.min.js"></script>
+    <script src="files/jquery.uniform.min.js"></script>
+    <script src="files/classie.js"></script>
+    <script src="files/waves.min.js"></script>
+    <script src="files/main2.js"></script>
+    <script src="files/jquery.waypoints.min.js"></script>
+    <script src="files/jquery.counterup.min.js"></script>
+    <script src="files/toastr.min.js"></script>
+    <script src="files/jquery.flot.min.js"></script>
+    <script src="files/jquery.flot.time.min.js"></script>
+    <script src="files/jquery.flot.symbol.min.js"></script>
+    <script src="files/jquery.flot.resize.min.js"></script>
+    <script src="files/jquery.flot.tooltip.min.js"></script>
+    <script src="files/curvedLines.js"></script>
+    <script src="files/MetroJs.min.js"></script>
+    <script src="files/modern.js"></script>
+
+    <!-- Funções -->
+    <script>
+
+        //Page Load
+        window.onload = function(){
+
+            iduser_global = queryString("id");
+            user_global = queryString("nom");
+            permissao_global = queryString("perm");
+            status_global = queryString("st");
+
+            //Ações
+            //Acao();
+            //Caputa localzação
+            //getLocation();
+        }
+
+        //String URL
+        function queryString(parameter) {
+              var loc = location.search.substring(1, location.search.length);
+              var param_value = false;
+              var params = loc.split("&");
+              for (i=0; i<params.length;i++) {
+                  param_name = params[i].substring(0,params[i].indexOf('='));
+                  if (param_name == parameter) {
+                      param_value = params[i].substring(params[i].indexOf('=')+1)
+                  }
+              }
+              if (param_value) {
+                  return param_value;
+              }
+              else {
+                  return undefined;
+              }
+        }
+
+        //Captura localizaçãi
+        function getLocation() {
+
+            if (navigator.geolocation) {
+
+                navigator.geolocation.getCurrentPosition(showPosition);
+            }
+
+        }
+
+        //Captura Posição
+        function showPosition(position) {
+
+            //cria posicao
+            var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+            //define conf
+            var options = {
+                zoom: 18,
+                center: latlng
+            };
+
+            //cria mapa
+            map = new google.maps.Map(document.getElementById("mapa"), options);
+
+            //coloca marcador
+            var marker = new google.maps.Marker({position: latlng, map: map});
+
+            //seta posicao
+            ping_tempo(iduser_global,position.coords.latitude,position.coords.longitude,'');
+
+            //salva posicao hidden
+            document.getElementById("h_lat").value=position.coords.latitude;
+            document.getElementById("h_lng").value=position.coords.longitude;
+
+            //escreve lat , long na tela
+            document.getElementById("lblLatitude").innerHTML="Latitude: " + position.coords.latitude;
+            document.getElementById("lblLongitude").innerHTML="Longitude: " + position.coords.longitude;
+        }
+
+        //Abre pagina
+        function open_page(pagina){
+            window.location = pagina + '?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + status_global;
+            //window.location = 'https://www.gatlink.com.br/appmercadopago/' + pagina + '?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + status_global;
+        }
+
+        //Ações
+        function Acao(){
+            //consulta
+            var sret = Pontos_Usuario(iduser_global, permissao_global);
+
+            //valida retorno
+            if  (sret==''){
+                document.getElementById("alerta").style="display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Sem Pontos Cadastrado!";
+                return;
+            }
+            else{
+
+                var obj_json = JSON.parse(sret);
+
+                document.getElementById('mapas').innerHTML="";
+
+                for (let index = 0; index < obj_json.length; index++) {
+
+                    //cria_mapas(index, obj_json[index].Grupo, obj_json[index].Sequencia, obj_json[index].Latitude, obj_json[index].Longitude, obj_json[index].Endereco, obj_json[index].idcodstatus, obj_json[index].IdCodMarcador, obj_json[index].IdCodGrupo,obj_json[index].observacao,obj_json[index].codstatus,obj_json[index].codsubstatus,obj_json[index].datainsercao, obj_json[index].dataatual, obj_json[index].Nome, obj_json[index].Sup);
+                    cria_mapas(index, obj_json[index].Grupo, obj_json[index].Sequencia, obj_json[index].Latitude, obj_json[index].Longitude, obj_json[index].Endereco, obj_json[index].idcodstatus, obj_json[index].IdCodMarcador, obj_json[index].IdCodGrupo, obj_json[index].observacao, obj_json[index].CodStausRegistro, obj_json[index].CodSubStausRegistro, obj_json[index].DataInsercao, obj_json[index].DataAtual, obj_json[index].Nome, obj_json[index].Sup, obj_json[index].IdCodUsuario, obj_json[index].IdCodUsuarioSupervisor);
+                }
+
+            }
+
+        }
+
+        //Cria os mapas
+        function cria_mapas(ind, Grupo, seq, lat, long, endereco, idstatus, idponto, iponto, observacao, codstatus, codsubstatus, sdatainsercao, sdataatual, snomeusuario, ssup, siduser, sidusersuper) {
+
+            var sdiv = "";
+
+            sdiv = sdiv + "<div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>";
+            sdiv = sdiv + "<div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>";
+
+            //Sequencia e o nome do grupo
+            sdiv = sdiv + "<span class='label label-success'>&nbsp;" + seq + "&nbsp;</span>" + " <b>&nbsp;" + Grupo + "</b><p></p>";
+
+            //verifica status para apresentação de titulo
+            if (idstatus == "1") {
+                sdiv = sdiv + "<span style='text-shadow: 0 0 0.1em red, 0 0 0.01em red'><strong>Atenção!</strong> Ponto aguardando visita!</span>";
+            }
+            else
+            {
+                //verifica permissao
+                if (permissao_global == "Supervisor") {
+                    //verifica se é o mesmo usuario
+                    if (sidusersuper == iduser_global) {
+                        //verifica se contem ação do supervisor
+                        if (ssup == null) {
+                            sdiv = sdiv + "<span style='text-shadow: 0 0 0.1em black, 0 0 0.01em black'><strong>Atenção!</strong> Ponto já tratado pelo usuário: " + snomeusuario.split(' ')[0] + "!</span><p></p>" + endereco;
+                        }
+                        else { //contem ação
+                            //verifica se contem ação do promotor
+                            if (snomeusuario == null) {
+                                sdiv = sdiv + "<span style='text-shadow: 0 0 0.1em black, 0 0 0.01em black'><strong>Atenção!</strong> Você já realizou uma ação ao Ponto!</span><p></p>" + endereco;
+                            }
+                            else { //contem ação
+                                sdiv = sdiv + "<span style='text-shadow: 0 0 0.1em black, 0 0 0.01em black'><strong>Atenção!</strong> Você já realizou uma ação ao Ponto! - Ponto já tratado pelo usuário: " + snomeusuario.split(' ')[0] + "!</span><p></p>" + endereco;
+                            }
+                        }
+                    }
+                    else { //usuario diferente
+                        //verifica se contem ação
+                        if (ssup == null) {
+                            sdiv = sdiv + "<span style='text-shadow: 0 0 0.1em black, 0 0 0.01em black'><strong>Atenção!</strong> Ponto já tratado pelo usuário: " + snomeusuario.split(' ')[0] + "!</span><p></p>" + endereco;
+                        }
+                        else {
+                            sdiv = sdiv + "<span style='text-shadow: 0 0 0.1em black, 0 0 0.01em black'><strong>Atenção!</strong> Ponto já tratado pelo usuário: " + snomeusuario.split(' ')[0] + "! - Supervisor: " + ssup.split(' ')[0] + " realizou uma ação ao Ponto!</span><p></p>" + endereco;
+                        }
+
+                    }
+                }
+                else { //promotor
+                    //verifica se é o mesmo usuario
+                    if (siduser == iduser_global) {
+                        //verifica se contem ação do supervisor
+                        if (ssup == null) {
+                            sdiv = sdiv + "<span style='text-shadow: 0 0 0.1em black, 0 0 0.01em black'><strong>Atenção!</strong> Você já visitou esse Ponto!</span><p></p>" + endereco;
+                        }
+                        else {
+                            sdiv = sdiv + "<span style='text-shadow: 0 0 0.1em black, 0 0 0.01em black'><strong>Atenção!</strong> Você já visitou esse Ponto! - Supervisor: " + ssup.split(' ')[0] + " realizou uma ação ao Ponto!</span><p></p>" + endereco;
+                        }
+                    }
+                    else { //usuario diferente
+                        //verifica se contem ação do supervisor para alertar
+                        if (ssup == null) {
+                            sdiv = sdiv + "<span style='text-shadow: 0 0 0.1em black, 0 0 0.01em black'><strong>Atenção!</strong> Ponto já tratado pelo usuário: " + snomeusuario.split(' ')[0] + "!</span><p></p>" + endereco;
+                        }
+                        else { //supervisor realizou algum ação
+                            if (snomeusuario == null) {
+                                sdiv = sdiv + "<span style='text-shadow: 0 0 0.1em black, 0 0 0.01em black'><strong>Atenção!</strong> Supervisor: " + ssup.split(' ')[0] + " realizou uma ação ao Ponto!</span><p></p>" + endereco;
+                            }
+                            else {
+                                sdiv = sdiv + "<span style='text-shadow: 0 0 0.1em black, 0 0 0.01em black'><strong>Atenção!</strong> Ponto já tratado pelo usuário: " + snomeusuario.split(' ')[0] + "! - Supervisor: " + ssup.split(' ')[0] + " realizou uma ação ao Ponto!</span><p></p>" + endereco;
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            sdiv = sdiv + "<div class='panel-control'>"
+
+            //Seta para minimizar
+            sdiv = sdiv + "<a data-target='#linkfiltro" + idponto + "' data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a></div></div>";
+            sdiv = sdiv + "<div id='linkfiltro" + idponto + "' class='collapse'>";
+
+            //Alerta / Caixa de dialogo
+            sdiv = sdiv + "<br /><div class='panel-body' style='padding-top:12px;'><div id='alerta" + idponto + "' class='alert alert-info' style='display: none; border: 1px solid; border-radius: 10px;'></div>";
+
+            //Menus Tabs - Nav tabs
+            sdiv = sdiv + " <div role='tabpanel'>";
+            sdiv = sdiv + " <ul class='nav nav-tabs' role='tablist'>";
+            sdiv = sdiv + " <li role='presentation' class='active'><a href='#tabinfo" + idponto + "' role='tab' data-toggle='tab' aria-expanded='true'>Principal</a></li>";
+            sdiv = sdiv + " <li role='presentation' class=''><a href='#tabobs" + idponto + "' role='tab' data-toggle='tab' aria-expanded='false'>Observação</a></li>";
+            sdiv = sdiv + " </ul>";
+            sdiv = sdiv + " <p/><p/>";
+
+            //Contéudo - Tab panes
+            sdiv = sdiv + " <div class='tab-content' style='padding: 1px;padding-top: 5px'>";
+
+            //Conteudo Primeiro Tab - Informações
+            sdiv = sdiv + " <div role='tabpanel' class='tab-pane fade active in' id='tabinfo" + idponto + "'>";
+
+            //ID do ponto
+            sdiv = sdiv + "<b>Código: </b>" + idponto;
+            sdiv = sdiv + " &nbsp;&nbsp;";
+
+            //Verifica status para definir o span
+            //Aguardando
+            if (idstatus == "1") {
+
+                //Status do ponto
+                sdiv = sdiv + "<span id='status" + idponto + "' class='label label-danger'>Status Roteiro: Aguardando</asp:Label></span>&nbsp;&nbsp;<span id='cont" + idponto + "' class='label label-danger'>1º Contato</asp:Label></span>";
+                sdiv = sdiv + " <br/><br/>";
+
+                //Status para registrar - Prospeccao e Pos-venda
+                sdiv = sdiv + "<div class='form-group'>";
+                sdiv = sdiv + "<label style='font-size:13px'><b>Status Registro:</b></label>";
+                sdiv = sdiv + "<select id='cmbstatus" + idponto + "' onchange='Apresenta_substatus(this.value," + idponto + ")' style='border-radius: 10px;width:100%; background-color:#ffffff; color:black; font-size:14px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>";
+                sdiv = sdiv + "<option value='0'>Selecione:</option>";
+                sdiv = sdiv + "<option value='1'>Prospecção</option>";
+                sdiv = sdiv + "<option value='2'>Pós-Venda</option>";
+                sdiv = sdiv + "</select>";
+                sdiv = sdiv + "</div>";
+
+                //Substatus para registrar
+                sdiv = sdiv + "<div class='form-group'>";
+                sdiv = sdiv + "<label style='font-size:13px'><b>Sub-Status Registro:</b></label>";
+                sdiv = sdiv + "<select id='cmbsubstatus" + idponto + "' onchange='Apresenta_CaixaDialog(this.value," + idponto + ")' style='border-radius: 10px;width:100%; background-color:#ffffff; color:#000000; font-size:14px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>";
+                sdiv = sdiv + "<option value=''>Selecione:</option>";
+                sdiv = sdiv + "<option value='1'>Negociação Fria</option>";
+                sdiv = sdiv + "<option value='2'>Negociação Morna</option>";
+                sdiv = sdiv + "<option value='3'>Negociação Quente</option>";
+                sdiv = sdiv + "<option value='4'>Vendido</option>";
+                sdiv = sdiv + "<option value='5'>Erro na Conta</option>";
+                sdiv = sdiv + "<option value='6'>Relacionamento</option>";
+                sdiv = sdiv + "<option value='7'>Troca de Chip</option>";
+                sdiv = sdiv + "<option value='8'>Troca de Máquina</option>";
+                sdiv = sdiv + "</select>";
+                sdiv = sdiv + "</div>";
+
+                //Botões
+                sdiv = sdiv + "<button type='button' onclick='AtualizaStatusPonto(2," + idponto + ");' style='border-radius: 10px;width:100%; height:30px; font-size:10px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>Concluído</button>";
+                sdiv = sdiv + " <p/><p/>";
+
+            }
+
+            //Concluido
+            if (idstatus == "2") {
+
+                //Status do ponto
+                sdiv = sdiv + "<span id='status" + idponto + "' class='label label-success'>Status Roteiro: Concluído</asp:Label></span>&nbsp;&nbsp;<span class='label label-success'>Cliente</asp:Label></span>";
+                sdiv = sdiv + " <p/><p/>";
+
+                //Status para registrar - Prospeccao e Pos-venda
+                sdiv = sdiv + "<div class='form-group'>";
+                sdiv = sdiv + "<label style='font-size:13px'><b>Status Registro:</b></label>";
+                sdiv = sdiv + "<select id='cmbstatus" + idponto + "' onchange='Apresenta_substatus(this.value," + idponto + ")' style='border-radius: 10px;width:100%; background-color:#ffffff; color:#000000; font-size:14px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>";
+                sdiv = sdiv + "<option value='0'>Selecione:</option>";
+                sdiv = sdiv + "<option value='1'>Prospecção</option>";
+                sdiv = sdiv + "<option value='2'>Pós-Venda</option>";
+                sdiv = sdiv + "</select>";
+                sdiv = sdiv + "</div>";
+
+                //Substatus para registrar
+                sdiv = sdiv + "<div class='form-group'>";
+                sdiv = sdiv + "<label style='font-size:13px'><b>Sub-Status Registro:</b></label>";
+                sdiv = sdiv + "<select id='cmbsubstatus" + idponto + "' onchange='Apresenta_CaixaDialog(this.value," + idponto + ")' style='border-radius: 10px;width:100%; background-color:#ffffff; color:#000000; font-size:14px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>";
+                sdiv = sdiv + "<option value=''>Selecione:</option>";
+                sdiv = sdiv + "<option value='1'>Negociação Fria</option>";
+                sdiv = sdiv + "<option value='2'>Negociação Morna</option>";
+                sdiv = sdiv + "<option value='3'>Negociação Quente</option>";
+                sdiv = sdiv + "<option value='4'>Vendido</option>";
+                sdiv = sdiv + "<option value='5'>Erro na Conta</option>";
+                sdiv = sdiv + "<option value='6'>Relacionamento</option>";
+                sdiv = sdiv + "<option value='7'>Troca de Chip</option>";
+                sdiv = sdiv + "<option value='8'>Troca de Máquina</option>";
+                sdiv = sdiv + "</select>";
+                sdiv = sdiv + "</div>";
+
+                //verifica valor
+                if (sdatainsercao != "") {
+                    //Verifica data de insercao / atual para alteração de roteiro concluido
+                    if (sdatainsercao == sdataatual) {
+                        //verifica permissão para carregamento do botão
+                        if (permissao_global == "Supervisor") {
+                            sdiv = sdiv + "<button type='button' onclick='AtualizaStatusPonto(2," + idponto + ");' style='border-radius: 10px;width:100%; height:30px; font-size:10px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>Concluído</button>";
+                            sdiv = sdiv + " <p/><p/>";
+                        }
+                    }
+                    else {
+                        //Botões
+                        sdiv = sdiv + "<button type='button' onclick='AtualizaStatusPonto(2," + idponto + ");' style='border-radius: 10px;width:100%; height:30px; font-size:10px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>Concluído</button>";
+                        sdiv = sdiv + " <p/><p/>";
+                    }
+                }
+            }
+
+            //Mapa
+            sdiv = sdiv + " <div id='mapa" + ind + "' style='width: 100%; height: 200px; border:1px; border-color:#E9EBEC; margin-bottom: 10px;box-shadow:0px 0px 1em #BBC0C8'></div><br />";
+            sdiv = sdiv + endereco;
+            sdiv = sdiv + " <p/><p/>";
+            sdiv = sdiv + "  </div>";
+
+            //Conteudo Segundo Tab - Observação
+            sdiv = sdiv + " <div role='tabpanel' class='tab-pane fade' style='padding: 1px; padding-top: 3px' id='tabobs" + idponto + "'>";
+            sdiv = sdiv + " <textarea id='txtobs" + idponto + "' placeholder=' Introduza a observação...' style='width:100%;border-radius: 9px; height: 240px; border: 1px solid; resize:none;'></textarea>";
+            sdiv = sdiv + " <p/><p/>";
+            sdiv = sdiv + " <div class='alert alert-info' style='margin:0px;border-radius: 10px;' role='alert'>";
+            sdiv = sdiv + " <h4 class='alert-heading'>Última observação</h4>";
+            sdiv = sdiv + " <hr>";
+
+            //verifica preenchimento vazio
+            if (observacao == undefined) {
+                sdiv = sdiv + " <p><span id='lblobservacao" + idponto + "'> </p></span>";
+                sdiv = sdiv + "  </div></div></div></div></div></div> ";
+            }
+            else {
+                sdiv = sdiv + " <p><span id='lblobservacao" + idponto + "'>" + observacao + "</p></span>";
+                sdiv = sdiv + "  </div></div></div></div></div></div> ";
+            }
+
+            var iiDiv = document.createElement('div');
+            iiDiv.innerHTML = sdiv;
+
+            document.getElementById('mapas').appendChild(iiDiv);
+
+            //cria posicao
+            var latlng = new google.maps.LatLng(lat,long);
+
+            //define conf
+            var options = {
+                zoom: 18,
+                center: latlng
+            };
+
+            //cria mapa
+            map = new google.maps.Map(document.getElementById("mapa" + ind), options);
+
+            //coloca marcador
+            var marker = new google.maps.Marker({position: latlng, map: map});
+
+            selecionadados(idponto, codstatus, codsubstatus);
+
+            sdiv = sdiv + "</div></div></div>";
+
+        }
+
+        //Seleciona os combos
+        function selecionadados(iponto, codstatus, codsubstatus) {
+            //valida valor
+            if (codstatus != null) {
+
+                $("#cmbstatus" + iponto + " option[value='" + codstatus + "']").attr("selected", true);
+                $("#cmbsubstatus" + iponto + " option[value='" + codsubstatus + "']").attr("selected", true);
+
+                var combosub = document.getElementById("cmbsubstatus" + iponto).options;
+
+                //oculta/apresenta de acordo com o status
+                if (codstatus == "1") {
+                    combosub.item(1).style.display = "block";
+                    combosub.item(2).style.display = "block";
+                    combosub.item(3).style.display = "block";
+                    combosub.item(4).style.display = "block";
+                    combosub.item(5).style.display = "none";
+                    combosub.item(6).style.display = "none";
+                    combosub.item(7).style.display = "none";
+                    combosub.item(8).style.display = "none";
+                }
+                else {
+                    //pos-venda
+                    combosub.item(1).style.display = "none";
+                    combosub.item(2).style.display = "none";
+                    combosub.item(3).style.display = "none";
+                    combosub.item(4).style.display = "none";
+                    combosub.item(5).style.display = "block";
+                    combosub.item(6).style.display = "block";
+                    combosub.item(7).style.display = "block";
+                    combosub.item(8).style.display = "block";
+                }
+            }
+        }
+
+        //Atualiza registro
+        function AtualizaStatusPonto(sIdStatus, sIdPonto) {
+
+            //verifica preechimento status e substatus
+            if (document.getElementById("cmbstatus" + sIdPonto).value == "") {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Selecione um Status!";
+                return;
+            }
+
+            if (document.getElementById("cmbsubstatus" + sIdPonto).value == "") {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Selecione um Substatus!";
+                return;
+            }
+
+            //Icone de carregamento
+            $("#myModal").modal({
+                show: true
+            });
+
+            //Verifica status de agendamento
+            if (sIdStatus == "3") {
+
+                //Exibe campo de data e hora
+                document.getElementById("txtdata" + sIdRoteiro).style.display = "block";
+                document.getElementById("txttime" + sIdRoteiro).style.display = "block";
+
+                //verifica preenchimento da data
+                if (document.getElementById("txtdata" + sIdRoteiro).value == "") {
+                    //atualiza span
+                    document.getElementById("status" + sIdRoteiro).className = "label label-info";
+                    document.getElementById("status" + sIdRoteiro).innerHTML = "Status Atual: Aguardando Data";
+
+                    //trata alerta
+                    document.getElementById("alerta" + sIdRoteiro).style = "display: visible;";
+                    document.getElementById("alerta" + sIdRoteiro).innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Seleciona uma Data para Retorno!";
+                    $('#myModal').modal('hide');
+                    return;
+                }
+                else {
+
+                    //Verifica preenchimento da hora
+                    if (document.getElementById("txttime" + sIdRoteiro).value == "") {
+
+                        //atualiza span
+                        document.getElementById("status" + sIdRoteiro).className = "label label-info";
+                        document.getElementById("status" + sIdRoteiro).innerHTML = "Status Atual: Aguardando Hora";
+
+                        //trata alerta
+                        document.getElementById("alerta" + sIdRoteiro).style = "display: visible;";
+                        document.getElementById("alerta" + sIdRoteiro).innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Seleciona uma Hora para Retorno!";
+                        $('#myModal').modal('hide');
+                        return;
+                    }
+                    else {
+                        //Formata data
+                        var sdtAgenda = document.getElementById("txtdata" + sIdRoteiro).value + " " + document.getElementById("txttime" + sIdRoteiro).value;
+
+                        //Atualiza o status
+                        var sret = AtualizaStatus(sIdStatus, sIdRoteiro, sdtAgenda, iduser_global, document.getElementById("cmbstatus" + sIdRoteiro).value, document.getElementById("cmbsubstatus" + sIdRoteiro).value, document.getElementById("txtobs" + sIdRoteiro).value);
+
+                        if (sret == '') {
+
+                            document.getElementById("alerta").style = "display: visible;";
+                            document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Atualizar Status para Agendamento!";
+                            $('#myModal').modal('hide');
+                            return;
+                        }
+                        else {
+                            //Insere dados de agendamento
+                            var sretag = Registra_Agendamento('', sidrota, sIdRoteiro, sIdStatus, iduser_global, '', '', sdtAgenda);
+
+                            if (sretag == '') {
+                                document.getElementById("alerta").style = "display: visible;";
+                                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Inserir Agendamento!";
+                                $('#myModal').modal('hide');
+                                return;
+                            }
+
+                            //Data preenchida, trata campos e alerta
+                            document.getElementById("alerta" + sIdRoteiro).style = "display: visible;";
+                            document.getElementById("status" + sIdRoteiro).className = "label label-info";
+                            document.getElementById("status" + sIdRoteiro).innerHTML = "Status Atual: Agendado";
+                            document.getElementById("alerta" + sIdRoteiro).style = "display: none;";
+                            $('#myModal').modal('hide');
+
+                        }
+                    }
+
+                }
+
+            } else {
+                //concluido
+                //trata campos
+                document.getElementById("status" + sIdPonto).className = "label label-success";
+                document.getElementById("status" + sIdPonto).innerHTML = "Status Atual: Concluído";
+                document.getElementById("cont" + sIdPonto).className = "label label-success";
+                document.getElementById("cont" + sIdPonto).innerHTML = " Cliente ";
+                document.getElementById("alerta" + sIdPonto).style = "display: none;";
+
+                //Atualiza o status
+                var sret = AtualizaPonto(sIdStatus, sIdPonto, 'Null', iduser_global, document.getElementById("cmbstatus" + sIdPonto).value, document.getElementById("cmbsubstatus" + sIdPonto).value, document.getElementById("txtobs" + sIdPonto).value, permissao_global);
+
+                if (sret == '') {
+
+                    document.getElementById("alerta").style = "display: visible;";
+                    document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Inserir Status para Concluído!";
+                    $('#myModal').modal('hide');
+                    return;
+                }
+                else {
+                    $('#myModal').modal('hide');
+                }
+            }
+        }
+
+        //Apresenta informações de acordo com o combo selecionado
+        function Apresenta_substatus(status, sIdPonto) {
+
+            var combosub = document.getElementById("cmbsubstatus" + sIdPonto).options;
+
+            //Verifica tipo status para ocultae options
+            if (status == "1") {
+                document.getElementById("alerta" + sIdPonto).style = "display: none;";
+                combosub.item(0).selected = true;
+                combosub.item(1).style.display = "block";
+                combosub.item(2).style.display = "block";
+                combosub.item(3).style.display = "block";
+                combosub.item(4).style.display = "block";
+                combosub.item(5).style.display = "none";
+                combosub.item(6).style.display = "none";
+                combosub.item(7).style.display = "none";
+                combosub.item(8).style.display = "none";
+            }
+            else {
+                //pos-venda
+                document.getElementById("alerta" + sIdPonto).style = "display: none;";
+                combosub.item(0).selected = true;
+                combosub.item(1).style.display = "none";
+                combosub.item(2).style.display = "none";
+                combosub.item(3).style.display = "none";
+                combosub.item(4).style.display = "none";
+                combosub.item(5).style.display = "block";
+                combosub.item(6).style.display = "block";
+                combosub.item(7).style.display = "block";
+                combosub.item(8).style.display = "block";
+            }
+        }
+
+        //Apresenta informações de acordo com o combo selecionado
+        function Apresenta_CaixaDialog(valor, sIdPonto) {
+            //trata alerta de acordo com a selecao do substatus
+            switch (valor) {
+                case "":
+                    document.getElementById("alerta" + sIdPonto).style = "display: none;";
+                    break;
+                case "1":
+                    document.getElementById("alerta" + sIdPonto).style = "display: visible;";
+                    document.getElementById("alerta" + sIdPonto).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Tenho o <b>NOME</b> e <b>CONTATO</b> do decisor, mas não consegui falar e/ou apresentar o produto!";
+                    break;
+                case "2":
+                    document.getElementById("alerta" + sIdPonto).style = "display: visible;";
+                    document.getElementById("alerta" + sIdPonto).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Apresentei o produto mas o decisor ficou de pensar e/ou falar com alguém!";
+                    break;
+                case "3":
+                    document.getElementById("alerta" + sIdPonto).style = "display: visible;";
+                    document.getElementById("alerta" + sIdPonto).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Apresentei o produto, fechei a venda, mas o decisor precisa de tempo para criar condições de pagamento!";
+                    break;
+                case "4":
+                    document.getElementById("alerta" + sIdPonto).style = "display: visible;";
+                    document.getElementById("alerta" + sIdPonto).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Parabéns!";
+                    break;
+                case "5":
+                    document.getElementById("alerta" + sIdPonto).style = "display: visible;";
+                    document.getElementById("alerta" + sIdPonto).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Cliente sem acesso ao App e/ou conta!";
+                    break;
+                case "6":
+                    document.getElementById("alerta" + sIdPonto).style = "display: visible;";
+                    document.getElementById("alerta" + sIdPonto).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Negociação de taxa, oportunidade de venda de outro produto ou serviço, pedido de indicação, bobina e etc...";
+                    break;
+                case "7":
+                    document.getElementById("alerta" + sIdPonto).style = "display: visible;";
+                    document.getElementById("alerta" + sIdPonto).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Sem sinal de internet móvel!";
+                    break;
+                case "8":
+                    document.getElementById("alerta" + sIdPonto).style = "display: visible;";
+                    document.getElementById("alerta" + sIdPonto).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Equipamento com defeito irremediável!";
+                    break;
+            }
+        }
+
+    </script>
+
+    <div id="flotTip" style="display: none; position: absolute;"></div>
+
+</body>
+</html>

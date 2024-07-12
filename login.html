@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0047)http://steelcoders.com/modern/admin1/login.html -->
+<html style="" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Title -->
+    <title>GAT® Link | Login - App Front</title>
+
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="description" content="STT GAT Link">
+    <meta name="keywords" content="admin,dashboard,stt">
+    <meta name="author" content="leonamcorreia">
+
+    <link rel="shortcut icon" type="image/png" href="favicon.png" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link href="files/pace-theme-flash.css" rel="stylesheet">
+    <link href="files/uniform.default.min.css" rel="stylesheet">
+    <link href="files/bootstrap.min.css" rel="stylesheet" type="text/css">
+    
+    <link href="files/simple-line-icons.css" rel="stylesheet" type="text/css">
+    <link href="files/menu_cornerbox.css" rel="stylesheet" type="text/css">
+    <link href="files/switchery.min.css" rel="stylesheet" type="text/css">
+    <link href="files/style.css" rel="stylesheet" type="text/css">
+
+    <!-- Theme Styles -->
+    <link href="files/modern.min.css" rel="stylesheet" type="text/css">
+    <link href="files/green.css" class="theme-color" rel="stylesheet" type="text/css">
+    <link href="files/custom.css" rel="stylesheet" type="text/css">
+    <script src="js/apijs.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- Funções -->
+    <script>
+
+        //login_client
+        function Acao() {
+
+            //apresenta carregamento
+            var iload = document.getElementById("icon_loading");
+            var camps = document.getElementById("div_campos");
+            var dalerta = document.getElementById("alerta");
+            var despaco = document.getElementById("dspaco");
+            
+            //altera displays
+            iload.style.display = "block";
+            despaco.style.display = "block";
+            camps.style.display = "none";
+            dalerta.style.display = "none";
+
+            //chama função de login
+            login_client();
+        }
+
+        //Login
+        function login_client() {
+            
+            //funcao login
+            var sret = login(document.getElementById('txtlogin').value, document.getElementById('txtsenha').value);
+
+            alert(sret);
+            
+            //valida retorno
+            if  (sret == ''){
+                document.getElementById('icon_loading').style.display = 'none';
+                document.getElementById('dspaco').style.display = 'none';
+                document.getElementById('div_campos').style.display = 'block';
+                document.getElementById("alerta").style.display = "block";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Login Inválido";
+                return;
+            }
+            else {
+
+                //array separado por ;
+                var arrayOfStrings = sret.split(';');
+
+                //verifica retorno
+                if (arrayOfStrings[0] == "OK") {
+
+                    var arrayOfStrings2 = arrayOfStrings[1].split('|');
+
+                    //variavei globais
+                    iduser_global=arrayOfStrings2[0];
+                    user_global=arrayOfStrings2[1];
+                    permissao_global = arrayOfStrings2[2];
+                    sstatus_global = arrayOfStrings2[3];
+
+                    //abre pagina
+                    //window.location = 'http://localhost:57086/gatlink.html?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + sstatus_global;
+
+                    if (permissao_global == "Supervisor") {
+                        window.location = 'https://www.gatlink.com.br/appmercadopago/gatlink_sup.html' + '?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + sstatus_global;
+                    }
+                    else {
+                        window.location = 'https://www.gatlink.com.br/appmercadopago/gatlink.html' + '?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + sstatus_global;
+                    }
+                    
+
+                }
+                else {
+
+                    //erro do retorno
+                    document.getElementById('icon_loading').style.display = 'none';
+                    document.getElementById('dspaco').style.display = 'none';
+                    document.getElementById('div_campos').style.display = 'block';
+                    document.getElementById("alerta").style.display = "block";
+                    document.getElementById("alerta").innerHTML="<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong>&nbsp;" + arrayOfStrings[1];
+                    return;
+                }
+            }
+        }
+
+    </script>
+
+    <style>
+
+        #alerta{
+            display:none;
+        }
+
+        #icon_loading{
+            display:none;
+        }
+
+        #dspaco{
+            display:none;
+        }
+
+    </style>
+
+</head>
+
+<body class="page-header-fixed  pace-done">
+
+	<!-- Barra de Progresso -->
+    <div class="pace  pace-inactive">
+
+        <div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+
+	<div class="overlay"></div>
+
+    <!-- Modal aguarde -->
+    <div class="modal" id="myModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Corpo -->
+    <main class="page-content content-wrap" style="background: #F1F4F9;">
+        
+        <!-- topo -->
+        <div class="page-inner" style="background-color:#DD2F2F">
+
+            <!-- div principal conteudo -->
+            <div id="main-wrapper" style="padding-bottom: 210px;">
+                
+                <div class="row">
+
+                    <div class="col-md-3 center">
+
+                        <!-- Conteudo -->
+                        <div class="login-box">
+
+                            <!-- Alerta -->
+                            <div id="alerta" class="alert alert-danger" style="display:none;"></div>
+
+                            <p></p>
+
+                            <!-- imagem mercado pago -->
+                            <div class="row">
+                                <div class="center">
+                                    <img src="imagens/logoclaro.png" width="180px" alt="">
+                                </div>
+                            </div>
+
+                            <br />
+
+                            <!-- Titulo -->
+                            <div class="logo-name text-lg text-center" style="color:white">GAT® Link App Front</div>
+                            <div class="row"><div class="center"  style="color:white">TEL - Mercado Pago </div></div>
+
+                            <br />
+                           
+                            <!-- icone de carregamento -->
+                            <div id="div_icon" class="d-flex justify-content-center">
+                                <div id="icon_loading" class="spinner-border" style="color:white;" role="status"></div>
+                            </div>
+
+                            <div id="dspaco" class="jumbotron" style="background-color:#DD2F2F;"></div>
+
+                            <!-- Campos -->
+                            <div id="div_campos">
+                                <div class="form-group">
+                                    <input type="text" id="txtlogin" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#ffffff" placeholder="Login">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="txtsenha" class="form-control" style="border-radius: 10px; width:100%; height:50px; background-color:#ffffff" placeholder="Senha">
+                                </div>
+                            </div>
+
+                            <!-- Botão -->
+                            <button type="button" class="btn btn-success btn-block" style="border-radius: 10px;width:100%; height:50px; background-color:#94150F" onclick="Acao()"><font size=3><b>Login</b></font></button>
+
+                            <!-- footer -->
+                            <p class="text-center m-t-xs text-sm"  style="color:white">2023 © STT GAT® Link -  for World Class Solutions</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+    </main>
+
+</body>
+</html>

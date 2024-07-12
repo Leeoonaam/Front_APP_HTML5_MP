@@ -1,0 +1,1094 @@
+﻿<!DOCTYPE html>
+<html style="" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>:: STT - GAT® Link ::</title>
+
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="description" content="STT GAT Link">
+    <meta name="keywords" content="app,rotas,stt">
+    <meta name="author" content="leonamcorreia">
+
+    <link href="files/pace-theme-flash.css" rel="stylesheet">
+    <link href="files/uniform.default.min.css" rel="stylesheet">
+    <link href="files/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="./weather-icons-master/css/weather-icons.min.css" rel="stylesheet" type="text/css">
+    <link href="./simple-line-icons-master/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+    <link href="files/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="files/menu_cornerbox.css" rel="stylesheet" type="text/css">
+    <link href="files/waves.min.css" rel="stylesheet" type="text/css">
+    <link href="files/switchery.min.css" rel="stylesheet" type="text/css">
+    <link href="files/style.css" rel="stylesheet" type="text/css">
+    <link href="files/component.css" rel="stylesheet" type="text/css">
+    <link href="files/MetroJs.min.css" rel="stylesheet" type="text/css">
+    <link href="files/toastr.min.css" rel="stylesheet" type="text/css">
+    <link href="files/modern.min.css" rel="stylesheet" type="text/css">
+    <link href="files/green.css" class="theme-color" rel="stylesheet" type="text/css">
+    <link href="files/custom.css" rel="stylesheet" type="text/css">
+    <script src="js/apijs.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+
+
+    <!-- Funções -->
+    <script>
+
+        //Page Load
+        window.onload = function () {
+
+            iduser_global = queryString("id");
+            user_global = queryString("nom");
+            permissao_global = queryString("perm");
+            status_global = queryString("st");
+
+            //altera titulo da tela
+            if (permissao_global == "Supervisor") {
+                document.getElementById("htitulo").innerHTML = "<span id='htitulo' style='color:#000000;font-size:27px;'><b>&nbsp;Agendamentos</b></span>";
+            }
+            else {
+                document.getElementById("htitulo").innerHTML = "<span id='htitulo' style='color:#000000;font-size:27px;'><b>&nbsp;Rotas</b></span>";
+            }
+
+            //Acao();
+            //getLocation();
+            //timer_agendamento();
+        }
+
+        //String URL
+        function queryString(parameter) {
+            var loc = location.search.substring(1, location.search.length);
+            var param_value = false;
+            var params = loc.split("&");
+            for (i = 0; i < params.length; i++) {
+                param_name = params[i].substring(0, params[i].indexOf('='));
+                if (param_name == parameter) {
+                    param_value = params[i].substring(params[i].indexOf('=') + 1)
+                }
+            }
+            if (param_value) {
+                return param_value;
+            }
+            else {
+                return undefined;
+            }
+        }
+
+        //Captura Localização
+        function getLocation() {
+
+            if (navigator.geolocation) {
+
+                navigator.geolocation.getCurrentPosition(showPosition);
+
+
+            }
+
+        }
+
+        //Captura posição
+        function showPosition(position) {
+
+            //cria posicao
+            var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+            //define conf
+            var options = {
+                zoom: 18,
+                center: latlng
+            };
+
+            //cria mapa
+            var map = new google.maps.Map(document.getElementById("mapa"), options);
+
+            //coloca marcador
+            var marker = new google.maps.Marker({ position: latlng, map: map });
+
+            //seta posicao
+            ping_tempo(iduser_global, position.coords.latitude, position.coords.longitude,'');
+
+            //salva posicao hidden
+            document.getElementById("h_lat").value = position.coords.latitude;
+            document.getElementById("h_lng").value = position.coords.longitude;
+
+            //escreve lat , long na tela
+            document.getElementById("lblLatitude").innerHTML = "Latitude: " + position.coords.latitude;
+            document.getElementById("lblLongitude").innerHTML = "Longitude: " + position.coords.longitude;
+        }
+
+        //Abre pagina
+        function open_page(pagina) {
+
+            //Icone de carregamento
+            $("#myModal").modal({
+                show: true
+            });
+
+            window.location = pagina + '?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + status_global;
+            //window.location = 'https://www.gatlink.com.br/appmercadopago/' + pagina + '?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + status_global;
+        }
+
+        //Carrega as Rotas 
+        function Acao() {
+
+            //verifica permissao para carregamento das rotas
+            if (permissao_global == "Supervisor") {
+
+                var sret = rota_usuario(iduser_global, "Supervisor");
+            }
+            else {
+                
+                var sret = rota_usuario(iduser_global, "Promotor");
+                alert(sret);
+            }
+            
+            //valida retorno
+            if (sret == '') {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao carregar Rotas";
+                return;
+            }
+            else {
+                
+                var obj_json = JSON.parse(sret);
+                
+                //captura quantidade de mapas criados
+                totmaps = obj_json.length;
+
+                document.getElementById('mapas').innerHTML = "";
+
+                //cria mapas
+                for (let index = 0; index < obj_json.length; index++) {
+
+                    //cria_mapas(index, obj_json[index].Rota, obj_json[index].Sequencia, obj_json[index].Latitude, obj_json[index].Longitude, obj_json[index].Endereco, obj_json[index].idcodstatus, obj_json[index].idcodroteiro, obj_json[index].DataAgendamento, obj_json[index].IDCodRota, obj_json[index].observacao, obj_json[index].CodStatusRegistro, obj_json[index].CodSubStatusRegistro, '29/11/2021', '29/11/2021', '', '');
+                    cria_mapas(index, obj_json[index].Rota, obj_json[index].Sequencia, obj_json[index].Latitude, obj_json[index].Longitude, obj_json[index].Endereco, obj_json[index].idcodstatus, obj_json[index].idcodroteiro, obj_json[index].DataAgendamento, obj_json[index].IDCodRota, obj_json[index].observacao, obj_json[index].CodStatusRegistro, obj_json[index].CodSubStatusRegistro, obj_json[index].DataInsercao, obj_json[index].DataAtual,obj_json[index].IdCodUsuarioSupervisor, obj_json[index].Idcodusuario, obj_json[index].Sup);
+                }
+
+            }
+
+        }
+
+        //Cria os mapas
+        function cria_mapas(ind, rota, seq, lat, long, endereco, idstatus, idroteiro, sdata, irota, observacao, codstatus, codsubstatus, datainsercao, dataatual, sidsup, sIduser, snomesup) {
+
+            var sdiv = "";
+            
+            sdiv = sdiv + "<div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>";
+            sdiv = sdiv + "<div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>";
+
+            //Sequencia e o nome da rota
+            sdiv = sdiv + "<span class='label label-success'>&nbsp;" + seq + "&nbsp;</span>" + " <b>&nbsp;" + rota + "</b><p></p>";
+
+            //verifica status para apresentação de titulo
+            if (idstatus == "1") {
+                sdiv = sdiv + "<span id='info" + idroteiro + "' style='text-shadow: 0 0 0.1em red, 0 0 0.01em red'><strong>Atenção!</strong> Rota aguardando visita!</span><p></p>" + endereco;
+            }
+            else if (idstatus == "2") {
+                if (rota == "Rotas - Vendas Aplicativo") {
+                    sdiv = sdiv + "<span id='info" + idroteiro + "' style='text-shadow: 0 0 0.1em black, 0 0 0.01em black'><strong>Atenção!</strong> Rota criada por uma Venda!</span><p></p>" + endereco;
+                }
+                else
+                {
+                    sdiv = sdiv + "<span id='info" + idroteiro + "' style='text-shadow: 0 0 0.1em black, 0 0 0.01em black'><strong>Atenção!</strong> Rota já trabalhada!</span><p></p>" + endereco;
+                }
+                
+            }
+            else {
+                sdiv = sdiv + "<span id='info" + idroteiro + "' style='text-shadow: 0 0 0.1em #08A7C3, 0 0 0.01em #08A7C3'><strong>Atenção!</strong> Rota agendada!</span><p></p>" + endereco;
+            }
+
+            sdiv = sdiv + "<div class='panel-control'>"
+
+            //Seta para minimizar
+            sdiv = sdiv + "<a data-target='#linkfiltro" + idroteiro + "' data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a></div></div>";
+            sdiv = sdiv + "<div id='linkfiltro" + idroteiro + "' class='collapse'>";
+                
+            //Alerta / Caixa de dialogo
+            sdiv = sdiv + "<br /><div class='panel-body' style='padding-top:12px;'><div id='alerta" + idroteiro + "' class='alert alert-info' style='display: none; border: 1px solid; border-radius: 10px;'></div>";
+
+            //verifica se o supervisor já tratou
+            if (sidsup === null) {
+                //não carrega alerta
+            }
+            else {
+                sdiv = sdiv + " <div class='alert alert-info new' style='border-radius:10px;margin:0px;box-shadow:0px 0px 1em #BBC0C8'><strong>Atenção!</strong>  Supervisor: " + ssup + " realizou uma tratativa à Rota!</div><br />";
+            }
+
+            //Menus Tabs - Nav tabs
+            sdiv = sdiv + " <div role='tabpanel'>";
+            sdiv = sdiv + " <ul class='nav nav-tabs' role='tablist'>";
+            sdiv = sdiv + " <li role='presentation' class='active'><a href='#tabinfo" + idroteiro + "' role='tab' data-toggle='tab' aria-expanded='true'>Principal</a></li>";
+            sdiv = sdiv + " <li role='presentation' class=''><a href='#tabobs" + idroteiro + "' role='tab' data-toggle='tab' aria-expanded='false'>Observação</a></li>";
+            sdiv = sdiv + " </ul>";
+            sdiv = sdiv + " <p/><p/>";
+
+            //Contéudo - Tab panes
+            sdiv = sdiv + " <div class='tab-content' style='padding: 1px;padding-top: 5px'>";
+
+            //Conteudo Primeiro Tab - Informações
+            sdiv = sdiv + " <div role='tabpanel' class='tab-pane fade active in' id='tabinfo" + idroteiro + "'>";
+
+            //ID do roteiro
+            sdiv = sdiv + "<b>Código: </b>" + idroteiro;
+            sdiv = sdiv + " &nbsp;&nbsp;";
+
+            //Verifica status para definir o span
+            //Aguardando
+            if (idstatus == "1") {
+
+                //Status do roteiro
+                sdiv = sdiv + "<span id='status" + idroteiro + "' class='label label-danger'>Status Roteiro: Aguardando</asp:Label></span>&nbsp;&nbsp;<span id='cont" + idroteiro + "' class='label label-danger'>1º Contato</asp:Label></span>";
+                sdiv = sdiv + " <br/><br/>";
+
+                //Status para registrar - Prospeccao e Pos-venda
+                sdiv = sdiv + "<div class='form-group'>";
+                sdiv = sdiv + "<label style='font-size:13px'><b>Status Registro:</b></label>";
+                sdiv = sdiv + "<select id='cmbstatus" + idroteiro + "' onchange='Apresenta_substatus(this.value," + idroteiro + ")' style='border-radius: 10px;width:100%; background-color:#ffffff; color:black; font-size:14px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>";
+                sdiv = sdiv + "<option value='0'>Selecione:</option>";
+                sdiv = sdiv + "<option value='1'>Prospecção</option>";
+                sdiv = sdiv + "<option value='2'>Pós-Venda</option>";
+                sdiv = sdiv + "</select>";
+                sdiv = sdiv + "</div>";
+
+                //Substatus para registrar 
+                sdiv = sdiv + "<div class='form-group'>";
+                sdiv = sdiv + "<label style='font-size:13px'><b>Sub-Status Registro:</b></label>";
+                sdiv = sdiv + "<select id='cmbsubstatus" + idroteiro + "' onchange='Apresenta_CaixaDialog(this.value," + idroteiro + ")' style='border-radius: 10px;width:100%; background-color:#ffffff; color:#000000; font-size:14px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>";
+                sdiv = sdiv + "<option value=''>Selecione:</option>";
+                sdiv = sdiv + "<option value='1'>Negociação Fria</option>";
+                sdiv = sdiv + "<option value='2'>Negociação Morna</option>";
+                sdiv = sdiv + "<option value='3'>Negociação Quente</option>";
+                sdiv = sdiv + "<option value='4'>Vendido</option>";
+                sdiv = sdiv + "<option value='5'>Erro na Conta</option>";
+                sdiv = sdiv + "<option value='6'>Relacionamento</option>";
+                sdiv = sdiv + "<option value='7'>Troca de Chip</option>";
+                sdiv = sdiv + "<option value='8'>Troca de Máquina</option>";
+                sdiv = sdiv + "</select>";
+                sdiv = sdiv + "</div>";
+
+                //Botões
+                sdiv = sdiv + "<button type='button' onclick='AtualizaStatusRoteiro(2," + idroteiro + "," + irota + ");' style='border-radius: 10px;width:100%; height:30px; font-size:10px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>Concluído</button>";
+                sdiv = sdiv + "<button type='button' onclick='AtualizaStatusRoteiro(3," + idroteiro + "," + irota + ");' style='border-radius: 10px;width:100%; height:30px; font-size:10px; border-color:#cfcfcf' class='text-center btn btn-info btn-block'>Agendado</button>";
+                sdiv = sdiv + " <p/><p/>";
+
+                //Data
+                sdiv = sdiv + "<input type='date' id='txtdata" + idroteiro + "' class='form-control' style='border-radius: 10px; display:none;'>";
+                sdiv = sdiv + " <p/><p/>";
+
+                //Hora
+                sdiv = sdiv + "<input type='time' id='txttime" + idroteiro + "' class='form-control' style='border-radius: 10px; display:none;'>";
+            }
+
+            //Concluido
+            if (idstatus == "2") {
+                //Status do roteiro
+                sdiv = sdiv + "<span id='status" + idroteiro + "' class='label label-success'>Status Roteiro: Concluído</asp:Label></span>&nbsp;<span class='label label-success'>Cliente</asp:Label></span>";
+                sdiv = sdiv + " <p/><p/>";
+
+                //Status para registrar - Prospeccao e Pos-venda
+                sdiv = sdiv + "<div class='form-group'>";
+                sdiv = sdiv + "<label style='font-size:13px'><b>Status Registro:</b></label>";
+                sdiv = sdiv + "<select id='cmbstatus" + idroteiro + "' onchange='Apresenta_substatus(this.value," + idroteiro + ")' style='border-radius: 10px;width:100%; background-color:#ffffff; color:#000000; font-size:14px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>";
+                sdiv = sdiv + "<option value='0'>Selecione:</option>";
+                sdiv = sdiv + "<option value='1'>Prospecção</option>";
+                sdiv = sdiv + "<option value='2'>Pós-Venda</option>";
+                sdiv = sdiv + "</select>";
+                sdiv = sdiv + "</div>";
+
+                //Substatus para registrar 
+                sdiv = sdiv + "<div class='form-group'>";
+                sdiv = sdiv + "<label style='font-size:13px'><b>Sub-Status Registro:</b></label>";
+                sdiv = sdiv + "<select id='cmbsubstatus" + idroteiro + "' onchange='Apresenta_CaixaDialog(this.value," + idroteiro + ")' style='border-radius: 10px;width:100%; background-color:#ffffff; color:#000000; font-size:14px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>";
+                sdiv = sdiv + "<option value=''>Selecione:</option>";
+                sdiv = sdiv + "<option value='1'>Negociação Fria</option>";
+                sdiv = sdiv + "<option value='2'>Negociação Morna</option>";
+                sdiv = sdiv + "<option value='3'>Negociação Quente</option>";
+                sdiv = sdiv + "<option value='4'>Vendido</option>";
+                sdiv = sdiv + "<option value='5'>Erro na Conta</option>";
+                sdiv = sdiv + "<option value='6'>Relacionamento</option>";
+                sdiv = sdiv + "<option value='7'>Troca de Chip</option>";
+                sdiv = sdiv + "<option value='8'>Troca de Máquina</option>";
+                sdiv = sdiv + "</select>";
+                sdiv = sdiv + "</div>";
+
+                //Verifica data de insercao / atual para alteração de roteiro concluido
+                if (datainsercao == dataatual) {
+                    //verifica permissão 
+                    if (permissao_global == "Supervisor") {
+                        //Botões
+                        sdiv = sdiv + "<button type='button' onclick='AtualizaStatusRoteiro(2," + idroteiro + "," + irota + ");' style='border-radius: 10px;width:100%; height:30px; font-size:10px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>Concluído</button>";
+                        sdiv = sdiv + " <p/><p/>";
+                    }
+                }
+                else {
+                    //Botões
+                    sdiv = sdiv + "<button type='button' onclick='AtualizaStatusRoteiro(2," + idroteiro + "," + irota + ");' style='border-radius: 10px;width:100%; height:30px; font-size:10px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>Concluído</button>";
+                    sdiv = sdiv + "<button type='button' onclick='AtualizaStatusRoteiro(3," + idroteiro + "," + irota + ");' style='border-radius: 10px;width:100%; height:30px; font-size:10px; border-color:#cfcfcf' class='text-center btn btn-info btn-block'>Agendado</button>";
+                    sdiv = sdiv + " <p/><p/>";
+                }
+                
+                //Data
+                sdiv = sdiv + "<input type='date' id='txtdata" + idroteiro + "' class='form-control' style='border-radius: 10px; display:none;'>";
+                sdiv = sdiv + " <p/><p/>";
+
+                //Hora
+                sdiv = sdiv + "<input type='time' id='txttime" + idroteiro + "' class='form-control' style='border-radius: 10px; display:none;'>";
+            }
+
+            //Agendamento
+            if (idstatus == "3") {
+
+                //Status do roteiro
+                sdiv = sdiv + "<span id='status" + idroteiro + "' class='label label-info'>Status Roteiro: Agendado</asp:Label></span>&nbsp;<span class='label label-info'>Cliente</asp:Label></span>";
+                sdiv = sdiv + " <br/><br/>";
+
+                //Status para registrar - Prospeccao e Pos-venda
+                sdiv = sdiv + "<div class='form-group'>";
+                sdiv = sdiv + "<label style='font-size:13px'><b>Status Registro:</b></label>";
+                sdiv = sdiv + "<select id='cmbstatus" + idroteiro + "' onchange='Apresenta_substatus(this.value," + idroteiro + ")' style='border-radius: 10px;width:100%; background-color:#ffffff; color:#000000; font-size:14px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>";
+                sdiv = sdiv + "<option value='0'>Selecione:</option>";
+                sdiv = sdiv + "<option value='1'>Prospecção</option>";
+                sdiv = sdiv + "<option value='2'>Pós-Venda</option>";
+                sdiv = sdiv + "</select>";
+                sdiv = sdiv + "</div>";
+
+                //Substatus para registrar 
+                sdiv = sdiv + "<div class='form-group'>";
+                sdiv = sdiv + "<label style='font-size:13px'><b>Sub-Status Registro:</b></label>";
+                sdiv = sdiv + "<select id='cmbsubstatus" + idroteiro + "' onchange='Apresenta_CaixaDialog(this.value," + idroteiro + ")' style='border-radius: 10px;width:100%; background-color:#ffffff; color:#000000; font-size:14px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>";
+                sdiv = sdiv + "<option value=''>Selecione:</option>";
+                sdiv = sdiv + "<option value='1'>Negociação Fria</option>";
+                sdiv = sdiv + "<option value='2'>Negociação Morna</option>";
+                sdiv = sdiv + "<option value='3'>Negociação Quente</option>";
+                sdiv = sdiv + "<option value='4'>Vendido</option>";
+                sdiv = sdiv + "<option value='5'>Erro na Conta</option>";
+                sdiv = sdiv + "<option value='6'>Relacionamento</option>";
+                sdiv = sdiv + "<option value='7'>Troca de Chip</option>";
+                sdiv = sdiv + "<option value='8'>Troca de Máquina</option>";
+                sdiv = sdiv + "</select>";
+                sdiv = sdiv + "</div>";
+
+                //Botões
+                sdiv = sdiv + "<button type='button' onclick='AtualizaStatusRoteiro(2," + idroteiro + "," + irota + ");' style='border-radius: 10px;width:100%; height:30px; font-size:10px; border-color:#cfcfcf' class='text-center btn btn-success btn-block'>Concluído</button>";
+                sdiv = sdiv + "<button type='button' onclick='AtualizaStatusRoteiro(3," + idroteiro + "," + irota + ");' style='border-radius: 10px;width:100%; height:30px; font-size:10px; border-color:#cfcfcf' class='text-center btn btn-info btn-block'>Agendado</button>";
+                sdiv = sdiv + " <p/><p/>";
+
+                //Data
+                sdiv = sdiv + "<input type='date' id='txtdata" + idroteiro + "' value='" + sdata.substring(0, 10) + "' class='form-control' style='border-radius: 10px; display:block;'>";
+                sdiv = sdiv + " <p/><p/>";
+
+                //Hora
+                sdiv = sdiv + "<input type='time' id='txttime" + idroteiro + "' value='" + sdata.substring(11, 16) + "' class='form-control' style='border-radius: 10px; display:block;'>";
+
+            }
+
+            //Mapa
+            sdiv = sdiv + " <div id='mapa" + ind + "' style='width: 100%; height: 200px; border:1px; border-color:#E9EBEC; margin-bottom: 10px;box-shadow:0px 0px 1em #BBC0C8'></div><br />";
+            sdiv = sdiv + endereco;
+            sdiv = sdiv + " <p/><p/>";
+            sdiv = sdiv + "  </div>";
+
+            //Conteudo Segundo Tab - Observação
+            sdiv = sdiv + " <div role='tabpanel' class='tab-pane fade' style='padding: 1px; padding-top: 3px' id='tabobs" + idroteiro + "'>";
+            sdiv = sdiv + " <textarea id='txtobs" + idroteiro + "' placeholder=' Introduza a observação...' style='width:100%;border-radius: 9px; height: 240px; border: 1px solid; resize:none;'></textarea>";
+            sdiv = sdiv + " <p/><p/>";
+            sdiv = sdiv + " <div class='alert alert-info' style='margin:0px;border-radius: 10px;' role='alert'>";
+            sdiv = sdiv + " <h4 class='alert-heading'>Última observação</h4>";
+            sdiv = sdiv + " <hr>";
+
+            //verifica preenchimento vazio 
+            if (observacao == undefined) {
+                sdiv = sdiv + " <p><span id='lblobservacao" + idroteiro + "'> </p></span>";
+                sdiv = sdiv + "  </div></div></div></div></div></div> ";
+            }
+            else {
+                sdiv = sdiv + " <p><span id='lblobservacao" + idroteiro + "'>" + observacao + "</p></span>";
+                sdiv = sdiv + "  </div></div></div></div></div></div> ";
+            }
+
+            //Aplica
+            var iiDiv = document.createElement('div');
+            iiDiv.innerHTML = sdiv;
+
+            document.getElementById('mapas').appendChild(iiDiv);
+
+            //cria posicao
+            var latlng = new google.maps.LatLng(lat, long);
+
+            //define conf
+            var options = {
+                zoom: 18,
+                center: latlng
+            };
+
+            //cria mapa
+            map = new google.maps.Map(document.getElementById("mapa" + ind), options);
+
+            //coloca marcador
+            var marker = new google.maps.Marker({ position: latlng, map: map });
+
+
+            selecionadados(idroteiro, codstatus, codsubstatus);
+                
+            
+            sdiv = sdiv + "</div></div></div>";
+
+            
+        }
+
+        //Atualiza registro
+        function AtualizaStatusRoteiro(sIdStatus, sIdRoteiro, sidrota) {
+
+            //verifica preechimento do status e substatus
+            if (document.getElementById("cmbstatus" + sIdRoteiro).value == "") {
+                document.getElementById("alerta" + sIdRoteiro).style = "display: visible;";
+                document.getElementById("alerta" + sIdRoteiro).innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Seleciona um Status!";
+                return;
+            }
+
+            if (document.getElementById("cmbsubstatus" + sIdRoteiro).value == "") {
+                document.getElementById("alerta" + sIdRoteiro).style = "display: visible;";
+                document.getElementById("alerta" + sIdRoteiro).innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Seleciona um Substatus!";
+                return;
+            }
+
+            //Icone de carregamento
+            $("#myModal").modal({
+                show: true
+            });
+
+            //Verifica status de agendamento
+            if (sIdStatus == "3") {
+
+                //Exibe campo de data e hora
+                document.getElementById("txtdata" + sIdRoteiro).style.display = "block";
+                document.getElementById("txttime" + sIdRoteiro).style.display = "block";
+
+                //verifica preenchimento da data
+                if (document.getElementById("txtdata" + sIdRoteiro).value == "") {
+                    
+                    //atualiza span
+                    document.getElementById("status" + sIdRoteiro).className = "label label-info";
+                    document.getElementById("status" + sIdRoteiro).innerHTML = "Status Atual: Aguardando Data";
+
+                    //trata alerta
+                    document.getElementById("alerta" + sIdRoteiro).style = "display: visible;";
+                    document.getElementById("alerta" + sIdRoteiro).innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Seleciona uma Data para Retorno!";
+                    $('#myModal').modal('hide');
+                    return;
+                }
+                else {
+
+                    //Verifica preenchimento da hora
+                    if (document.getElementById("txttime" + sIdRoteiro).value == "") {
+
+                        //atualiza span
+                        document.getElementById("status" + sIdRoteiro).className = "label label-info";
+                        document.getElementById("status" + sIdRoteiro).innerHTML = "Status Atual: Aguardando Hora";
+
+                        //trata alerta
+                        document.getElementById("alerta" + sIdRoteiro).style = "display: visible;";
+                        document.getElementById("alerta" + sIdRoteiro).innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Seleciona uma Hora para Retorno!";
+                        $('#myModal').modal('hide');
+                        return;
+                    }
+                    else {
+                        //Formata data
+                        var sdtAgenda = document.getElementById("txtdata" + sIdRoteiro).value + " " + document.getElementById("txttime" + sIdRoteiro).value;
+
+                        //Atualiza o status
+                        var sret = AtualizaStatus(sIdStatus, sIdRoteiro, sdtAgenda, iduser_global, document.getElementById("cmbstatus" + sIdRoteiro).value, document.getElementById("cmbsubstatus" + sIdRoteiro).value, document.getElementById("txtobs" + sIdRoteiro).value);
+                        
+                        if (sret == '') {
+                            document.getElementById("alerta").style = "display: visible;";
+                            document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Atualizar Status para Agendamento!";
+                            $('#myModal').modal('hide');
+                            return;
+                        }
+                        else {
+                            //Insere dados de agendamento
+                            var sretag = Registra_Agendamento('', sidrota, sIdRoteiro, sIdStatus, iduser_global, '', '', sdtAgenda);
+
+                            if (sretag == '') {
+                                document.getElementById("alerta").style = "display: visible;";
+                                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Inserir Agendamento!";
+                                $('#myModal').modal('hide');
+                                return;
+                            }
+
+                            //Data preenchida, trata campos e alerta
+                            document.getElementById("alerta" + sIdRoteiro).style = "display: visible;";
+                            document.getElementById("status" + sIdRoteiro).className = "label label-info";
+                            document.getElementById("status" + sIdRoteiro).innerHTML = "Status Atual: Agendado";
+                            document.getElementById("alerta" + sIdRoteiro).style = "display: none;";
+                            $('#myModal').modal('hide');
+                        }
+                    }
+                }
+            }
+            else {
+                //concluido
+                //trata campos
+                document.getElementById("status" + sIdRoteiro).className = "label label-success";
+                document.getElementById("status" + sIdRoteiro).innerHTML = "Status Atual: Concluído";
+                //document.getElementById("cont" + sIdRoteiro).className = "label label-success";
+                //document.getElementById("cont" + sIdRoteiro).innerHTML = " Cliente ";
+                document.getElementById("txtdata" + sIdRoteiro).style.display = "none";
+                document.getElementById("txttime" + sIdRoteiro).style.display = "none";
+                document.getElementById("alerta" + sIdRoteiro).style = "display: none;";
+                document.getElementById("info" + sIdRoteiro).innerHTML = "<span id='info" + sIdRoteiro + "' style='text-shadow: 0 0 0.1em black, 0 0 0.01em black'><strong>Atenção!</strong> Rota já trabalhada!</span><p></p>";
+                
+                //Atualiza o status
+                var sret = AtualizaStatus(sIdStatus, sIdRoteiro, 'Null', iduser_global, document.getElementById("cmbstatus" + sIdRoteiro).value, document.getElementById("cmbsubstatus" + sIdRoteiro).value, document.getElementById("txtobs" + sIdRoteiro).value);
+                console.log(sret);
+                if (sret == '') {
+
+                    document.getElementById("alerta").style = "display: visible;";
+                    document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Inserir Status para Concluído!";
+                    $('#myModal').modal('hide');
+                    return;
+                }
+                else {
+                    $('#myModal').modal('hide');
+                }
+            }
+        }
+
+        //Consulta agendamento
+        function timer_agendamento() {
+
+            // Obtém a data/hora atual
+            var data = new Date();
+
+            // Guarda cada pedaço em uma variável
+            var dia = data.getDate();           // 1-31
+            var mes = data.getMonth();          // 0-11 (zero=janeiro)
+            var ano = data.getFullYear();       // 4 dígitos
+            var hora = data.getHours();         // 0-23
+            var min = data.getMinutes();        // 0-59
+            var seg = data.getSeconds();        // 0-59
+
+            //ajusta
+            mes = mes + 1;
+
+            //captura data e hora atual
+            var newdt = ano + "-" + mes + "-" + dia + " " + hora + ":" + min + ":" + seg;
+
+            for (var i = 1; i < totmaps; i++) {
+
+                var dt = document.getElementById("txtdata" + i).value;
+                var hr = document.getElementById("txttime" + i).value;
+
+                if (dt != '') {
+
+                    //monta hora
+                    sret = dt + " " + hr;
+
+                    //Calcula a diferenca em segundos entre a data atual e a data do agendamento
+                    var diff = moment(sret).diff(moment(newdt));
+                    var tempo = moment.duration(diff).asSeconds();
+
+                    //verifica o tempo, menor que 0 significa que atrasou
+                    if (tempo > 0) {
+                        //verifica se o tempo é de 30 minutos ou menos para alertar
+                        if (tempo <= 1800) {
+                            //Alerta
+                            document.getElementById("alertaagenda").style = "display: block; color:#ffffff; background-color:#063A43; text-align: center;";
+                            document.getElementById("alertaagenda").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção!</strong> Uma Rota está Agendada para às " + sret.substring(11, 16);
+                        }
+                    }
+
+                }
+            }
+        }
+
+        //Apresenta informações de acordo com o combo selecionado
+        function Apresenta_substatus(status,idroteiro) {            
+            
+            var combosub = document.getElementById("cmbsubstatus" + idroteiro).options;
+
+            //Verifica tipo status para ocultae options
+            if (status == "1") {
+                document.getElementById("alerta" + idroteiro).style = "display: none;";
+                combosub.item(0).selected = true;
+                combosub.item(1).style.display = "block";
+                combosub.item(2).style.display = "block";
+                combosub.item(3).style.display = "block";
+                combosub.item(4).style.display = "block";
+                combosub.item(5).style.display = "none";
+                combosub.item(6).style.display = "none";
+                combosub.item(7).style.display = "none";
+                combosub.item(8).style.display = "none";
+            }
+            else {
+                //pos-venda
+                document.getElementById("alerta" + idroteiro).style = "display: none;";
+                combosub.item(0).selected = true;
+                combosub.item(1).style.display = "none";
+                combosub.item(2).style.display = "none";
+                combosub.item(3).style.display = "none";
+                combosub.item(4).style.display = "none";
+                combosub.item(5).style.display = "block";
+                combosub.item(6).style.display = "block";
+                combosub.item(7).style.display = "block";
+                combosub.item(8).style.display = "block";
+            }
+        }
+
+        //Apresenta informações de acordo com o combo selecionado
+        function Apresenta_CaixaDialog(valor, idroteiro)
+        {
+            //trata alerta de acordo com a selecao do substatus
+            switch (valor) {
+                case "":
+                    document.getElementById("alerta" + idroteiro).style = "display: none;";
+                    break;
+                case "1":
+                    document.getElementById("alerta" + idroteiro).style = "display: visible;";
+                    document.getElementById("alerta" + idroteiro).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Tenho o <b>NOME</b> e <b>CONTATO</b> do decisor, mas não consegui falar e/ou apresentar o produto!";
+                    break;
+                case "2":
+                    document.getElementById("alerta" + idroteiro).style = "display: visible;";
+                    document.getElementById("alerta" + idroteiro).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Apresentei o produto mas o decisor ficou de pensar e/ou falar com alguém!";
+                    break;
+                case "3":
+                    document.getElementById("alerta" + idroteiro).style = "display: visible;";
+                    document.getElementById("alerta" + idroteiro).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Apresentei o produto, fechei a venda, mas o decisor precisa de tempo para criar condições de pagamento!";
+                    break;
+                case "4":
+                    document.getElementById("alerta" + idroteiro).style = "display: visible;";
+                    document.getElementById("alerta" + idroteiro).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Parabéns!";
+                    break;
+                case "5":
+                    document.getElementById("alerta" + idroteiro).style = "display: visible;";
+                    document.getElementById("alerta" + idroteiro).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Cliente sem acesso ao App e/ou conta!";
+                    break;
+                case "6":
+                    document.getElementById("alerta" + idroteiro).style = "display: visible;";
+                    document.getElementById("alerta" + idroteiro).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Negociação de taxa, oportunidade de venda de outro produto ou serviço, pedido de indicação, bobina e etc...";
+                    break;
+                case "7":
+                    document.getElementById("alerta" + idroteiro).style = "display: visible;";
+                    document.getElementById("alerta" + idroteiro).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Sem sinal de internet móvel!";
+                    break;
+                case "8":
+                    document.getElementById("alerta" + idroteiro).style = "display: visible;";
+                    document.getElementById("alerta" + idroteiro).innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Equipamento com defeito irremediável!";
+                    break;
+
+            }
+        }
+
+        //Seleciona combos
+        function selecionadados(iroteiro, codstatus, codsubstatus) {
+
+            if (codstatus != null) {
+
+                $("#cmbstatus" + iroteiro + " option[value='" + codstatus + "']").attr("selected", true);
+                $("#cmbsubstatus" + iroteiro + " option[value='" + codsubstatus + "']").attr("selected", true);
+
+                var combosub = document.getElementById("cmbsubstatus" + iroteiro).options;
+
+                if (codstatus == "1") {
+                    combosub.item(1).style.display = "block";
+                    combosub.item(2).style.display = "block";
+                    combosub.item(3).style.display = "block";
+                    combosub.item(4).style.display = "block";
+                    combosub.item(5).style.display = "none";
+                    combosub.item(6).style.display = "none";
+                    combosub.item(7).style.display = "none";
+                    combosub.item(8).style.display = "none";
+                }
+                else {
+                    //pos-venda
+                    combosub.item(1).style.display = "none";
+                    combosub.item(2).style.display = "none";
+                    combosub.item(3).style.display = "none";
+                    combosub.item(4).style.display = "none";
+                    combosub.item(5).style.display = "block";
+                    combosub.item(6).style.display = "block";
+                    combosub.item(7).style.display = "block";
+                    combosub.item(8).style.display = "block";
+                }
+            }
+        }
+
+    </script>
+
+    <!-- Estilo -->
+    <style>
+        .modal {
+            text-align: center;
+        }
+
+        @media screen and (min-width: 768px) {
+            .modal:before {
+                display: inline-block;
+                vertical-align: middle;
+                content: " ";
+                height: 100%;
+            }
+        }
+
+        .modal-dialog {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
+        .new{
+                background-color:white;
+                color:black;
+                text-align:center;
+            }
+        /* DivTable.com */
+        .divTable{
+            display: table;
+            width: 100%;
+        }
+        .divTableRow {
+            display: table-row;
+        }
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+        }
+        .divTableCell, .divTableHead {
+            border: none;
+            display: table-cell;
+            padding: 3px 10px;
+        }
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+            font-weight: bold;
+        }
+        .divTableFoot {
+            background-color: #EEE;
+            display: table-footer-group;
+            font-weight: bold;
+        }
+        .divTableBody {
+            display: table-row-group;
+        }
+
+
+        #mapa {
+            width: 100%;
+            height: 200px;
+            border: 2px solid #ccc;;
+            margin-bottom: 10px;
+        }
+
+
+
+    </style>
+
+
+</head>
+
+<body class="page-header-fixed  pace-done">
+
+    <!-- Barra de Progresso -->
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+
+    <!-- Espaço -->
+    <div class="overlay"></div>
+
+    <!-- BARRA DE MENU SUPERIOR --TOP -->
+    <main class="page-content content-wrap">
+
+        <!-- Navbar -->
+        <div class="navbar">
+            <div class="navbar-inner">
+
+                <div class="sidebar-pusher">
+                    <a href="javascript:void(0);" class="waves-effect waves-button waves-classic push-sidebar">
+                        <i class="fa fa-bars" style="color:#ffffff"></i>
+                    </a>
+                </div>
+                
+                <!-- GAT LINK -->
+                <div class="logo-box">
+                    <a href="#" style="background-color:#DD2F2F" class="logo-text"><span style="color:#ffffff;">GAT® Link</span></a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MENU ESQUERDA -  -->
+        <div class="page-sidebar sidebar">
+            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+                <div class="page-sidebar-inner slimscroll" style="overflow: hidden; width: auto; height: 100%;">
+
+                    <!-- CABECALHO MENU LATERAL -->
+                    <ul class="menu accordion-menu">
+
+                        <!-- HOME -->
+                        <li><a href="javascript:open_page('gatlink.html');" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
+
+                        <!-- LOGIN -->
+                        <li><a href="javascript:open_page('logingeo.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-sign-in"></span><p>Login</p></a></li>
+
+                        <!-- LOGOUT -->
+                        <li><a href="javascript:open_page('logoutgeo.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-sign-out"></span><p>Logout</p></a></li>
+
+                        <!-- CHECKIN -->
+                        <li><a href="javascript:open_page('checkin.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-map-marker"></span><p>Check-In</p></a></li>
+
+                        <!-- CHECKOUT -->
+                        <li><a href="javascript:open_page('checkout.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-external-link-square"></span><p>Check-Out</p></a></li>
+
+                        <!-- ROTAS -->
+                        <li><a href="javascript:open_page('rota.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-location-arrow"></span><p>Rotas</p></a></li>
+
+                        <!-- MAPS -->
+                        <li><a href="javascript:open_page('maps.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-globe"></span><p>Maps</p></a></li>
+
+                        <!-- CLIENTES -->
+                        <li><a href="javascript:open_page('ger_clientes.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-users"></span><p>Clientes</p></a></li>
+
+                        <!-- VENDAS -->
+                        <li><a href="javascript:open_page('ger_vendas.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-credit-card"></span><p>Vendas</p></a></li>
+
+                        <!-- PONTOS -->
+                        <li><a href="javascript:open_page('pontos.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-random"></span><p>Pontos</p></a></li>
+
+                        <!-- SAIR -->
+                        <li><a href="login.html" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-share"></span><p>Sair</p></a></li>
+
+                    </ul>
+
+                </div>
+
+                <div class="slimScrollBar" style="background: rgb(204, 204, 204); width: 7px; position: absolute; top: 0px; opacity: 0.3; display: none; border-radius: 0px; z-index: 99; right: 0px; height: 1080px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 0px;"></div>
+            </div><!-- Page Sidebar Inner -->
+        </div>
+
+
+        <div class="page-inner">
+
+            <!-- Modal -->
+            <div class="modal fade fa-box" id="myModal" tabindex="-1" style="border-radius:10px" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div>
+                        <div class="modal-body">
+                            <img src="files/loading_blue.gif" alt="carregando...">
+                            <figcaption class="loading-text"></figcaption>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal FAQ -->
+            <div class="modal fade" id="modalrotas" tabindex="-1" role="dialog" aria-labelledby="modalrotasLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h2 class="modal-title" id="modalrotasLabel">Questões Gerais</h2>
+                        </div>
+                        <br />
+                        <div class="modal-body" style="font-size:15px">
+                            <!--FAQS -->
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span><b>1.</b>    O que essa tela apresenta?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro" class="collapse">
+                                        <div class="panel-body">
+                                            Essa tela apresenta todos os endereços relacionados à você e que deverá realizar uma visita;<p></p>
+                                            Para visualização dos detalhes do endereço, basta expandir o painel desejado!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>2.    Como realizar um agendamento?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro1" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro1" class="collapse">
+                                        <div class="panel-body">
+                                            1 - Expandir o painel do endereço em que deseja Agendar;<p></p>
+                                            2 - Clicar no botão Agendado: <span style="background-color:#08A7C3; color:white; border-radius:10px;">&emsp;Agendado&emsp;</span><p></p><p></p>
+                                            3 - Ao clicar no botão, expandirá dois campos sendo eles: Data e Hora;
+                                            4 - Preencher os campos e clicar no botão Agendado novamente para confirmação do Agendamento.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>3.    Como saber se o agendamento foi realizado com sucesso?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro2" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro2" class="collapse">
+                                        <div class="panel-body">
+                                            Existem duas formas:<p></p>
+                                            1 - Nota-se que em todo endereço, tem o alerta: Status Roteiro que se localiza ao lado do Código no detalhes do painel na aba Principal;<p></p>
+                                            Para confirmação o Status Roteiro estará assim: <p></p>
+                                            2 - Clicar no botão Login: <span style="background-color:#08A7C3; color:white; border-radius:10px;">&nbsp;Status Roteiro: Agendado&nbsp;</span><p></p>
+                                            3 - Ao abrir ou carregar a tela novamente o painel apresentará o alerta: <span style='text-shadow: 0 0 0.1em #08A7C3, 0 0 0.01em #08A7C3'><strong>Atenção!</strong> Rota agendada!</span><p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>4.    Como é criado um novo endereço nas rotas?:</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro3" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro3" class="collapse">
+                                        <div class="panel-body">
+                                            Existem duas formas, sendo elas:<p></p>
+                                            1 - Usuários administradores (Supervisores, Coordenadores e ect) realizam uma importação à sua Rota;<p></p>
+                                            2 - Ao inserir Venda, automaticamente a venda se torna um endereço. <p></p>
+                                            O endereço é formado com o cadastro do cliente e localização atual do registro da venda.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>5.    Como inserir uma observação?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro5" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro5" class="collapse">
+                                        <div class="panel-body">
+                                            1 - Expandir o painel desejado;<p></p>
+                                            2 - Nota-se que no detalhes de cada painel, contém a aba Principal e a Aba Observação, selecionar a aba Observação e preencher o campo;<p></p>
+                                            3 - Após preencher o campo, é necessário registrar Conclusão ou Agendamento do endereço.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>6.    Como registrar qualquer ação?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro6" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro6" class="collapse">
+                                        <div class="panel-body">
+                                            Para qualquer registro de ação ao endereços, é necessário apertar o botão Concluído!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" style="border-radius: 10px;width:100%; background-color:#94150F; height:55px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">FECHAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TITULO DA PAGINA -->
+            <div class="page-title" style="background-color:#ffffff">
+                <span id="htitulo"></span>
+                <a data-toggle="modal" data-target="#modalrotas"><img src="Imagens/qaV.png" style="float:right;max-height:39px;max-width:45px" /></a>
+            </div>
+
+            <!-- ALERTA -->
+            <div id="alertaagenda" class="alert" style="display: none;"></div>
+            <div id="alerta" class="alert alert-danger" style="display: none;"></div>
+
+            <!-- CORPO -->
+            <div id="main-wrapper">
+
+                <!-- BLOCOS GERENCIAS -->
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <input type="hidden" id="h_lat" />
+                        <input type="hidden" id="h_lng" />
+
+                        <!--Google map-->
+                        <div id="mapas"></div>
+
+                        <!-- CANCELAR -->
+                        <div>
+                            <button type="button" id="cmdCancelar" onclick="open_page('gatlink.html');" style="border-radius: 10px;width:100%; background-color:#94150F; height:55px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">VOLTAR</button>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+                        
+            <!-- RODAPE -->
+            <div class="page-footer">
+                <p class="no-s">2023 © STT GAT® Link -  for World Class Solutions</p>
+            </div>
+
+            <!-- Key -->
+            <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD64r3AtOT6uaGrLkQtyLUuy9ukWeFkiCs">
+            </script>
+
+        </div>
+
+    </main>
+
+    <!-- Javascripts -->
+    <script src="files/jquery-2.1.4.min.js"></script>
+    <script src="files/jquery-ui.min.js"></script>
+    <script src="files/pace.min.js"></script>
+    <script src="files/jquery.blockui.js"></script>
+    <script src="files/bootstrap.min.js"></script>
+    <script src="files/jquery.slimscroll.min.js"></script>
+    <script src="files/switchery.min.js"></script>
+    <script src="files/jquery.uniform.min.js"></script>
+    <script src="files/classie.js"></script>
+    <script src="files/waves.min.js"></script>
+    <script src="files/main2.js"></script>
+    <script src="files/jquery.waypoints.min.js"></script>
+    <script src="files/jquery.counterup.min.js"></script>
+    <script src="files/toastr.min.js"></script>
+    <script src="files/jquery.flot.min.js"></script>
+    <script src="files/jquery.flot.time.min.js"></script>
+    <script src="files/jquery.flot.symbol.min.js"></script>
+    <script src="files/jquery.flot.resize.min.js"></script>
+    <script src="files/jquery.flot.tooltip.min.js"></script>
+    <script src="files/curvedLines.js"></script>
+    <script src="files/MetroJs.min.js"></script>
+    <script src="files/modern.js"></script>
+
+    <div id="flotTip" style="display: none; position: absolute;"></div>
+
+</body>
+
+</html>

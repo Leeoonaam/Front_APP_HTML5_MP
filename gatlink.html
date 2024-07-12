@@ -1,0 +1,664 @@
+﻿<!DOCTYPE html>
+<html style="" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>:: STT - GAT® Link ::</title>
+
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="description" content="STT GAT Link">
+    <meta name="keywords" content="admin,dashboard,stt">
+    <meta name="author" content="leonamcorreia">
+
+     
+    <link href="files/pace-theme-flash.css" rel="stylesheet">
+    <link href="files/uniform.default.min.css" rel="stylesheet">
+    <link href="files/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="./weather-icons-master/css/weather-icons.min.css" rel="stylesheet" type="text/css">
+    <link href="./simple-line-icons-master/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+    <link href="files/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="files/menu_cornerbox.css" rel="stylesheet" type="text/css">
+    
+    <link href="files/switchery.min.css" rel="stylesheet" type="text/css">
+    <link href="files/style.css" rel="stylesheet" type="text/css">
+    <link href="files/component.css" rel="stylesheet" type="text/css">
+    <link href="files/MetroJs.min.css" rel="stylesheet" type="text/css">
+    <link href="files/toastr.min.css" rel="stylesheet" type="text/css">
+    <link href="files/modern.min.css" rel="stylesheet" type="text/css">
+    <link href="files/green.css" class="theme-color" rel="stylesheet" type="text/css">
+    <link href="files/custom.css" rel="stylesheet" type="text/css">
+    <script src="js/apijs.js" type="text/javascript"></script>
+
+    <!-- Funções -->
+    <script>
+
+        //Page Load
+        window.onload = function () {
+
+            iduser_global = queryString("id");
+            user_global = queryString("nom");
+            permissao_global = queryString("perm");
+            status_global = queryString("st");
+            
+            //Verifica status 
+            if (status_global == "Logado") {
+                document.getElementById("lblstatus").innerHTML = "<strong style='text-shadow: 0 0 0.1em Green, 0 0 0.01em black'>Status Atual: " + status_global + "</strong>";
+            }
+            else if (status_global == "Deslogado") {
+                document.getElementById("lblstatus").innerHTML = "<strong style='text-shadow: 0 0 0.1em Black, 0 0 0.01em black'>Status Atual: " + status_global + "</strong>";
+            }
+            else if (status_global == "Check-In") {
+                document.getElementById("lblstatus").innerHTML = "<strong style='text-shadow: 0 0 0.1em Blue, 0 0 0.01em black'>Status Atual: " + status_global + "</strong>";
+            }
+            else {
+                //Check-Out
+                document.getElementById("lblstatus").innerHTML = "<strong style='text-shadow: 0 0 0.1em Red, 0 0 0.01em black'>Status Atual: " + status_global + "</strong>";
+            }
+
+            //verifica permissao para ajuste de layout
+            if (permissao_global == "Supervisor") {
+
+                document.getElementById("div_venda").style.display = "none";
+                document.getElementById("div_pontos_sup").style.display = "block";
+                document.getElementById("div_pontos_").style.display = "none";
+                document.getElementById("div_rel").style.display = "block";
+                document.getElementById("div_rel_sup").style.display = "none";
+
+                document.getElementById("lblrotas_agen").innerText = "Agendamento";
+                document.getElementById("lblmenurota").innerText = "Agendamento";
+                document.getElementById("lblcli_ind").innerText = "Indicação";
+
+            }
+            else {
+                document.getElementById("div_maps").style.display = "block";
+                document.getElementById("div_venda").style.display = "block";
+                document.getElementById("div_pontos_sup").style.display = "none";
+                document.getElementById("div_rel").style.display = "block";
+                document.getElementById("div_rel_sup").style.display = "none";
+                document.getElementById("menu_venda").style.display = "none";
+
+                document.getElementById("lblrotas_agen").innerText = "Rotas";
+                document.getElementById("lblmenurota").innerText = "Rotas";
+                document.getElementById("lblcli_ind").innerText = "Clientes";
+            }
+
+            //getLocation();
+            //timer_agendamento();
+
+        }
+
+        //String URL
+        function queryString(parameter) {
+            var loc = location.search.substring(1, location.search.length);
+            var param_value = false;
+            var params = loc.split("&");
+            for (i = 0; i < params.length; i++) {
+                param_name = params[i].substring(0, params[i].indexOf('='));
+                if (param_name == parameter) {
+                    param_value = params[i].substring(params[i].indexOf('=') + 1)
+                }
+            }
+            if (param_value) {
+                return param_value;
+            }
+            else {
+                return undefined;
+            }
+        }
+
+        //Captura localização
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            }
+        }
+
+        //Captura posição
+        function showPosition(position) {
+
+            //escreve lat , long na tela
+            document.getElementById("lblLatitude").innerHTML = "<strong>Latitude: " + position.coords.latitude + "</strong>";
+            document.getElementById("lblLongitude").innerHTML = "<strong>Longitude: " + position.coords.longitude + "</strong>";
+
+            ping_tempo(iduser_global, position.coords.latitude, position.coords.longitude, '');
+            return;
+        }
+
+        //Abre pagina
+        function open_page(pagina) {
+            
+            //Icone de carregamento
+            $("#myModal").modal({
+                show: true
+            });
+
+            window.location = pagina + '?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + status_global;
+            //window.location = 'https://www.gatlink.com.br/appmercadopago/' + pagina + '?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + status_global;
+        }
+
+        //Verifica agendamento
+        function timer_agendamento() {
+            
+            // Obtém a data/hora atual
+            var data = new Date();
+
+            // Guarda cada pedaço em uma variável
+            var dia = data.getDate();           // 1-31
+            var mes = data.getMonth();          // 0-11 (zero=janeiro)
+            var ano = data.getFullYear();       // 4 dígitos
+            var hora = data.getHours();          // 0-23
+            var min = data.getMinutes();        // 0-59
+            var seg = data.getSeconds();        // 0-59
+            mes = (mes + 1);
+
+            //captura data e hora atual
+            var newdt = ano + "-" + mes + "-" + dia + " " + hora + ":" + min + ":" + seg;
+
+            //Consulta agendamento
+            var sret = Consulta_Agendamentos(iduser_global);
+            
+            var obj_json = JSON.parse(sret);
+
+            //Verifica retorno
+            if (sret == '[]') {
+                //sem agendamento
+                return;
+            }
+            else {
+                //Calcula a diferenca em segundos entre a data atual e a data do agendamento
+                var diff = moment(obj_json[0].DataAgendamento.substring(0, 10) + " " + obj_json[0].DataAgendamento.substring(11)).diff(moment(newdt));
+                var tempo = moment.duration(diff).asSeconds();
+
+                var painel = document.getElementById("panel_rotas");
+                painel.style.backgroundColor = "#063A43";
+
+                //Alerta
+                document.getElementById("alerta").style = "display: block; color:#ffffff; background-color:#063A43; text-align: center;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção!</strong> Acesse o Menu Rotas - Agendamento realizado para às " + obj_json[0].DataAgendamento.substring(11, 16);
+
+                return;
+
+            }
+
+        }
+
+    </script>
+
+    <!-- Estilo -->
+    <style>
+        .modal {
+            text-align: center;
+        }
+
+        @media screen and (min-width: 768px) {
+            .modal:before {
+                display: inline-block;
+                vertical-align: middle;
+                content: " ";
+                height: 100%;
+            }
+        }
+
+        .modal-dialog {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+        /* DivTable.com */
+        .divTable {
+            display: table;
+            width: 100%;
+        }
+
+        .divTableRow {
+            display: table-row;
+        }
+
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+        }
+
+        .divTableCell, .divTableHead {
+            border: none;
+            display: table-cell;
+            padding: 3px 10px;
+        }
+
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+            font-weight: bold;
+        }
+
+        .divTableFoot {
+            background-color: #EEE;
+            display: table-footer-group;
+            font-weight: bold;
+        }
+
+        .divTableBody {
+            display: table-row-group;
+        }
+
+        
+    </style>
+
+
+</head>
+<body class="page-header-fixed  pace-done">
+
+    <!-- Barra de Progresso -->
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+
+    <div class="overlay"></div>
+
+    <!-- BARRA DE MENU SUPERIOR --TOP -->
+    <main class="page-content content-wrap">
+
+        <!-- Navbar -->
+        <div class="navbar">
+            <div class="navbar-inner">
+
+                <div class="sidebar-pusher">
+                    <a href="javascript:void(0);" class="waves-effect waves-button waves-classic push-sidebar">
+                        <i class="fa fa-bars" style="color:#ffffff"></i>
+                    </a>
+                </div>
+
+                <!-- GAT LINK -->
+                <div class="logo-box">
+                    <a href="#" style="background-color:#DD2F2F" class="logo-text"><span style="color:#ffffff">GAT® Link</span></a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MENU ESQUERDA -  -->
+        <div class="page-sidebar sidebar">
+            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+                <div class="page-sidebar-inner slimscroll" style="overflow: hidden; width: auto; height: 100%;">
+
+                    <!-- CABECALHO MENU LATERAL -->
+                    <ul class="menu accordion-menu">
+
+                        <!-- HOME -->
+                        <li class="active"><a href="javascript:open_page('gatlink.html');" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
+
+                        <!-- LOGIN -->
+                        <li><a href="javascript:open_page('logingeo.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-sign-in"></span><p>Login</p></a></li>
+
+                        <!-- LOGOUT -->
+                        <li><a href="javascript:open_page('logoutgeo.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-sign-out"></span><p>Logout</p></a></li>
+
+                        <!-- CHECKIN -->
+                        <li><a href="javascript:open_page('checkin.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-map-marker"></span><p>Check-In</p></a></li>
+
+                        <!-- CHECKOUT -->
+                        <li><a href="javascript:open_page('checkout.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-external-link-square"></span><p>Check-Out</p></a></li>
+
+                        <!-- ROTAS -->
+                        <li><a href="javascript:open_page('rota.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-location-arrow"></span><p id="lblmenurota">Rotas</p></a></li>
+
+                        <!-- MAPS -->
+                        <li><a href="javascript:open_page('maps.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-globe"></span><p id="lblmenumaps">Maps</p></a></li>
+
+                        <!-- CLIENTES -->
+                        <li><a href="javascript:open_page('ger_clientes.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-users"></span><p id="lblmenucliente">Clientes</p></a></li>
+
+                        <!-- VENDAS -->
+                        <li id="menu_venda"><a href="javascript:open_page('ger_vendas.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-credit-card"></span><p>Vendas</p></a></li>
+
+                        <!-- RELATORIO -->
+                        <li id="menu_rel"><a href="javascript:open_page('relatorio.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-bar-chart"></span><p>Relatório</p></a></li>
+
+                        <!-- SAIR -->
+                        <li><a href="login.html" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-share"></span><p>Sair</p></a></li>
+
+                    </ul>
+
+                </div>
+
+                <div class="slimScrollBar" style="background: rgb(204, 204, 204); width: 7px; position: absolute; top: 0px; opacity: 0.3; display: none; border-radius: 0px; z-index: 99; right: 0px; height: 1080px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 0px;"></div>
+            </div>
+        </div>
+
+        <div class="page-inner">
+
+            <!-- Modal -->
+            <div class="modal fade fa-box" id="myModal" tabindex="-1" style="border-radius:10px" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div >
+                        <div class="modal-body">                            
+                            <img src="files/loading_blue.gif" alt="carregando...">
+                            <figcaption class="loading-text"></figcaption>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal FAQ -->
+            <div class="modal fade" id="modalgatlink" tabindex="-1" role="dialog" aria-labelledby="modalgatlinkLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h2 class="modal-title" id="modalgatlinkLabel">Questões Gerais</h2>
+                        </div>
+                        <br />
+                        <div class="modal-body" style="font-size:15px">
+                            <!--FAQS -->
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span><b>1.</b>    Como iniciar a Jornada de Trabalho corretamente?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro" class="collapse">
+                                        <div class="panel-body">
+                                            1 - Acessar o Menu Principal;<p></p>
+                                            2 - Clicar no botão Login ou <a onclick="open_page('logingeo.html')">clique aqui;</a><p></p>
+                                            3 - Na tela de Login, carregará o mapa com sua localização;<p></p>
+                                            4 - Registrar o Login no botão: <span style="background-color:#94150F; color:white; border-radius:10px;">&emsp;Registrar&emsp;</span><p></p>
+                                            5 - Ao apresentar a mensagem: <strong style="background-color:#E5F3DF;color:#3C763D;"><i class='fa fa-check-circle-o' aria-hidden='true'></i>&nbsp;Ação Realizada com Sucesso!</strong> a jornada foi iniciada corretamente;<p></p>
+                                            6 - Após registro será possível realizar as demais ações de Check-in, Check-out e Logout.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>2.    Como finalizar a Jornada de trabalho corretamente?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro1" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro1" class="collapse">
+                                        <div class="panel-body">
+                                            1 - Acessar o Menu Principal;<p></p>
+                                            2 - Clicar no botão Logout ou <a onclick="open_page('logoutngeo.html')">clique aqui;</a><p></p>
+                                            3 - O registro só será realizado após uma ação de <a onclick="open_page('checkout.html')">Check-out;</a><p></p>
+                                            4 - Ao apresentar a mensagem: <strong style="background-color:#E5F3DF;color:#3C763D;"><i class='fa fa-check-circle-o' aria-hidden='true'></i>&nbsp;Ação Realizada com Sucesso!</strong> a jornada foi finalizada corretamente.<p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>3.    Como localizar os endereços da minha Rota?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro2" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro2" class="collapse">
+                                        <div class="panel-body">
+                                            1 - Acessar o Menu Principal.<p></p>
+                                            2 - Clicar no botão Rotas ou <a onclick="open_page('rota.html')">clique aqui;</a><p></p>
+                                            3 - A tela será carregada com todos os endereços minimizados, associados à você e com seus respectivos status;<p></p>
+                                            4 - Atenção com os alertas que apresentados em tela.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>4.    Como é criado um novo endereço nas rotas?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro3" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro3" class="collapse">
+                                        <div class="panel-body">
+                                            Existem duas formas, sendo elas:<p></p>
+                                            1 - Usuários administradores (Supervisores, Coordenadores e ect) realizam uma importação à sua Rota;<p></p>
+                                            2 - Ao inserir Venda, automaticamente a venda se torna um endereço. <p></p>
+                                            O endereço é formado com o cadastro do cliente e localização atual do registro da venda.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>5.    Para que serve o Menu Maps?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro4" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro4" class="collapse">
+                                        <div class="panel-body">
+                                            1 - Esse menu simula o Google Maps;<p></p>
+                                            2 - Visualizar Ponto de Proximidade ao redor de sua localização, ou seja, um novo endereço para visita;<p></p>
+                                            3 - Acessar o Menu de Pontos de Proximidade.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" style="border-radius: 10px;width:100%; background-color:#94150F; height:55px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">FECHAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TITULO DA PAGINA -->
+            <div class="page-title" style="background-color:#fff; padding-bottom:15px;padding-top:17px">
+                <span style="color:#000000;font-size:27px;"><b>Menu</b></span>
+                <a data-toggle="modal" data-target="#modalgatlink"><img src="Imagens/qaV.png" style="float:right;max-height:39px;max-width:45px" /></a>
+            </div>
+
+            <!-- ALERTA -->
+            <div id="alerta" class="alert" style="display: none;"></div>
+
+            <!-- CORPO -->
+            <div id="main-wrapper">
+
+                <!-- BLOCOS GERENCIAS -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel-default"  style="border-radius:10px; box-shadow: 0px 0px 1em #BBC0C8;background-color:#ffffff; text-align: center;-moz-border-radius:7px;-webkit-border-radius:7px;border-radius:7px;">
+                            <div class="row" style="height:20px; width:30px"></div>
+                            <div class="divTable">
+
+                                <div class="divTableBody">
+
+                                    <!-- login/logout -->
+                                    <div class="divTableRow">
+                                        <div class="divTableCell">
+                                            <button onclick="open_page('logingeo.html');" class="panel info-box panel-white" style="border-radius: 10px;width:135px; height:125px; background-color:#DD2F2F" ;>
+                                                <p>
+                                                    <h1><i class="fa fa-sign-in" style="color:#ffffff"></i></h1>
+                                                </p>
+                                                <h3><span class="info-box-title" style="color:#ffffff">Login</span></h3>
+                                            </button>
+                                        </div>
+                                        <div class="divTableCell">
+                                            <button onclick="open_page('logoutgeo.html');" class="panel info-box panel-white" style="border-radius: 10px;width:135px; height:125px; background-color:#DD2F2F" ;>
+                                                <p>
+                                                    <h1> <i class="fa fa-sign-out" style="color:#ffffff"></i></h1>
+                                                </p>
+                                                <h3><span class="info-box-title" style="color:#ffffff">Logout</span></h3>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- checkin/checkout -->
+                                    <div class="divTableRow">
+                                        <div class="divTableCell">
+                                            <button onclick="open_page('checkin.html');" class="panel info-box panel-white" style="border-radius: 10px;width:135px; height:125px; background-color:#DD2F2F" ;>
+                                                <p>
+                                                    <h1> <i class="fa fa-map-marker" style="color:#ffffff"></i></h1>
+                                                </p>
+                                                <h3><span class="info-box-title" style="color:#ffffff">Check-In</span></h3>
+                                            </button>
+                                        </div>
+                                        <div class="divTableCell">
+                                            <button onclick="open_page('checkout.html');" class="panel info-box panel-white" style="border-radius: 10px;width:135px; height:125px; background-color:#DD2F2F" ;>
+                                                <p>
+                                                    <h1> <i class="fa fa-external-link-square" style="color:#ffffff"></i></h1>
+                                                </p>
+                                                <h3><span class="info-box-title" style="color:#ffffff">Check-Out</span></h3>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Rotas/maps/ agendamentos supervisor / pontos supervisor -->
+                                    <div class="divTableRow">
+                                        <div class="divTableCell">
+                                            <button onclick="open_page('rota.html');" id="panel_rotas" class="panel info-box panel-white" style="border-radius: 10px;width:135px; height:125px; background-color:#DD2F2F" ;>
+                                                <p>
+                                                    <h1> <i class="fa fa-location-arrow" style="color:#ffffff"></i></h1>
+                                                </p>
+                                                <h3><span id="lblrotas_agen" class="info-box-title" style="color:#ffffff">Rotas</span></h3>
+                                            </button>
+                                        </div>
+
+                                        <div id="div_maps" class="divTableCell">
+                                            <button onclick="open_page('maps.html');" class="panel info-box panel-white" style="border-radius: 10px;width:135px; height:125px; background-color:#DD2F2F" ;>
+                                                <p>
+                                                    <h1> <i class="fa fa-globe" style="color:#ffffff"></i></h1>
+                                                </p>
+                                                <h3><span class="info-box-title" style="color:#ffffff">Maps</span></h3>
+                                            </button>
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <!-- clientes/vendas/relatorio -->
+                                    <div class="divTableRow">
+                                        <div class="divTableCell">
+                                            <button onclick="open_page('ger_clientes.html');" class="panel info-box panel-white" style="border-radius: 10px;width:135px; height:125px; background-color:#DD2F2F" ;>
+                                                <p>
+                                                    <h1> <i class="fa fa-users" style="color:#ffffff"></i></h1>
+                                                </p>
+                                                <h3><span id="lblcli_ind" class="info-box-title" style="color:#ffffff">Clientes</span></h3>
+                                            </button>
+                                        </div>
+                                        <div id="div_venda" style="display:block" class="divTableCell">
+                                            <button onclick="open_page('ger_vendas.html');" class="panel info-box panel-white" style="border-radius: 10px;width:135px; height:125px; background-color:#DD2F2F" ;>
+                                                <p>
+                                                    <h1> <i class="fa fa-credit-card" style="color:#ffffff"></i></h1>
+                                                </p>
+                                                <h3><span class="info-box-title" style="color:#ffffff">Vendas</span></h3>
+                                            </button>
+                                        </div>
+
+                                        <div id="div_rel_sup" class="divTableCell" style="display:none;">
+                                            <button onclick="open_page('relatorio.html');" class="panel info-box panel-white" style="border-radius: 10px;width:135px; height:125px; background-color:#DD2F2F" ;>
+                                                <p>
+                                                    <h1> <i class="fa fa-bar-chart" style="color:#ffffff"></i></h1>
+                                                </p>
+                                                <h3><span class="info-box-title" style="color:#ffffff">Relatório</span></h3>
+                                            </button>
+                                        </div>
+
+                                        <div id="div_pontos_sup" class="divTableCell" style="display:none">
+                                            <button onclick="open_page('pontos.html');" class="panel info-box panel-white" style="border-radius: 10px;width:135px; height:125px; background-color:#DD2F2F" ;>
+                                                <p>
+                                                    <h1> <i class="fa fa-random" style="color:#ffffff"></i></h1>
+                                                </p>
+                                                <h3><span class="info-box-title" style="color:#ffffff">Pontos</span></h3>
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- pontos/relatorio -->
+                                    <div class="divTableRow">
+                                        <div id="div_pontos_" class="divTableCell">
+                                            <button onclick="open_page('pontos.html');" class="panel info-box panel-white" style="border-radius: 10px;width:135px; height:125px; background-color:#DD2F2F" ;>
+                                                <p>
+                                                    <h1><i class="fa fa-random" style="color:#ffffff"></i></h1>
+                                                </p>
+                                                <h3><span class="info-box-title" style="color:#ffffff">Pontos</span></h3>
+                                            </button>
+                                        </div>
+                                        <div id="div_rel" class="divTableCell">
+                                            <button onclick="open_page('relatorio.html');" class="panel info-box panel-white" style="border-radius: 10px;width:135px; height:125px; background-color:#DD2F2F" ;>
+                                                <p>
+                                                    <h1> <i class="fa fa-bar-chart" style="color:#ffffff"></i></h1>
+                                                </p>
+                                                <h3><span class="info-box-title" style="color:#ffffff">Relatório</span></h3>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- LABELS -->
+                            <p class="text-center m-t-xs text-sm" style="margin:0px"><label id="endereco"></label></p>
+                            <p class="text-center m-t-xs text-sm" style="margin:0px"><label id="lblstatus"></label></p>
+                            <p class="text-center m-t-xs text-sm"><label id="lblLatitude"></label></p>
+                            <p class="text-center m-t-xs text-sm"><label id="lblLongitude"></label></p>
+
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RODAPE -->
+            <div class="page-footer">
+                <p class="no-s">2023 © STT GAT® Link -  for World Class Solutions</p>
+            </div>
+
+        </div>
+
+    </main>
+
+    <div class="cd-overlay"></div>
+
+
+    <!-- Javascripts -->
+    <script src="files/jquery-2.1.4.min.js"></script>
+    <script src="files/jquery-ui.min.js"></script>
+    <script src="files/pace.min.js"></script>
+    <script src="files/jquery.blockui.js"></script>
+    <script src="files/bootstrap.min.js"></script>
+    <script src="files/jquery.slimscroll.min.js"></script>
+    <script src="files/switchery.min.js"></script>
+    <script src="files/jquery.uniform.min.js"></script>
+    <script src="files/classie.js"></script>
+    <script src="files/waves.min.js"></script>
+    <script src="files/main2.js"></script>
+    <script src="files/jquery.waypoints.min.js"></script>
+    <script src="files/jquery.counterup.min.js"></script>
+    <script src="files/toastr.min.js"></script>
+    <script src="files/jquery.flot.min.js"></script>
+    <script src="files/jquery.flot.time.min.js"></script>
+    <script src="files/jquery.flot.symbol.min.js"></script>
+    <script src="files/jquery.flot.resize.min.js"></script>
+    <script src="files/jquery.flot.tooltip.min.js"></script>
+    <script src="files/curvedLines.js"></script>
+    <script src="files/MetroJs.min.js"></script>
+    <script src="files/modern.js"></script>
+
+    <div id="flotTip" style="display: none; position: absolute;"></div>
+
+</body>
+</html>

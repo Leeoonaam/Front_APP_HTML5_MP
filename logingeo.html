@@ -1,0 +1,622 @@
+﻿<!DOCTYPE html>
+<html style="" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>:: STT - GAT® Link ::</title>
+
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="description" content="STT GAT Link">
+    <meta name="keywords" content="admin,dashboard,stt">
+    <meta name="author" content="leonamcorreia">
+
+     
+    <link href="files/pace-theme-flash.css" rel="stylesheet">
+    <link href="files/uniform.default.min.css" rel="stylesheet">
+    <link href="files/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="./weather-icons-master/css/weather-icons.min.css" rel="stylesheet" type="text/css">
+    <link href="./simple-line-icons-master/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+    <link href="files/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="files/menu_cornerbox.css" rel="stylesheet" type="text/css">
+    <link href="files/waves.min.css" rel="stylesheet" type="text/css">
+    <link href="files/switchery.min.css" rel="stylesheet" type="text/css">
+    <link href="files/style.css" rel="stylesheet" type="text/css">
+    <link href="files/component.css" rel="stylesheet" type="text/css">
+    <link href="files/MetroJs.min.css" rel="stylesheet" type="text/css">
+    <link href="files/toastr.min.css" rel="stylesheet" type="text/css">
+    <link href="files/modern.min.css" rel="stylesheet" type="text/css">
+    <link href="files/green.css" class="theme-color" rel="stylesheet" type="text/css">
+    <link href="files/custom.css" rel="stylesheet" type="text/css">
+    <script src="js/apijs.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    
+
+    <!-- Estilo -->
+    <style>
+
+        .modal {
+            text-align: center;
+        }
+
+        @media screen and (min-width: 768px) {
+            .modal:before {
+                display: inline-block;
+                vertical-align: middle;
+                content: " ";
+                height: 100%;
+            }
+        }
+
+        .modal-dialog {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
+        /* DivTable.com */
+        .divTable{
+            display: table;
+            width: 100%;
+        }
+        .divTableRow {
+            display: table-row;
+        }
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+        }
+        .divTableCell, .divTableHead {
+            border: none;
+            display: table-cell;
+            padding: 3px 10px;
+        }
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+            font-weight: bold;
+        }
+        .divTableFoot {
+            background-color: #EEE;
+            display: table-footer-group;
+            font-weight: bold;
+        }
+        .divTableBody {
+            display: table-row-group;
+        }
+
+
+        #mapa { 
+            width: 100%;
+            height: 400px;
+            border: 2px solid #ccc;;
+            margin-bottom: 10px;
+        }
+
+        #video{
+            width: 100%;
+            display:none;
+        }
+
+        #canvas{
+            width: 100%;
+            display:none;
+        }
+
+    </style>
+
+
+</head>
+<body class="page-header-fixed  pace-done">
+
+    <!-- Barra de Progresso -->
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+	
+
+    <div class="overlay"></div>
+
+    <!-- BARRA DE MENU SUPERIOR --TOP -->
+    <main class="page-content content-wrap">
+
+		<!-- Navbar -->
+        <div class="navbar">
+            <div class="navbar-inner">
+
+                <div class="sidebar-pusher">
+                    <a href="javascript:void(0);" class="waves-effect waves-button waves-classic push-sidebar">
+                        <i class="fa fa-bars" style="color:#ffffff"></i>
+                    </a>
+                </div>
+
+                <!-- GAT LINK -->
+                <div class="logo-box">
+                    <a href="#" style="background-color:#DD2F2F" class="logo-text"><span style="color:#ffffff">GAT® Link</span></a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MENU ESQUERDA -  -->
+        <div class="page-sidebar sidebar">
+            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+                <div class="page-sidebar-inner slimscroll" style="overflow: hidden; width: auto; height: 100%;">
+
+                    <!-- CABECALHO MENU LATERAL -->                   
+                    <ul class="menu accordion-menu">
+
+                        <!-- HOME -->
+                        <li ><a href="javascript:open_page('gatlink.html');" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
+
+                        <!-- LOGIN -->
+                        <li class="active"><a href="javascript:open_page('logingeo.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-sign-in"></span><p>Login</p></a></li>
+
+                        <!-- LOGOUT -->
+                        <li><a href="javascript:open_page('logoutgeo.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-sign-out"></span><p>Logout</p></a></li>
+                        
+                        <!-- CHECKIN -->
+                        <li><a href="javascript:open_page('checkin.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-map-marker"></span><p>Check-In</p></a></li>
+                        
+                        <!-- CHECKOUT -->
+                        <li><a href="javascript:open_page('checkout.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-external-link-square"></span><p>Check-Out</p></a></li>
+                        
+                        <!-- ROTAS -->
+                        <li><a href="javascript:open_page('rota.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-location-arrow"></span><p>Rotas</p></a></li>
+
+                        <!-- MAPS -->
+                        <li><a href="javascript:open_page('maps.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-globe"></span><p>Maps</p></a></li>
+
+                        <!-- CLIENTES -->
+                        <li><a href="javascript:open_page('ger_clientes.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-users"></span><p>Clientes</p></a></li>
+
+                        <!-- VENDAS -->
+                        <li><a href="javascript:open_page('ger_vendas.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-credit-card"></span><p>Vendas</p></a></li>                                                  
+
+                        <!-- PONTOS -->
+                        <li><a href="javascript:open_page('pontos.html');" class="waves-effect waves-button"><span class="menu-icon fa fa-random"></span><p>Pontos</p></a></li>
+
+                        <!-- SAIR -->
+                        <li><a href="login.html" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-share"></span><p>Sair</p></a></li>
+                        
+                    </ul>
+
+                </div>
+				
+                <div class="slimScrollBar" style="background: rgb(204, 204, 204); width: 7px; position: absolute; top: 0px; opacity: 0.3; display: none; border-radius: 0px; z-index: 99; right: 0px; height: 1080px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 0px;"></div>
+            </div>
+        </div>
+
+        <div class="page-inner" >
+
+            <!-- Modal -->
+            <div class="modal fade fa-box" id="myModal" tabindex="-1" style="border-radius:10px" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div>
+                        <div class="modal-body">
+                            <img src="files/loading_blue.gif" alt="carregando...">
+                            <figcaption class="loading-text"></figcaption>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal FAQ -->
+            <div class="modal fade" id="modallogin" tabindex="-1" role="dialog" aria-labelledby="modalloginLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h2 class="modal-title" id="modalloginLabel">Questões Gerais</h2>
+                        </div>
+                        <br />
+                        <div class="modal-body" style="font-size:15px">
+                            <!--FAQS -->
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span><b>1.</b>    Como iniciar a Jornada de Trabalho corretamente?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro" class="collapse">
+                                        <div class="panel-body">
+                                            1 - Nota-se que a tela carregará o mapa com sua localização;<p></p>
+                                            2 - Clicar no botão Login: <span style="background-color:#94150F; color:white; border-radius:10px;">&emsp;Registrar&emsp;</span><p></p><p></p>
+                                            3 - Após o clique apresentará a mensagem: <strong style="background-color:#E5F3DF;color:#3C763D;"><i class='fa fa-check-circle-o' aria-hidden='true'></i>&nbsp;Ação Realizada com Sucesso!</strong> a jornada foi iniciada corretamente;<p></p>
+                                            4 - Após registro do Login, será possível realizar as demais ações de Check-in, Check-out e Logout.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>2.    Quando que deve ser usado o registro de Login?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro1" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro1" class="collapse">
+                                        <div class="panel-body">
+                                            Somente no início da jornada de trabalho, ou seja, o Login é realizado uma vez por dia!<p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" style="background-color:white;padding:5px;">
+                                <div class='panel panel-white ui-sortable-handle' style='border-radius: 10px;box-shadow:0px 0px 1em #BBC0C8'>
+                                    <div class='panel-heading' style='padding:18px 18px 10px 18px;height: 30%'>
+                                        <span>3.    Quais os erros de registrar Login?</span>
+                                        <div class='panel-control'>
+                                            <a data-target="#linkfiltro2" data-toggle='collapse' data-placement='top' class='panel-collapse' data-original-title='Expandir / Reduzir'><i class='icon-arrow-down'></i></a>
+                                        </div>
+                                    </div>
+                                    <div id="linkfiltro2" class="collapse">
+                                        <div class="panel-body">
+                                            1 - Status de logout faltante! Lembrar de realizar o logout do dia anterior!<p></p>
+                                            2 - Realizar o Login somente uma vez;<p></p>
+                                            3 - Carregamento incompleto da localização, sempre aguardar o carregamento da marcação no mapa.<p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" style="border-radius: 10px;width:100%; background-color:#94150F; height:55px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">FECHAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TITULO DA PAGINA -->
+            <div class="page-title" style="background-color:#ffffff">
+                <span style="color:#000000;font-size:27px;"><b>Login</b> </span>
+                <a data-toggle="modal" data-target="#modallogin"><img src="Imagens/qaV.png" style="float:right;max-height:39px;max-width:45px" /></a>
+            </div>
+
+            <div id="alerta" class="alert alert-danger" style="display: none;"></div>
+
+            <!-- CORPO -->
+            <div id="main-wrapper" style="margin:12px">
+
+                <!-- BLOCOS GERENCIAS -->
+                <div class="panel-body" style="border-radius:10px; box-shadow: 0px 0px 1em #BBC0C8;background-color:white;padding:7px">
+
+                    <div class="col-lg-12" style="padding:1px">
+                        
+                        <input type="hidden" id="h_lat"/>
+                        <input type="hidden" id="h_lng"/>
+                        <input type="hidden" id="img64" name="img64" />
+
+                        <p></p>
+
+                        <!--Google map-->
+                        <div id="mapa"></div>
+                        <p></p>
+
+                        <!-- LABELS -->
+                        <div style="display:none"><label id="endereco"></label></div>
+                        <p class="text-center m-t-xs text-sm" style="margin:0px"><label id="lblstatus"></label></p>
+                        <p class="text-center m-t-xs text-sm"><label id="lblLatitude"></label></p>
+                        <p class="text-center m-t-xs text-sm"><label id="lblLongitude"></label></p>
+
+                        <!-- Hodômetro -->
+                        <div id="div_hod" class="form-group" style="display:none;">
+                            <label style="font-size:13px"><b>Hodômetro:</b></label>
+                            <input type="text" id="txthodometro" class="form-control" style="border-radius: 10px;width:100%; height:50px; background-color:#ffffff">
+                        </div>
+
+                        <br />
+
+                        <!-- REGISTRAR -->
+                        <div>
+                            <button type="button" id="btnacao" onclick="Acao();" style="border-radius: 10px;width:100%; background-color:#94150F; height:55px; font-size:14px" class="text-center btn btn-success btn-block">REGISTRAR</button>
+                        </div>
+
+                        <p></p>
+
+                        <!-- CANCELAR -->
+                        <div>
+                            <button type="button" id="cmdCancelar" onclick="open_page('gatlink.html');" style="border-radius: 10px;width:100%; background-color:#94150F; height:55px; font-size:14px; border-color:#cfcfcf" class="text-center btn btn-success btn-block">VOLTAR</button>
+                        </div>
+
+                        <br />
+                        
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <br />
+
+            <!-- RODAPE -->
+            <div class="page-footer">
+                <p class="no-s">2023 © STT GAT® Link -  for World Class Solutions</p>
+            </div>
+
+            <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD64r3AtOT6uaGrLkQtyLUuy9ukWeFkiCs">
+            </script>
+
+        </div>
+		
+    </main>
+
+
+    <!-- Javascripts -->
+    <script src="files/jquery-2.1.4.min.js"></script>
+    <script src="files/jquery-ui.min.js"></script>
+    <script src="files/pace.min.js"></script>
+    <script src="files/jquery.blockui.js"></script>
+    <script src="files/bootstrap.min.js"></script>
+    <script src="files/jquery.slimscroll.min.js"></script>
+    <script src="files/switchery.min.js"></script>
+    <script src="files/jquery.uniform.min.js"></script>
+    <script src="files/classie.js"></script>
+    <script src="files/waves.min.js"></script>
+    <script src="files/main2.js"></script>
+    <script src="files/jquery.waypoints.min.js"></script>
+    <script src="files/jquery.counterup.min.js"></script>
+    <script src="files/toastr.min.js"></script>
+    <script src="files/jquery.flot.min.js"></script>
+    <script src="files/jquery.flot.time.min.js"></script>
+    <script src="files/jquery.flot.symbol.min.js"></script>
+    <script src="files/jquery.flot.resize.min.js"></script>
+    <script src="files/jquery.flot.tooltip.min.js"></script>
+    <script src="files/curvedLines.js"></script>
+    <script src="files/MetroJs.min.js"></script>
+    <script src="files/modern.js"></script>
+    <div id="flotTip" style="display: none; position: absolute;"></div>
+
+    <!-- Funções -->
+    <script>
+
+        //Page load
+        window.onload = function(){
+
+            iduser_global = queryString("id");
+            user_global = queryString("nom");
+            permissao_global = queryString("perm");
+            status_global = queryString("st");
+
+            //localização
+            //getLocation();
+
+            //Verifica status
+            if (status_global == "Logado") {
+                document.getElementById("lblstatus").innerHTML = "<strong style='text-shadow: 0 0 0.1em Green, 0 0 0.01em black'>Status Atual: " + status_global + "</strong>";
+            }
+            else if (status_global == "Deslogado") {
+                document.getElementById("lblstatus").innerHTML = "<strong style='text-shadow: 0 0 0.1em Black, 0 0 0.01em black'>Status Atual: " + status_global + "</strong>";
+            }
+            else if (status_global == "Check-In") {
+                document.getElementById("lblstatus").innerHTML = "<strong style='text-shadow: 0 0 0.1em Blue, 0 0 0.01em black'>Status Atual: " + status_global + "</strong>";
+            }
+            else {
+                //Check-Out
+                document.getElementById("lblstatus").innerHTML = "<strong style='text-shadow: 0 0 0.1em Red, 0 0 0.01em black'>Status Atual: " + status_global + "</strong>";
+            }
+
+            //Verifica permissao para ocultar campo hodometro
+            if (permissao_global == "Supervisor") {
+                document.getElementById("div_hod").style.display = "block";
+                //document.getElementById("div_foto").style.display = "block";
+                //div_foto
+            }
+            else {
+                document.getElementById("div_hod").style.display = "none";
+                //document.getElementById("div_foto").style.display = "none";
+            }
+			
+			const map = new google.maps.Map(document.getElementById("mapa"), {
+				zoom: 8,
+				center: { lat: 40.732, lng: -73.997 },
+			  });
+  const geocoder = new google.maps.Geocoder();
+  
+  const  infowindow= new google.maps.InfoWindow();
+alert(infowindow);
+
+    geocodeLatLng(geocoder, map, infowindow);
+        }
+
+        //String URL
+        function queryString(parameter) {
+              var loc = location.search.substring(1, location.search.length);
+              var param_value = false;
+              var params = loc.split("&");
+              for (i=0; i<params.length;i++) {
+                  param_name = params[i].substring(0,params[i].indexOf('='));
+                  if (param_name == parameter) {
+                      param_value = params[i].substring(params[i].indexOf('=')+1)
+                  }
+              }
+              if (param_value) {
+                  return param_value;
+              }
+              else {
+                  return undefined;
+              }
+        }
+
+        //Captura localização
+        function getLocation() {
+
+            if (navigator.geolocation) {
+
+                navigator.geolocation.getCurrentPosition(showPosition);
+
+            }
+        }
+
+        //Captura posição
+        function showPosition(position) {
+
+            //cria posicao
+            var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+            //define conf
+            var options = {
+                zoom: 18,
+                center: latlng
+            };
+
+            //cria mapa
+            map = new google.maps.Map(document.getElementById("mapa"), options);
+
+            //coloca marcador
+            var marker = new google.maps.Marker({position: latlng, map: map});
+
+            //seta posicao
+            ping_tempo(iduser_global,position.coords.latitude,position.coords.longitude,'');
+
+            //salva posicao hidden
+            document.getElementById("h_lat").value=position.coords.latitude;
+            document.getElementById("h_lng").value=position.coords.longitude;
+
+            //escreve lat , long na tela
+            document.getElementById("lblLatitude").innerHTML = "<strong>Latitude: " + position.coords.latitude + "</strong>";
+            //document.getElementById("lblLongitude").innerHTML = "<strong>Longitude: " + position.coords.longitude + "</strong>";
+			document.getElementById("lblLongitude").innerHTML = "<strong>Longitude: " + position.coords.longitude + "</strong>";
+        }
+		
+		function geocodeLatLng(geocoder, map, infowindow) {
+		
+  const input = '-23.4944863,-46.8515509';
+  const latlngStr = input.split(",", 2);
+  const latlng = {
+    lat: parseFloat(latlngStr[0]),
+    lng: parseFloat(latlngStr[1]),
+  };
+
+  geocoder
+    .geocode({ location: latlng })
+    .then((response) => {
+      if (response.results[0]) {
+        map.setZoom(11);
+
+        const marker = new google.maps.Marker({
+          position: latlng,
+          map: map,
+        });
+
+        
+		document.getElementById("lblLongitude").innerHTML = "<strong>Longitude: " + infowindow.setContent(response.results[0].formatted_address) + "</strong>";
+      } else {
+        window.alert("No results found");
+      }
+    })
+    .catch((e) => window.alert("Geocoder failed due to: " + e));
+}
+
+window.initMap = initMap;
+
+        //Abre paginas
+        function open_page(pagina) {
+
+            //Icone de carregamento
+            $("#myModal").modal({
+                show: true
+            });
+
+            window.location = pagina + '?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + status_global;
+            //window.location = 'https://www.gatlink.com.br/appmercadopago/' + pagina + '?id=' + iduser_global + '&nom=' + user_global + '&perm=' + permissao_global + '&st=' + status_global;
+        }
+
+        //Ações
+        function Acao() {
+
+            document.getElementById("btnacao").style.display = "none";
+
+            //Icone de carregamento
+            $("#myModal").modal({
+                show: true
+            });
+
+            //Verifica se capturou a localização
+            if (document.getElementById("h_lat").value == "" || document.getElementById("h_lng").value == "") {
+                document.getElementById("alerta").style = "display: visible;";
+                document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Aguarde Identificação GPS!";
+                document.getElementById("btnacao").style.display = "block";
+                $('#myModal').modal('hide');
+                window.scrollTo(0,0);
+                return;
+            }
+
+            //Verifica permissao
+            if (permissao_global == "Supervisor") {
+
+                //verifica preenchimento
+                if (document.getElementById("txthodometro").value == "") {
+                    document.getElementById("alerta").style = "display: visible;";
+                    document.getElementById("alerta").innerHTML = "<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Preencha o campo Hodômetro!";
+                    window.scrollTo(0, 0);
+                    document.getElementById("btnacao").style.display = "block";
+                    $('#myModal').modal('hide');
+                    return;
+                }
+
+                var sret = registro_tempo(iduser_global, '1', document.getElementById("h_lat").value, document.getElementById("h_lng").value, '', '', document.getElementById("txthodometro").value, '', '0', '0');
+
+            }
+            //promotor
+            else {
+
+                //var sret = registro_tempo(iduser_global, '1', document.getElementById("h_lat").value, document.getElementById("h_lng").value, '', document.getElementById("endereco").innerText.replace(';', ''), '', '', '0', '0');
+                var sret = registro_tempo(iduser_global, '1', document.getElementById("h_lat").value, document.getElementById("h_lng").value, 'Null', '', '', '', '0', '0');
+            }
+
+            //verifica retorno
+            if  (sret==''){
+                document.getElementById("alerta").style="display: visible;";
+                document.getElementById("alerta").innerHTML="<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong> Erro ao Executar ação";
+                window.scrollTo(0, 0);
+                return;
+            }
+            else{
+
+                var arrayOfStrings = sret.split(';');
+
+                //valida retorno
+                if (arrayOfStrings[0]=="OK"){
+                    document.getElementById("alerta").style="visibility: visible;";
+                    document.getElementById("alerta").className="alert alert-success";
+                    document.getElementById("alerta").innerHTML="<strong><i class='fa fa-check-circle-o' aria-hidden='true'></i>&nbsp;Ação Realizada com Sucesso!</strong>";
+                    window.scrollTo(0, 0);
+
+                    status_global = "Logado";
+                    document.getElementById("lblstatus").innerHTML = "<label id='lblstatus'><strong style='text-shadow: 0 0 0.1em Green, 0 0 0.01em black'>Status Atual: " + status_global + "</strong></label></p>";
+                    $('#myModal').modal('hide');
+                    return;
+                }
+                else{
+                    document.getElementById("alerta").style="visibility: visible;";
+                    document.getElementById("alerta").innerHTML="<strong><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;Atenção !</strong>&nbsp;" + arrayOfStrings[1];
+                    window.scrollTo(0, 0);
+                    $('#myModal').modal('hide');
+
+                    return;
+                }
+            }
+        }
+
+    </script>
+
+</body>
+</html>
